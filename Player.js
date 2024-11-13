@@ -15,38 +15,57 @@ export class Player {
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
-        const acceleration = 1.55; // Adjust acceleration as needed
+        const acceleration = 1.96; // Adjust acceleration as needed
 
         // Initialize accumulation variables for acceleration
         this.velocityChangeAccumulator = new BABYLON.Vector3(0, 0, 0);
         this.accumulatedTime = 0;
+        
+        // Initialize variables for click rate capping
+        this.clickCount = 0;
+        this.lastClickTime = 0;
+        this.clickRateCap = 10; // Max clicks per second allowed
 
         // Function to handle key down events and adjust velocity
         window.addEventListener("keydown", (event) => {
-            // Calculate forward and right vectors relative to the camera's current orientation
-            const forward = this.camera.getFrontPosition(1).subtract(this.camera.position).normalize();
-            const right = BABYLON.Vector3.Cross(forward, BABYLON.Vector3.Up()).normalize();
-            const up = BABYLON.Vector3.Up(); // Y-axis direction for up and down movement
+            const currentTime = performance.now() / 1000; // Current time in seconds
 
-            switch (event.key) {
-                case "w": // Accelerate forward
-                    this.velocity.addInPlace(forward.scale(acceleration));
-                    break;
-                case "s": // Accelerate backward
-                    this.velocity.addInPlace(forward.scale(-acceleration));
-                    break;
-                case "a": // Accelerate left
-                    this.velocity.addInPlace(right.scale(acceleration));
-                    break;
-                case "d": // Accelerate right
-                    this.velocity.addInPlace(right.scale(-acceleration));
-                    break;
-                case "r": // Move up
-                    this.velocity.addInPlace(up.scale(acceleration));
-                    break;
-                case "f": // Move down
-                    this.velocity.addInPlace(up.scale(-acceleration));
-                    break;
+            // Reset click count every second
+            if (currentTime - this.lastClickTime >= 1) {
+                this.clickCount = 0;
+                this.lastClickTime = currentTime;
+            }
+
+            // If clicks this second are under the cap, proceed
+            if (this.clickCount < this.clickRateCap) {
+                this.clickCount++; // Count the key press
+
+                // Calculate forward and right vectors relative to the camera's current orientation
+                const forward = this.camera.getFrontPosition(1).subtract(this.camera.position).normalize();
+                const right = BABYLON.Vector3.Cross(forward, BABYLON.Vector3.Up()).normalize();
+                const up = BABYLON.Vector3.Up(); // Y-axis direction for up and down movement
+
+                const acceleration = 1.96; // Adjust acceleration as needed
+                switch (event.key) {
+                    case "w": // Accelerate forward
+                        this.velocity.addInPlace(forward.scale(acceleration));
+                        break;
+                    case "s": // Accelerate backward
+                        this.velocity.addInPlace(forward.scale(-acceleration));
+                        break;
+                    case "a": // Accelerate left
+                        this.velocity.addInPlace(right.scale(acceleration));
+                        break;
+                    case "d": // Accelerate right
+                        this.velocity.addInPlace(right.scale(-acceleration));
+                        break;
+                    case "r": // Move up
+                        this.velocity.addInPlace(up.scale(acceleration));
+                        break;
+                    case "f": // Move down
+                        this.velocity.addInPlace(up.scale(-acceleration));
+                        break;
+                }
             }
         });
 
@@ -72,7 +91,8 @@ export class Player {
             this.previousVelocity.copyFrom(this.velocity);
         });
     }
-
+	
+	
     // Function to create a DOM element to display the velocity
     createVelocityDisplay() {
         this.velocityDisplay = document.createElement("div");
