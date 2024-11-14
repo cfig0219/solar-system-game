@@ -20,8 +20,9 @@ export class Star {
         
         // Calculate the initial distance between the camera and the star
     	this.starDistance = BABYLON.Vector3.Distance(this.camera.position, this.starPosition);
-    	// Calculate the adjusted star light intensity and star light scale
+    	// Initializes image scale and volumetric light resolution
     	this.imageScale = 0;
+    	this.volLightRes = 100;
         
         // Set up the star elements in the scene
         this.createLightSphere();
@@ -68,22 +69,20 @@ export class Star {
 	
 	// Creates volumetric light with god rays affect
     createVolumetricLight() {
-        if (this.starDistance < (this.starRadius * 200)) {
-            this.volLight = new BABYLON.VolumetricLightScatteringPostProcess(
-                "godrays",
-                1.0,
-                this.camera,
-                this.lightSphere,
-                100,
-                BABYLON.Texture.BILINEAR_SAMPLINGMODE,
-                this.scene.getEngine(),
-                false
-            );
-            this.volLight.exposure = 0.3;
-            this.volLight.decay = 0.97;
-            this.volLight.weight = 0.7;
-            this.volLight.density = 0.8;
-        }
+        this.volLight = new BABYLON.VolumetricLightScatteringPostProcess(
+            "godrays",
+            1.0,
+            this.camera,
+        	this.lightSphere,
+            this.volLightRes,
+            BABYLON.Texture.BILINEAR_SAMPLINGMODE,
+            this.scene.getEngine(),
+            false
+        );
+        this.volLight.exposure = 0.3;
+        this.volLight.decay = 0.97;
+        this.volLight.weight = 0.7;
+        this.volLight.density = 0.8;
     }
 	
     createImagePlane() {
@@ -107,13 +106,20 @@ export class Star {
         
         // Continuously updates the size of the star flare relative to camera location
         this.scene.registerBeforeRender(() => {
-        	console.log("Image Scale:", this.starDistance);
             this.starDistance = BABYLON.Vector3.Distance(this.camera.position, this.starPosition);
         	this.imageScale = (((this.starDistance) / 30) * (Math.pow(this.starRadius, 1/2) / 30)) * (Math.pow((1/this.starDistance), 1/10));
 			
         	// Update the scaling of the imagePlane directly
         	this.imagePlane.scaling.x = this.imageScale;
         	this.imagePlane.scaling.y = this.imageScale / 2;
+        	
+        	// Reduces resolution of volumetric light with distance
+        	let newLightRes = this.volLightRes = 100 - ((this.starDistance / (this.starRadius*5)) * 100);
+        	if (newLightRes < 0) {
+        		newLightRes = 0;
+        	}
+        	this.volLightRes = newLightRes;
+        	console.log(this.volLightRes);
         });
     }
 	
