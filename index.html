@@ -102,7 +102,8 @@
       const EdenLocation = new BABYLON.Vector3(0, 0, -(179026 + CanaanRadius));
       
       // Camera parameters
-      camera.setTarget(EdenLocation);
+      const cameraLocation = new BABYLON.Vector3(0, 0, -(179026 + CanaanRadius)); // setting it equal to planet moves planet
+      camera.setTarget(cameraLocation);
       camera.alpha = 0.3;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.5;   // Vertical rotation (60 degrees)
       camera.radius = EdenRadius * 3; // adjusts default camera distance
