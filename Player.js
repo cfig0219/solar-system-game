@@ -97,7 +97,7 @@ export class Player {
     createVelocityDisplay() {
         this.velocityDisplay = document.createElement("div");
         this.velocityDisplay.style.position = "absolute";
-        this.velocityDisplay.style.bottom = "30px";
+        this.velocityDisplay.style.bottom = "40px";
         this.velocityDisplay.style.left = "10px";
         this.velocityDisplay.style.color = "white";
         this.velocityDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
