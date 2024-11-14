@@ -75,9 +75,8 @@
       // Calls function to create first yellow star
       const CanaanLight = new BABYLON.Color3(1, 0.9, 0.5);
       const CanaanRadius = 52220;
-      const CanaanDistance = 179026 + CanaanRadius;
       const CanaanHabitableZone = 200710 + CanaanRadius;
-	  const CanaanPosition = new BABYLON.Vector3(0, 0, CanaanDistance);
+	  const CanaanPosition = new BABYLON.Vector3(0, 0, 0);
       const Canaan = new Star(CanaanLight, CanaanRadius, CanaanPosition, CanaanHabitableZone, scene, camera);
         
       // Second red star
@@ -100,7 +99,12 @@
       // First Planet parameters
       const EdenRadius = 1162;
       const atmosphereDepth = 50.8;
-      const EdenLocation = new BABYLON.Vector3(0, 0, 0);
+      const EdenLocation = new BABYLON.Vector3(0, 0, -(179026 + CanaanRadius));
+      
+      // Camera parameters
+      camera.setTarget(EdenLocation);
+      camera.alpha = 0.3;  // Horizontal rotation (45 degrees)
+	  camera.beta = 1.5;   // Vertical rotation (60 degrees)
       camera.radius = EdenRadius * 3; // adjusts default camera distance
       
       // Calls on function to create first planet
@@ -110,7 +114,7 @@
       
       // Second planet parameters
       const NysaRadius = 2958;
-      const NysaLocation = new BABYLON.Vector3(10000, 0, 0);
+      const NysaLocation = new BABYLON.Vector3(0, 0, -(275491 + CanaanRadius));
       const NysaTexture = new BABYLON.Texture('Textures/Nysa/NysaMap.png', scene);
       const NysaLand = new BABYLON.Texture('Textures/Nysa/NysaLand.png', scene);
       const NysaClouds = new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene);
@@ -127,14 +131,9 @@
       Nysa.setCloudColor(cloudColor);
       Nysa.setAtmosphereOpacity(0.24);
       
-      // Calculates intensity of lights for second rings
-      //const starIntensity2 = Canaan.calculateIntensity(NysaLocation, CanaanPosition);
-      //const NysaRings = new Rings(NysaRadius, NysaLocation, CanaanLight, starIntensity2, CanaanPosition, scene, camera);
-      //NysaRings.setRingColor(ringColor2);
-      
       // Creates third planet
       const AraratRadius = 1560;
-      const AraratLocation = new BABYLON.Vector3(-10000, 0, 0);
+      const AraratLocation = new BABYLON.Vector3(-8113, 0, -(275491 + CanaanRadius));
       const AraratTexture = new BABYLON.Texture('Textures/Ararat/AraratMap.png', scene);
       const AraratLand = new BABYLON.Texture('Textures/Ararat/AraratLand.png', scene);
       const AraratClouds = new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene);
