@@ -43,7 +43,7 @@
           'Textures/Sky/3dspace.jpg', 
           { 
               resolution: 32,
-              size: 1000000000000 // range increased
+              size: 100000000000 // range increased
           }, 
           scene
       );
@@ -99,7 +99,7 @@
       const SolLight = new BABYLON.Color3(0.9, 0.95, 1);
       const SolRadius = 58178;
       const SolDistance = 21040000 + SolRadius;
-      const SolHabitableZone = 299710 + SolRadius;
+      const SolHabitableZone = 399710 + SolRadius;
       const SolPosition = new BABYLON.Vector3(SolDistance, 0, SolDistance);
       const Sol = new Star(SolLight, SolRadius, SolPosition, SolHabitableZone, scene, camera);
 
@@ -129,7 +129,7 @@
       Nysa.setTexture(new BABYLON.Texture('Textures/Nysa/NysaMap.png', scene));
       Nysa.setLand(new BABYLON.Texture('Textures/Nysa/NysaLand.png', scene));
       Nysa.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 1));
-      Nysa.setCloudColor(new BABYLON.Color3(0.6, 0.75, 1));
+      Nysa.setCloudColor(new BABYLON.Color3(0.8, 0.7, 0.5));
       Nysa.setAtmosphereOpacity(0.24);
       
       // Creates third planet
@@ -185,8 +185,53 @@
       Venus.createAtmosphere();
       Venus.setTexture(new BABYLON.Texture('Textures/Sol/Venus/VenusMap.jpg', scene));
       Venus.setClouds(new BABYLON.Texture('Textures/Sol/Venus/VenusClouds.jpg', scene));
-      Venus.setAtmosphereColor(new BABYLON.Color3(0.7, 0.6, 0.3))
+      Venus.setAtmosphereColor(new BABYLON.Color3(0.8, 0.7, 0.3))
       Venus.setAtmosphereOpacity(0.2);
+      
+      // Creates Mars
+      const MarsRadius = 1672;
+      const MarsLocation = new BABYLON.Vector3(SolDistance + 448800, 0, SolDistance);
+      const Mars = new Planet(MarsRadius, MarsLocation, scene, camera);
+      Mars.createAtmosphere();
+      Mars.setTexture(new BABYLON.Texture('Textures/Sol/Mars/MarsMap.jpg', scene));
+      Mars.setAtmosphereColor(new BABYLON.Color3(0.8, 0.45, 0.15))
+      Mars.setAtmosphereOpacity(0.12);
+      
+      // Creates Jupiter
+      const JupiterRadius = 12582;
+      const JupiterLocation = new BABYLON.Vector3(SolDistance + 897442, 0, SolDistance);
+      const Jupiter = new Planet(JupiterRadius, JupiterLocation, scene, camera);
+      Jupiter.createAtmosphere();
+      Jupiter.setTexture(new BABYLON.Texture('Textures/Sol/Jupiter/JupiterMap.jpg', scene));
+      Jupiter.setAtmosphereColor(new BABYLON.Color3(0.65, 0.5, 0.3))
+      Jupiter.setAtmosphereOpacity(0.13);
+      
+      // Creates Saturn
+      const SaturnRadius = 10982;
+      const SaturnLocation = new BABYLON.Vector3(SolDistance + 1525651, 0, SolDistance);
+      const Saturn = new Planet(SaturnRadius, SaturnLocation, scene, camera);
+      Saturn.createAtmosphere();
+      Saturn.setTexture(new BABYLON.Texture('Textures/Sol/Saturn/SaturnMap.jpg', scene));
+      Saturn.setAtmosphereOpacity(0.15);
+      const SolIntensity = Canaan.calculateIntensity(SaturnLocation, SolPosition);
+      const SaturnRings = new Rings(SaturnRadius, SaturnLocation, SolLight, SolIntensity, SolPosition, scene, camera);
+      SaturnRings.setRingColor(new BABYLON.Color3(0.7, 0.6, 0.5))
+      
+      // Creates Uranus
+      const UranusRadius = 6402;
+      const UranusLocation = new BABYLON.Vector3(SolDistance + 2441042, 0, SolDistance);
+      const Uranus = new Planet(UranusRadius, UranusLocation, scene, camera);
+      Uranus.createAtmosphere();
+      Uranus.setTexture(new BABYLON.Texture('Textures/Sol/Uranus/UranusMap.jpg', scene));
+      Uranus.setAtmosphereOpacity(0.17);
+      
+      // Creates Neptune
+      const NeptuneRadius = 6276;
+      const NeptuneLocation = new BABYLON.Vector3(SolDistance + 3661563, 0, SolDistance);
+      const Neptune = new Planet(NeptuneRadius, NeptuneLocation, scene, camera);
+      Neptune.createAtmosphere();
+      Neptune.setTexture(new BABYLON.Texture('Textures/Sol/Neptune/NeptuneMap.jpg', scene));
+      Neptune.setAtmosphereOpacity(0.16);
       
 
       return scene;
