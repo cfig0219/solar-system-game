@@ -85,7 +85,7 @@ export class Planet {
         cloudMaterial.useAlphaFromDiffuseTexture = true;
         cloudMaterial.backFaceCulling = true;
         cloudMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-        cloudMaterial.diffuseColor = this.cloudColor;
+        cloudMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
         this.cloudLayer.material = cloudMaterial;
         this.cloudLayer.position = this.planetLocation;
         this.cloudLayer.renderingGroupId = 1;
