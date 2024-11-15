@@ -21,17 +21,11 @@ export class Planet {
 
         // Initialize planet layers
         this.createBaseLayer();
-        this.createLandLayer();
-        this.createCloudLayer();
-        this.createAtmosphere();
 
-        // Initialize rotation speeds
+        // Initializes rotation rates
         this.planetRotationSpeed = 0.001;
         this.landRotationSpeed = 0.001;
         this.cloudRotationSpeed = 0.0008;
-
-        // Start rotation animation
-        this.startRotation();
     }
 
     createBaseLayer() {
@@ -48,6 +42,11 @@ export class Planet {
         this.sphere.material = sphereMaterial;
         this.sphere.position = this.planetLocation;
         this.sphere.renderingGroupId = 1;
+        
+        // Rotates base layer
+        this.scene.registerBeforeRender(() => {
+            this.sphere.rotation.y -= this.planetRotationSpeed;
+        });
     }
 
     createLandLayer() {
@@ -67,6 +66,11 @@ export class Planet {
         this.landLayer.material = landMaterial;
         this.landLayer.position = this.planetLocation;
         this.landLayer.renderingGroupId = 1;
+        
+        // Rotates land layer
+        this.scene.registerBeforeRender(() => {
+            this.landLayer.rotation.y -= this.landRotationSpeed;
+        });
     }
 
     createCloudLayer() {
@@ -85,6 +89,11 @@ export class Planet {
         this.cloudLayer.material = cloudMaterial;
         this.cloudLayer.position = this.planetLocation;
         this.cloudLayer.renderingGroupId = 1;
+        
+        // Rotates cloud layer
+        this.scene.registerBeforeRender(() => {
+            this.cloudLayer.rotation.y -= this.cloudRotationSpeed;
+        });
     }
 
     createAtmosphere() {
@@ -105,31 +114,29 @@ export class Planet {
         this.atmosphere.position = this.planetLocation;
         this.atmosphere.renderingGroupId = 1;
     }
-
-    startRotation() {
-        this.scene.registerBeforeRender(() => {
-            this.sphere.rotation.y -= this.planetRotationSpeed;
-            this.landLayer.rotation.y -= this.landRotationSpeed;
-            this.cloudLayer.rotation.y -= this.cloudRotationSpeed;
-        });
-    }
     
     
     // Functions to set the planet surface and cloud textures
     setTexture(newPlanetTexture) {
     	this.planetTexture = newPlanetTexture;
+        this.planetTexture.vScale = -1; // Apply vertical flip
+        this.planetTexture.uScale = -1; // Apply horizontal flip
     	this.sphere.material.diffuseTexture = this.planetTexture;
     }
     
     setLand(newLandTexture) {
     	this.landTexture = newLandTexture;
     	this.landTexture.hasAlpha = true;
+        this.landTexture.vScale = -1;
+        this.landTexture.uScale = -1;
     	this.landLayer.material.diffuseTexture = this.landTexture;
     }
     
     setClouds(newCloudTexture) {
     	this.cloudTexture = newCloudTexture;
     	this.cloudTexture.hasAlpha = true;
+        this.cloudTexture.vScale = -1;
+        this.cloudTexture.uScale = -1;
     	this.cloudLayer.material.diffuseTexture = this.cloudTexture;
     }
     
@@ -147,5 +154,14 @@ export class Planet {
     setAtmosphereOpacity(newOpacity) {
     	this.atmosphereOpacity = newOpacity;
     	this.atmosphere.material.alpha = newOpacity;
+    }
+    
+    // Sets the planet's reflective color and glow
+    setReflection(newSpecularColor) {
+    	this.sphere.material.specularColor = newSpecularColor;
+    }
+    
+    setEmissiveness(newEmissiveColor) {
+    	this.sphere.material.emissiveColor = newEmissiveColor;
     }
 }
