@@ -36,7 +36,7 @@ export class Planet {
         const sphereMaterial = new BABYLON.StandardMaterial("sphereMaterial", this.scene);
 
         sphereMaterial.diffuseTexture = this.planetTexture;
-        sphereMaterial.specularColor = new BABYLON.Color3(1, 0.9, 0.9);
+        sphereMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         sphereMaterial.emissiveColor = new BABYLON.Color3(0, 0, 0);
         sphereMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1).scale(1 - this.atmosphereOpacity);
         this.sphere.material = sphereMaterial;
