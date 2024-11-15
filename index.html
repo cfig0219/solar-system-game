@@ -164,7 +164,30 @@
       camera.alpha = 2.1;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.5;   // Vertical rotation (60 degrees)
       camera.radius = EarthRadius * 3; // adjusts default camera distance
-
+      
+      // Creates Luna
+      const LunaRadius = 1076;
+      const LunaLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance - 10000);
+      const Luna = new Planet(LunaRadius, LunaLocation, scene, camera);
+      Luna.setTexture(new BABYLON.Texture('Textures/Sol/Earth/LunaMap.png', scene));
+      
+      // Creates Mercury
+      const MercuryRadius = 1344;
+      const MercuryLocation = new BABYLON.Vector3(SolDistance + 115790, 0, SolDistance);
+      const Mercury = new Planet(MercuryRadius, MercuryLocation, scene, camera);
+      Mercury.setTexture(new BABYLON.Texture('Textures/Sol/InnerSol/MercuryMap.jpg', scene));
+      
+      // Creates Venus
+      const VenusRadius = 2438;
+      const VenusLocation = new BABYLON.Vector3(SolDistance + 215424, 0, SolDistance);
+      const Venus = new Planet(VenusRadius, VenusLocation, scene, camera);
+      Venus.createCloudLayer();
+      Venus.createAtmosphere();
+      Venus.setTexture(new BABYLON.Texture('Textures/Sol/Venus/VenusMap.jpg', scene));
+      Venus.setClouds(new BABYLON.Texture('Textures/Sol/Venus/VenusClouds.jpg', scene));
+      Venus.setAtmosphereColor(new BABYLON.Color3(0.7, 0.6, 0.3))
+      Venus.setAtmosphereOpacity(0.2);
+      
 
       return scene;
     };
