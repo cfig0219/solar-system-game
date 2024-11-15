@@ -90,7 +90,7 @@
       // Third red-orange star
       const MizraimLight = new BABYLON.Color3(1, 0.5, 0.2);
       const MizraimRadius = 23100;
-      const MizraimDistance = 10365600 + MizraimRadius;
+      const MizraimDistance = 5365600 + MizraimRadius;
       const MizraimHabitableZone = 52680 + MizraimRadius;
       const MizraimPosition = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance);
       const Mizraim = new Star(MizraimLight, MizraimRadius, MizraimPosition, MizraimHabitableZone, scene, camera);
@@ -98,7 +98,7 @@
 	  // Sol system star
       const SolLight = new BABYLON.Color3(0.9, 0.95, 1);
       const SolRadius = 58178;
-      const SolDistance = 30000000 + SolRadius;
+      const SolDistance = 21040000 + SolRadius;
       const SolHabitableZone = 299710 + SolRadius;
       const SolPosition = new BABYLON.Vector3(SolDistance, 0, SolDistance);
       const Sol = new Star(SolLight, SolRadius, SolPosition, SolHabitableZone, scene, camera);
@@ -114,66 +114,54 @@
       Eden.createLandLayer();
       Eden.createCloudLayer();
       Eden.createAtmosphere();
+      Eden.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       const starIntensity1 = Canaan.calculateIntensity(EdenLocation, CanaanPosition);
       const EdenRings = new Rings(EdenRadius, EdenLocation, CanaanLight, starIntensity1, CanaanPosition, scene, camera);
-      
-      // Second planet parameters
+
+      // Creates second planet
       const NysaRadius = 2958;
       const NysaLocation = new BABYLON.Vector3(0, 0, -(275491 + CanaanRadius));
-      const NysaTexture = new BABYLON.Texture('Textures/Nysa/NysaMap.png', scene);
-      const NysaLand = new BABYLON.Texture('Textures/Nysa/NysaLand.png', scene);
-      const atmosphereColor = new BABYLON.Color3(1, 0.7, 1);
-      const cloudColor = new BABYLON.Color3(0.9, 0.8, 0.7);
-      const ringColor2 = new BABYLON.Color3(0.6, 0.75, 1) // Constant ring color variable
-      
-      // Creates second planet
       const Nysa = new Planet(NysaRadius, NysaLocation, scene, camera);
       Nysa.createLandLayer();
       Nysa.createCloudLayer();
       Nysa.createAtmosphere();
-      Nysa.setTexture(NysaTexture);
-      Nysa.setLand(NysaLand);
-      Nysa.setAtmosphereColor(atmosphereColor);
-      Nysa.setCloudColor(cloudColor);
+      Nysa.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
+      Nysa.setTexture(new BABYLON.Texture('Textures/Nysa/NysaMap.png', scene));
+      Nysa.setLand(new BABYLON.Texture('Textures/Nysa/NysaLand.png', scene));
+      Nysa.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 1));
+      Nysa.setCloudColor(new BABYLON.Color3(0.6, 0.75, 1));
       Nysa.setAtmosphereOpacity(0.24);
       
       // Creates third planet
       const AraratRadius = 1560;
       const AraratLocation = new BABYLON.Vector3(8113 + NysaRadius, 0, -(275491 + CanaanRadius));
-      const AraratTexture = new BABYLON.Texture('Textures/Ararat/AraratMap.png', scene);
-      const AraratLand = new BABYLON.Texture('Textures/Ararat/AraratLand.png', scene);
-      const AraratClouds = new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene);
-      
       const Ararat = new Planet(AraratRadius, AraratLocation, scene, camera);
       Ararat.createLandLayer();
       Ararat.createCloudLayer();
       Ararat.createAtmosphere();
-      Ararat.setTexture(AraratTexture);
-      Ararat.setLand(AraratLand);
-      Ararat.setClouds(AraratClouds);
+      Ararat.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
+      Ararat.setTexture(new BABYLON.Texture('Textures/Ararat/AraratMap.png', scene));
+      Ararat.setLand(new BABYLON.Texture('Textures/Ararat/AraratLand.png', scene));
+      Ararat.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Ararat.setAtmosphereOpacity(0.22);
       
       
       // Creates Earth
       const EarthRadius = 2548;
       const EarthLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance);
-      const EarthTexture = new BABYLON.Texture('Textures/Sol/Earth/EarthMap.png', scene);
-      const EarthLand = new BABYLON.Texture('Textures/Sol/Earth/EarthLand.png', scene);
-      const EarthClouds = new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene);
-      
       const Earth = new Planet(EarthRadius, EarthLocation, scene, camera);
       Earth.createLandLayer();
       Earth.createCloudLayer();
       Earth.createAtmosphere();
-      Earth.setTexture(EarthTexture);
-      Earth.setLand(EarthLand);
-      Earth.setClouds(EarthClouds);
-      Earth.setAtmosphereOpacity(0.2);
+      Earth.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
+      Earth.setTexture(new BABYLON.Texture('Textures/Sol/Earth/EarthMap.png', scene));
+      Earth.setLand(new BABYLON.Texture('Textures/Sol/Earth/EarthLand.png', scene));
+      Earth.setAtmosphereOpacity(0.17);
       
       // Camera parameters
       const cameraLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance);; // setting it equal to planet moves planet
       camera.setTarget(cameraLocation);
-      camera.alpha = 0.3;  // Horizontal rotation (45 degrees)
+      camera.alpha = 2.1;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.5;   // Vertical rotation (60 degrees)
       camera.radius = EarthRadius * 3; // adjusts default camera distance
 
