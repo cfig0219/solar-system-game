@@ -4,7 +4,7 @@ export class Player {
      */
     constructor(camera, scene) {
         this.camera = camera;
-        this.camera.maxZ = 12000000000000;
+        this.camera.maxZ = 1200000000000;
         this.camera.minZ = 50; // Prevents jittering of layers when adjusted for distance
 
         // Make zoom 10x faster for mouse wheel (PC)
@@ -65,8 +65,25 @@ export class Player {
                     case "f": // Move down
                         this.velocity.addInPlace(up.scale(-acceleration));
                         break;
+                        
+                    case " ": // Space bar pressed
+                        if (!this.isBoosting) {
+                            this.isBoosting = true;
+                            this.originalVelocity = this.velocity.clone(); // Store the original velocity
+                            this.velocity.scaleInPlace(100); // Boost velocity by 100x
+                        }
+                        break;
                 }
             }
+            
+            // Check for key release
+            window.addEventListener("keyup", (event) => {
+                if (event.key === " " && this.isBoosting) { // Space bar released
+                    this.velocity = this.originalVelocity.clone(); // Revert to original velocity
+                    this.isBoosting = false;
+                }
+            });
+            
         });
 
         // Create displays for speed and acceleration
