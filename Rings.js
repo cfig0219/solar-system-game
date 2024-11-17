@@ -204,7 +204,7 @@ export class Rings {
     }
 	
 	
-	// Sets the ring color
+    // Sets the ring color
     setRingColor(color) {
         this.ringColor = color;
         this.ringTorus.material.emissiveColor = color.multiply(this.starLight1.scale(this.starIntensity1));
