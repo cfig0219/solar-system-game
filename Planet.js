@@ -6,7 +6,7 @@ export class Planet {
      * @param {number} planetRadius - The radius of the planet
      * @param {BABYLON.Vector3} planetLocation - Position in 3D space
      * @param {BABYLON.Scene} scene - The Babylon scene
-     * @param {BABYLON.camera} camera - The camera to adjust ring rotation relative to view
+     * @param {BABYLON.camera} camera - The camera to adjust render distance
      */
     constructor(planetRadius, planetLocation, scene, camera) {
         this.planetRadius = planetRadius;
@@ -163,5 +163,25 @@ export class Planet {
     
     setEmissiveness(newEmissiveColor) {
     	this.sphere.material.emissiveColor = newEmissiveColor;
+    }
+    
+    
+    // Physics related functions
+    setMass(planetRadius, surfaceGravity) {
+    	// Gravity Variables
+		const gConstant = 0.000000000067
+		this.planetMass = (surfaceGravity * Math.pow(planetRadius,2)) / gConstant;
+    }
+    
+    getMass() {
+    	return this.planetMass;
+    }
+    
+    getRadius() {
+    	return this.planetRadius;
+    }
+    
+    getLocation() {
+    	return this.planetLocation;
     }
 }
