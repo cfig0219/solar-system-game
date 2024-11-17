@@ -108,7 +108,16 @@ export class Player {
             this.previousVelocity.copyFrom(this.velocity);
         });
     }
-	
+    
+    
+    // Functions to get and update velocity
+    getVelocity() {
+    	return this.velocity;
+    }
+    
+    setVelocity(newVelocity) {
+    	this.velocity = newVelocity;
+    }
 	
     // Function to create a DOM element to display the velocity
     createVelocityDisplay() {
@@ -145,6 +154,7 @@ export class Player {
         const speed = this.velocity.length(); // Magnitude of the velocity vector
         this.velocityDisplay.innerText = `Speed: ${speed.toFixed(2)} m/s`;
     }
+    
 
     // Function to accumulate velocity changes and display average acceleration per second
     accumulateAcceleration(deltaTime) {
