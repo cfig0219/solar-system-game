@@ -30,6 +30,7 @@
     import { Planet } from './Planet.js';
     import { Rings } from './Rings.js';
     import { Player } from './Player.js';
+    import { Gravity } from './Gravity.js';
     
     const canvas = document.getElementById("renderCanvas");
     const createScene = async (engine) => {
@@ -70,7 +71,10 @@
       defaultPipeline.bloomWeight = 0.5;         // Set bloom intensity (default 0.15)
       defaultPipeline.bloomKernel = 64;          // Blur kernel size for the bloom effect
       defaultPipeline.bloomScale = 0.8;          // Set bloom scaling (default 0.5)
-
+      
+      
+      // Initializes planet list
+      let planetList = new Gravity(camera, scene);
         
       // Calls function to create first yellow star
       const CanaanLight = new BABYLON.Color3(1, 0.9, 0.5);
@@ -78,6 +82,7 @@
       const CanaanHabitableZone = 200710 + CanaanRadius;
       const CanaanPosition = new BABYLON.Vector3(0, 0, 0);
       const Canaan = new Star(CanaanLight, CanaanRadius, CanaanPosition, CanaanHabitableZone, scene, camera);
+      Canaan.setMass(CanaanRadius, 54.76); // Sets Canaan's mass
         
       // Second red star
       const SinaiLight = new BABYLON.Color3(1, 0.35, 0.1);
@@ -86,22 +91,25 @@
       const SinaiHabitableZone = 15546 + SinaiRadius;
       const SinaiPosition = new BABYLON.Vector3(SinaiDistance/2, 0, -SinaiDistance);
       const Sinai = new Star(SinaiLight, SinaiRadius, SinaiPosition, SinaiHabitableZone, scene, camera);
+      Sinai.setMass(SinaiRadius, 139.95);
         
       // Third red-orange star
       const MizraimLight = new BABYLON.Color3(1, 0.5, 0.2);
       const MizraimRadius = 23100;
-      const MizraimDistance = 5365600 + MizraimRadius;
+      const MizraimDistance = 8365600 + MizraimRadius;
       const MizraimHabitableZone = 52680 + MizraimRadius;
       const MizraimPosition = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance);
       const Mizraim = new Star(MizraimLight, MizraimRadius, MizraimPosition, MizraimHabitableZone, scene, camera);
+      Mizraim.setMass(MizraimRadius, 94.96);
 	  
 	  // Sol system star
       const SolLight = new BABYLON.Color3(0.9, 0.95, 1);
       const SolRadius = 58178;
       const SolDistance = 21040000 + SolRadius;
-      const SolHabitableZone = 399710 + SolRadius;
+      const SolHabitableZone = 299710 + SolRadius;
       const SolPosition = new BABYLON.Vector3(SolDistance, 0, SolDistance);
       const Sol = new Star(SolLight, SolRadius, SolPosition, SolHabitableZone, scene, camera);
+      Sol.setMass(SolRadius, 51.82);
 
       
       // First Planet parameters
@@ -115,6 +123,7 @@
       Eden.createCloudLayer();
       Eden.createAtmosphere();
       Eden.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
+      Eden.setMass(EdenRadius, 5.28);
       const starIntensity1 = Canaan.calculateIntensity(EdenLocation, CanaanPosition);
       const EdenRings = new Rings(EdenRadius, EdenLocation, CanaanLight, starIntensity1, CanaanPosition, scene, camera);
 
@@ -131,6 +140,7 @@
       Nysa.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 1));
       Nysa.setCloudColor(new BABYLON.Color3(0.8, 0.7, 0.5));
       Nysa.setAtmosphereOpacity(0.24);
+      Nysa.setMass(NysaRadius, 16.27);
       
       // Creates third planet
       const AraratRadius = 1560;
@@ -144,6 +154,7 @@
       Ararat.setLand(new BABYLON.Texture('Textures/Ararat/AraratLand.png', scene));
       Ararat.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Ararat.setAtmosphereOpacity(0.22);
+      Ararat.setMass(AraratRadius, 6.79);
       
       
       // Creates Earth
@@ -157,25 +168,28 @@
       Earth.setTexture(new BABYLON.Texture('Textures/Sol/Earth/EarthMap.png', scene));
       Earth.setLand(new BABYLON.Texture('Textures/Sol/Earth/EarthLand.png', scene));
       Earth.setAtmosphereOpacity(0.17);
+	  Earth.setMass(EarthRadius, 9.8); // Sets Earth's mass
       
       // Camera parameters
-      const cameraLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance);; // setting it equal to planet moves planet
+      const cameraLocation = new BABYLON.Vector3(SolDistance + 299200 - 3000, 500, SolDistance + 5000);; // setting it equal to planet moves planet
       camera.setTarget(cameraLocation);
       camera.alpha = 2.1;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.5;   // Vertical rotation (60 degrees)
-      camera.radius = EarthRadius * 3; // adjusts default camera distance
+      camera.radius = EarthRadius; // adjusts default camera distance
       
       // Creates Luna
       const LunaRadius = 1076;
       const LunaLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance - 10000);
       const Luna = new Planet(LunaRadius, LunaLocation, scene, camera);
       Luna.setTexture(new BABYLON.Texture('Textures/Sol/Earth/LunaMap.png', scene));
+      Luna.setMass(LunaRadius, 3.98);
       
       // Creates Mercury
       const MercuryRadius = 1344;
       const MercuryLocation = new BABYLON.Vector3(SolDistance + 115790, 0, SolDistance);
       const Mercury = new Planet(MercuryRadius, MercuryLocation, scene, camera);
       Mercury.setTexture(new BABYLON.Texture('Textures/Sol/InnerSol/MercuryMap.jpg', scene));
+      Mercury.setMass(MercuryRadius, 6.02);
       
       // Creates Venus
       const VenusRadius = 2438;
@@ -187,6 +201,7 @@
       Venus.setClouds(new BABYLON.Texture('Textures/Sol/Venus/VenusClouds.jpg', scene));
       Venus.setAtmosphereColor(new BABYLON.Color3(0.8, 0.7, 0.3))
       Venus.setAtmosphereOpacity(0.2);
+      Venus.setMass(VenusRadius, 9.32);
       
       // Creates Mars
       const MarsRadius = 1672;
@@ -196,6 +211,7 @@
       Mars.setTexture(new BABYLON.Texture('Textures/Sol/Mars/MarsMap.jpg', scene));
       Mars.setAtmosphereColor(new BABYLON.Color3(0.8, 0.45, 0.15))
       Mars.setAtmosphereOpacity(0.12);
+      Mars.setMass(MarsRadius, 6.03);
       
       // Creates Jupiter
       const JupiterRadius = 12582;
@@ -205,6 +221,7 @@
       Jupiter.setTexture(new BABYLON.Texture('Textures/Sol/Jupiter/JupiterMap.jpg', scene));
       Jupiter.setAtmosphereColor(new BABYLON.Color3(0.65, 0.5, 0.3))
       Jupiter.setAtmosphereOpacity(0.13);
+      Jupiter.setMass(JupiterRadius, 24.79);
       
       // Creates Saturn
       const SaturnRadius = 10982;
@@ -213,6 +230,8 @@
       Saturn.createAtmosphere();
       Saturn.setTexture(new BABYLON.Texture('Textures/Sol/Saturn/SaturnMap.jpg', scene));
       Saturn.setAtmosphereOpacity(0.15);
+      Saturn.setMass(SaturnRadius, 10.44);
+      
       const SolIntensity = Canaan.calculateIntensity(SaturnLocation, SolPosition);
       const SaturnRings = new Rings(SaturnRadius, SaturnLocation, SolLight, SolIntensity, SolPosition, scene, camera);
       SaturnRings.setRingColor(new BABYLON.Color3(0.7, 0.6, 0.5))
@@ -224,6 +243,7 @@
       Uranus.createAtmosphere();
       Uranus.setTexture(new BABYLON.Texture('Textures/Sol/Uranus/UranusMap.jpg', scene));
       Uranus.setAtmosphereOpacity(0.17);
+      Uranus.setMass(UranusRadius, 9.32);
       
       // Creates Neptune
       const NeptuneRadius = 6276;
@@ -232,6 +252,29 @@
       Neptune.createAtmosphere();
       Neptune.setTexture(new BABYLON.Texture('Textures/Sol/Neptune/NeptuneMap.jpg', scene));
       Neptune.setAtmosphereOpacity(0.16);
+      Neptune.setMass(NeptuneRadius, 11.15);
+      
+      
+      // Adds planet gravities to planet list
+      planetList.addPlanet(Canaan);
+      planetList.addPlanet(Sinai);
+      planetList.addPlanet(Mizraim);
+      planetList.addPlanet(Sol);
+      planetList.addPlanet(Eden);
+      planetList.addPlanet(Nysa);
+      planetList.addPlanet(Ararat);
+      planetList.addPlanet(Mercury);
+      planetList.addPlanet(Venus);
+      planetList.addPlanet(Earth);
+      planetList.addPlanet(Luna);
+      planetList.addPlanet(Mars);
+      planetList.addPlanet(Jupiter);
+      planetList.addPlanet(Saturn);
+      planetList.addPlanet(Uranus);
+      planetList.addPlanet(Neptune);
+      
+      // Updates player velocity to account for gravity
+      player.setVelocity(planetList.getVelocity());
       
 
       return scene;
