@@ -63,7 +63,7 @@ export class Star {
         
         // allows for light to fade with distance
         this.pointLight.falloffType = BABYLON.Light.FALLOFF_PHYSICAL;
-        this.pointLight.range = this.habitableZone * 10;
+        this.pointLight.range = this.habitableZone * 20;
     }
 	
 	
@@ -119,8 +119,28 @@ export class Star {
         		newLightRes = 0;
         	}
         	this.volLightRes = newLightRes;
-        	console.log(this.volLightRes);
+        	//console.log(this.volLightRes);
         });
+    }
+    
+    
+    // Physics related functions
+    setMass(starRadius, surfaceGravity) {
+    	// Gravity Variables
+		const gConstant = 0.000000000067
+		this.starMass = (surfaceGravity * Math.pow(starRadius,2)) / gConstant;
+    }
+    
+    getMass() {
+    	return this.starMass;
+    }
+    
+    getRadius() {
+    	return this.starRadius;
+    }
+    
+    getLocation() {
+    	return this.starPosition;
     }
 	
 }
