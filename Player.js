@@ -15,7 +15,7 @@ export class Player {
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
-        const acceleration = 1.96; // Adjust acceleration as needed
+        this.acceleration = 1.96; // Adjust acceleration as needed
 
         // Initialize accumulation variables for acceleration
         this.velocityChangeAccumulator = new BABYLON.Vector3(0, 0, 0);
@@ -45,25 +45,24 @@ export class Player {
                 const right = BABYLON.Vector3.Cross(forward, BABYLON.Vector3.Up()).normalize();
                 const up = BABYLON.Vector3.Up(); // Y-axis direction for up and down movement
 
-                const acceleration = 1.96; // Adjust acceleration as needed
                 switch (event.key) {
                     case "w": // Accelerate forward
-                        this.velocity.addInPlace(forward.scale(acceleration));
+                        this.velocity.addInPlace(forward.scale(this.acceleration));
                         break;
                     case "s": // Accelerate backward
-                        this.velocity.addInPlace(forward.scale(-acceleration));
+                        this.velocity.addInPlace(forward.scale(-this.acceleration));
                         break;
                     case "a": // Accelerate left
-                        this.velocity.addInPlace(right.scale(acceleration));
+                        this.velocity.addInPlace(right.scale(this.acceleration));
                         break;
                     case "d": // Accelerate right
-                        this.velocity.addInPlace(right.scale(-acceleration));
+                        this.velocity.addInPlace(right.scale(-this.acceleration));
                         break;
                     case "r": // Move up
-                        this.velocity.addInPlace(up.scale(acceleration));
+                        this.velocity.addInPlace(up.scale(this.acceleration));
                         break;
                     case "f": // Move down
-                        this.velocity.addInPlace(up.scale(-acceleration));
+                        this.velocity.addInPlace(up.scale(-this.acceleration));
                         break;
                         
                     case " ": // Space bar pressed
@@ -71,20 +70,23 @@ export class Player {
                             this.isBoosting = true;
                             this.originalVelocity = this.velocity.clone(); // Store the original velocity
                             this.velocity.scaleInPlace(100); // Boost velocity by 100x
+                            this.acceleration = 200;
                         }
                         break;
                 }
             }
             
-            // Check for key release
-            window.addEventListener("keyup", (event) => {
-                if (event.key === " " && this.isBoosting) { // Space bar released
-                    this.velocity = this.originalVelocity.clone(); // Revert to original velocity
-                    this.isBoosting = false;
-                }
-            });
-            
         });
+            
+        // Check for key release
+        window.addEventListener("keyup", (event) => {
+            if (event.key === " " && this.isBoosting) { // Space bar released
+                this.velocity = this.originalVelocity.clone(); // Revert to original velocity
+                this.isBoosting = false;
+                this.acceleration = 1.96;
+            }
+        });
+
 
         // Create displays for speed and acceleration
         this.createVelocityDisplay();
