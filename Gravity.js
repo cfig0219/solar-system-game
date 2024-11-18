@@ -36,6 +36,10 @@ export class Gravity {
     setVelocity(newVelocity) {
     	this.velocity = newVelocity;
     }
+    
+    resetVelocity() {
+    	this.velocity = new BABYLON.Vector3(0, 0, 0);
+    }
 	
     // Loops through list of planets to obtain gravity center
     updateGravity() {
