@@ -14,10 +14,12 @@ export class Planet {
         this.planetTexture = new BABYLON.Texture('Textures/Eden/EdenMap.png', scene);
         this.landTexture = new BABYLON.Texture('Textures/Eden/EdenLand.png', scene);
         this.cloudTexture = new BABYLON.Texture('Textures/Clouds/EarthClouds.png', scene);
+        
         this.atmosphereOpacity = 0.27;
         this.atmosphereColor = new BABYLON.Color3(0.5, 0.7, 1);
         this.cloudColor = new BABYLON.Color3(1, 1, 1);
         this.scene = scene;
+        this.planetName = "";
 
         // Initialize planet layers
         this.createBaseLayer();
@@ -140,7 +142,7 @@ export class Planet {
     	this.cloudLayer.material.diffuseTexture = this.cloudTexture;
     }
     
-    // Functions to alter atmosphere and cloud colors
+    // Functions to planet's visuals
     setAtmosphereColor(newAtmosphereColor) {
     	this.atmosphereColor = newAtmosphereColor;
     	this.atmosphere.material.diffuseColor = this.atmosphereColor;
@@ -156,7 +158,6 @@ export class Planet {
     	this.atmosphere.material.alpha = newOpacity;
     }
     
-    // Sets the planet's reflective color and glow
     setReflection(newSpecularColor) {
     	this.sphere.material.specularColor = newSpecularColor;
     }
@@ -183,5 +184,13 @@ export class Planet {
     
     getLocation() {
     	return this.planetLocation;
+    }
+    
+    setName(name) {
+    	this.planetName = name;
+    }
+    
+    getName() {
+    	return this.planetName;
     }
 }
