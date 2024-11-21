@@ -83,7 +83,7 @@ export class Player {
             if (event.key === " " && this.isBoosting) { // Space bar released
                 this.velocity = this.originalVelocity.clone(); // Revert to original velocity
                 this.isBoosting = false;
-                this.acceleration = 1.96;
+                this.acceleration = 0.196;
             }
         });
 
