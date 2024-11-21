@@ -13,8 +13,7 @@ export class Gravity {
         this.planetMass = 1000000000;
         this.gravityCenter = new BABYLON.Vector3(0, 0, 0);
         this.currentPlanet = null;
-        this.gravityForce = 0.45;
-        this.surfaceGravity = this.gravityForce * 20;
+        this.gravityForce = 0.045;
         
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
@@ -56,8 +55,9 @@ export class Gravity {
             return 0;
         }
     
-        // Calculate acceleration due to gravity, divides by 20
-        const acceleration = (gConstant * mass / (distance * distance)) / 20;
+        // Calculate acceleration due to gravity, divides by 200
+        const acceleration = (gConstant * mass / (distance * distance)) / 200;
+        console.log(mass)
         
         return acceleration; // Acceleration in m/s²
     }
