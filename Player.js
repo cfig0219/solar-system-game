@@ -15,7 +15,7 @@ export class Player {
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
-        this.acceleration = 1.96; // Adjust acceleration as needed
+        this.acceleration = 0.196; // Adjust acceleration as needed
 
         // Initialize accumulation variables for acceleration
         this.velocityChangeAccumulator = new BABYLON.Vector3(0, 0, 0);
@@ -153,7 +153,7 @@ export class Player {
 
     // Function to calculate and display the current speed in meters per second
     displayVelocity() {
-        const speed = this.velocity.length(); // Magnitude of the velocity vector
+        const speed = (this.velocity.length()) * 10; // Magnitude of the velocity vector
         this.velocityDisplay.innerText = `Speed: ${speed.toFixed(2)} m/s`;
     }
     
@@ -169,7 +169,7 @@ export class Player {
 
         // If one second has passed, calculate and display acceleration
         if (this.accumulatedTime >= 1) {
-            const acceleration = this.velocityChangeAccumulator.length(); // Magnitude of accumulated change
+            const acceleration = this.velocityChangeAccumulator.length() * 10; // Magnitude of accumulated change
             this.accelerationDisplay.innerText = `Acceleration: ${acceleration.toFixed(2)} m/s²`;
 
             // Reset accumulator and time
