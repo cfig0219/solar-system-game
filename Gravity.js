@@ -8,7 +8,13 @@ export class Gravity {
         this.scene = scene;
         this.camera = camera;
         this.playerPosition = camera.position;
+        
+        this.planetDistance = 1000;
+        this.planetMass = 1000000000;
         this.gravityCenter = new BABYLON.Vector3(0, 0, 0);
+        this.currentPlanet = null;
+        this.gravityForce = 0.45;
+        this.surfaceGravity = this.gravityForce * 20;
         
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
@@ -17,7 +23,8 @@ export class Gravity {
         // Calls to apply gravity function
         this.applyGravity();
     }
-
+	
+	
     // Functions to add planets and get player position
     addPlanet(planet) {
         this.planetList.push(planet);
@@ -26,7 +33,6 @@ export class Gravity {
     currentPosition() {
         return this.playerPosition;
     }
-    
     
     // Functions to get and update velocity
     getVelocity() {
@@ -40,6 +46,22 @@ export class Gravity {
     resetVelocity() {
     	this.velocity = new BABYLON.Vector3(0, 0, 0);
     }
+    
+    // Calculates gravitational pull based on distance from planet
+    calculateGravity(distance, mass) {
+        const gConstant = 0.000000000067; // Gravitational constant in N·m²/kg²
+        
+        // Prevent division by zero for very close distances
+        if (distance <= 0) {
+            return 0;
+        }
+    
+        // Calculate acceleration due to gravity, divides by 20
+        const acceleration = (gConstant * mass / (distance * distance)) / 20;
+        
+        return acceleration; // Acceleration in m/s²
+    }
+    
 	
     // Loops through list of planets to obtain gravity center
     updateGravity() {
@@ -55,6 +77,10 @@ export class Gravity {
                 if (distance < closestDistance) {
                     closestDistance = distance;
                     closestPlanet = planetLocation;
+                    
+                    // Saves current planet variable and closest distance
+                    this.currentPlanet = currentPlanet;
+                    this.planetDistance = distance;
                 }
             });
 
@@ -65,18 +91,15 @@ export class Gravity {
         }
     }
     
-    
     // Applies gravity
     applyGravity() {
-        const acceleration = 0.45; // Adjust acceleration as needed
-    
         this.scene.onBeforeRenderObservable.add(() => {
             // Update the gravity center
             this.updateGravity();
     
             // Calculate the gravitational force
             let forward = this.gravityCenter.subtract(this.camera.position).normalize();
-            this.velocity.addInPlace(forward.scale(acceleration));
+            this.velocity.addInPlace(forward.scale(this.gravityForce));
     
             // Update camera position based on velocity
             this.camera.target.addInPlace(this.velocity);
@@ -84,6 +107,9 @@ export class Gravity {
             
             // Update previous velocity for the next frame
             this.previousVelocity.copyFrom(this.velocity);
+            
+            // Calculates the gravitational pull of the planet
+            this.gravityForce = this.calculateGravity(this.planetDistance, this.currentPlanet.getMass());
         });
     }
 }
