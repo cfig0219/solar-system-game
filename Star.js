@@ -17,6 +17,7 @@ export class Star {
         this.mainStar = false;
         this.scene = scene;
         this.camera = camera;
+        this.planetName = "";
         
         // Calculate the initial distance between the camera and the star
     	this.starDistance = BABYLON.Vector3.Distance(this.camera.position, this.starPosition);
@@ -141,6 +142,14 @@ export class Star {
     
     getLocation() {
     	return this.starPosition;
+    }
+    
+    setName(name) {
+    	this.planetName = name;
+    }
+    
+    getName() {
+    	return this.planetName;
     }
 	
 }
