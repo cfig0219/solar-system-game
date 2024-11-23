@@ -4,6 +4,7 @@ export class Player {
      */
     constructor(camera, scene) {
         this.camera = camera;
+        this.scene = scene;
         this.camera.maxZ = 1200000000000;
         this.camera.minZ = 50; // Prevents jittering of layers when adjusted for distance
 
@@ -16,7 +17,125 @@ export class Player {
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
         this.acceleration = 0.196; // Adjust acceleration as needed
+        
+        // Calls function to initialize player controls
+        this.setButtons();
+        this.setControls();
+    }
+    
+    // Initializes buttons
+    setButtons() {
+        // Left side buttons
+        const buttonContainer = document.createElement("div");
+        buttonContainer.style.position = "absolute";
+        buttonContainer.style.bottom = "20%";
+        buttonContainer.style.left = "120px";
+        buttonContainer.style.display = "flex";
+        buttonContainer.style.flexDirection = "column";
+        document.body.appendChild(buttonContainer);
+        
+        // X and Y offsets for positioning buttons
+        const buttonOffsets = [
+            { x: 0, y: 0 },  // Top button
+            { x: 0, y: 80 },  // Bottom button
+            { x: -70, y: -50 }, // Left button
+            { x: 70, y: -110 },  // Right button
+        ];
+        
+        // Button displays
+        const buttonTexts = ["forward", "back", "left", "right"];
+    
+        for (let i = 0; i < 4; i++) {
+            const button = document.createElement("button");
+            button.innerText = buttonTexts[i];
+            button.style.width = "60px";
+            button.style.height = "60px";
+            button.style.backgroundColor = "blue";
+            button.style.transform = `translate(${buttonOffsets[i].x}px, ${buttonOffsets[i].y}px)`;
+            button.style.color = "white";
+            button.style.border = "none";
+            button.style.borderRadius = "5px";
+            button.style.cursor = "pointer";
+            button.style.fontFamily = "Arial, sans-serif";
+            button.style.fontSize = "14px";
+    
+            // Add click event listener to each button
+            button.addEventListener("click", () => {
+                console.log("clicked");
+            });
+    
+            buttonContainer.appendChild(button);
+        }
+        
+        // Right side buttons
+        const buttonContainer2 = document.createElement("div");
+        buttonContainer2.style.position = "absolute";
+        buttonContainer2.style.bottom = "25%";
+        buttonContainer2.style.right = "100px";
+        buttonContainer2.style.display = "flex";
+        buttonContainer2.style.gap = "10px";
+        buttonContainer2.style.flexDirection = "column";
+        document.body.appendChild(buttonContainer2);
+        
+        const buttonTexts2 = ["up", "rcs", "down"];
+        
+        for (let i = 0; i < 3; i++) {
+            const button = document.createElement("button");
+            button.innerText = buttonTexts2[i];
+            button.style.width = "60px";
+            button.style.height = "60px";
+            button.style.backgroundColor = "blue";
+            button.style.color = "white";
+            button.style.border = "none";
+            button.style.borderRadius = "5px";
+            button.style.cursor = "pointer";
+            button.style.fontFamily = "Arial, sans-serif";
+            button.style.fontSize = "14px";
+    
+            // Add click event listener to each button
+            button.addEventListener("click", () => {
+                console.log("clicked");
+            });
+    
+            buttonContainer2.appendChild(button);
+        }
+        
+        // Bottom buttons
+        const buttonContainer3 = document.createElement("div");
+        buttonContainer3.style.position = "absolute";
+        buttonContainer3.style.bottom = "5%";
+        buttonContainer3.style.left = "35%";
+        buttonContainer3.style.display = "flex";
+        buttonContainer3.style.gap = "30px";
+        document.body.appendChild(buttonContainer3);
+        
+        const buttonTexts3 = ["drill", "warp"];
+        
+        for (let i = 0; i < 2; i++) {
+            const button = document.createElement("button");
+            button.innerText = buttonTexts3[i];
+            button.style.width = "200px";
+            button.style.height = "60px";
+            button.style.backgroundColor = "blue";
+            button.style.color = "white";
+            button.style.border = "none";
+            button.style.borderRadius = "5px";
+            button.style.cursor = "pointer";
+            button.style.fontFamily = "Arial, sans-serif";
+            button.style.fontSize = "14px";
+    
+            // Add click event listener to each button
+            button.addEventListener("click", () => {
+                console.log("clicked");
+            });
+    
+            buttonContainer3.appendChild(button);
+        }
+    }
 
+    
+    // Sets the keyboard and button controls to move player
+    setControls() {
         // Initialize accumulation variables for acceleration
         this.velocityChangeAccumulator = new BABYLON.Vector3(0, 0, 0);
         this.accumulatedTime = 0;
@@ -46,22 +165,28 @@ export class Player {
                 const up = BABYLON.Vector3.Up(); // Y-axis direction for up and down movement
 
                 switch (event.key) {
-                    case "w": // Accelerate forward
+                    case "w":
+                    case "W": // Accelerate forward
                         this.velocity.addInPlace(forward.scale(this.acceleration));
                         break;
-                    case "s": // Accelerate backward
+                    case "s":
+                    case "S": // Accelerate backward
                         this.velocity.addInPlace(forward.scale(-this.acceleration));
                         break;
-                    case "a": // Accelerate left
+                    case "a":
+                    case "A": // Accelerate left
                         this.velocity.addInPlace(right.scale(this.acceleration));
                         break;
-                    case "d": // Accelerate right
+                    case "d":
+                    case "D": // Accelerate right
                         this.velocity.addInPlace(right.scale(-this.acceleration));
                         break;
-                    case "r": // Move up
+                    case "r":
+                    case "R": // Move up
                         this.velocity.addInPlace(up.scale(this.acceleration));
                         break;
-                    case "f": // Move down
+                    case "f":
+                    case "F": // Move down
                         this.velocity.addInPlace(up.scale(-this.acceleration));
                         break;
                         
@@ -77,7 +202,7 @@ export class Player {
             }
             
         });
-            
+        
         // Check for key release
         window.addEventListener("keyup", (event) => {
             if (event.key === " " && this.isBoosting) { // Space bar released
@@ -93,8 +218,8 @@ export class Player {
         this.createAccelerationDisplay();
 
         // Update camera position and calculate acceleration in each render loop
-        scene.onBeforeRenderObservable.add(() => {
-            const deltaTime = scene.getEngine().getDeltaTime() / 1000; // Time in seconds
+        this.scene.onBeforeRenderObservable.add(() => {
+            const deltaTime = this.scene.getEngine().getDeltaTime() / 1000; // Time in seconds
 
             // Update camera position based on velocity
             this.camera.target.addInPlace(this.velocity);
@@ -157,7 +282,6 @@ export class Player {
         this.velocityDisplay.innerText = `Speed: ${speed.toFixed(2)} m/s`;
     }
     
-
     // Function to accumulate velocity changes and display average acceleration per second
     accumulateAcceleration(deltaTime) {
         // Calculate the change in velocity for this frame
@@ -177,4 +301,6 @@ export class Player {
             this.accumulatedTime = 0;
         }
     }
+    
+    // Function to add clickable buttons
 }
