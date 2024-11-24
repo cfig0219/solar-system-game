@@ -14,6 +14,7 @@ export class Gravity {
         this.gravityCenter = new BABYLON.Vector3(0, 0, 0);
         this.currentPlanet = null;
         this.gravityForce = 0.045;
+        this.frameRate = 20;
         
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
@@ -55,10 +56,8 @@ export class Gravity {
             return 0;
         }
     
-        // Calculate acceleration due to gravity, divides by 200
-        const acceleration = (gConstant * mass / (distance * distance)) / 200;
-        console.log(mass)
-        
+        // Calculate acceleration due to gravity, divides by frame rate x 10
+        const acceleration = (gConstant * mass / (distance * distance)) / (this.frameRate * 10); 
         return acceleration; // Acceleration in m/s²
     }
     
@@ -93,6 +92,10 @@ export class Gravity {
     
     // Applies gravity
     applyGravity() {
+        // calculates frame rate
+        let frames = 0;
+        let lastUpdateTime = 0;
+    
         this.scene.onBeforeRenderObservable.add(() => {
             // Update the gravity center
             this.updateGravity();
@@ -110,6 +113,18 @@ export class Gravity {
             
             // Calculates the gravitational pull of the planet
             this.gravityForce = this.calculateGravity(this.planetDistance, this.currentPlanet.getMass());
+            
+            frames = frames + 1;
+            
+            const currentTime = performance.now() / 1000; // Current time in seconds
+            const timeElapsed = currentTime - lastUpdateTime;
+            
+            if (timeElapsed >= 1) {
+                // Saves current frame rate value
+                this.frameRate = frames;
+                frames = 0;
+                lastUpdateTime = currentTime;
+            }
         });
     }
 }
