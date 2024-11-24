@@ -31,6 +31,7 @@
     import { Rings } from './Rings.js';
     import { Player } from './Player.js';
     import { Gravity } from './Gravity.js';
+    import { Base } from './Base.js';
     
     const canvas = document.getElementById("renderCanvas");
     const createScene = async (engine) => {
@@ -192,6 +193,10 @@
       Luna.setTexture(new BABYLON.Texture('Textures/Sol/Earth/LunaMap.png', scene));
       Luna.setMass(LunaRadius, 3.98);
       Luna.setName("luna");
+      
+      // Creates base
+      const baseLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance - 8000);
+      const homeBase = new Base(baseLocation, scene, camera);
       
       // Creates Mercury
       const MercuryRadius = 1344;
