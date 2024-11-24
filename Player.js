@@ -50,7 +50,7 @@ export class Player {
             button.innerText = buttonTexts[i];
             button.style.width = "60px";
             button.style.height = "60px";
-            button.style.backgroundColor = "blue";
+            button.style.backgroundColor = "#006666";
             button.style.transform = `translate(${buttonOffsets[i].x}px, ${buttonOffsets[i].y}px)`;
             button.style.color = "white";
             button.style.border = "none";
@@ -58,12 +58,6 @@ export class Player {
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
-    
-            // Add click event listener to each button
-            button.addEventListener("click", () => {
-                console.log("clicked");
-            });
-    
             buttonContainer.appendChild(button);
         }
         
@@ -84,19 +78,13 @@ export class Player {
             button.innerText = buttonTexts2[i];
             button.style.width = "60px";
             button.style.height = "60px";
-            button.style.backgroundColor = "blue";
+            button.style.backgroundColor = "#006666";
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
-    
-            // Add click event listener to each button
-            button.addEventListener("click", () => {
-                console.log("clicked");
-            });
-    
             buttonContainer2.appendChild(button);
         }
         
@@ -116,19 +104,13 @@ export class Player {
             button.innerText = buttonTexts3[i];
             button.style.width = "200px";
             button.style.height = "60px";
-            button.style.backgroundColor = "blue";
+            button.style.backgroundColor = "#006666";
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
-    
-            // Add click event listener to each button
-            button.addEventListener("click", () => {
-                console.log("clicked");
-            });
-    
             buttonContainer3.appendChild(button);
         }
     }
@@ -301,6 +283,4 @@ export class Player {
             this.accumulatedTime = 0;
         }
     }
-    
-    // Function to add clickable buttons
 }
