@@ -50,7 +50,7 @@ export class Player {
             button.innerText = buttonTexts[i];
             button.style.width = "60px";
             button.style.height = "60px";
-            button.style.backgroundColor = "#006666";
+            button.style.backgroundColor = "#008000";
             button.style.transform = `translate(${buttonOffsets[i].x}px, ${buttonOffsets[i].y}px)`;
             button.style.color = "white";
             button.style.border = "none";
