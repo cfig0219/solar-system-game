@@ -78,7 +78,7 @@ export class Player {
             button.innerText = buttonTexts2[i];
             button.style.width = "60px";
             button.style.height = "60px";
-            button.style.backgroundColor = "#006666";
+            button.style.backgroundColor = "#008000";
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
