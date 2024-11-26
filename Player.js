@@ -21,6 +21,7 @@ export class Player {
         // Calls function to initialize player controls
         this.setButtons();
         this.setControls();
+        this.createRocket();
     }
     
     // Initializes buttons
@@ -29,7 +30,7 @@ export class Player {
         const buttonContainer = document.createElement("div");
         buttonContainer.style.position = "absolute";
         buttonContainer.style.bottom = "20%";
-        buttonContainer.style.left = "120px";
+        buttonContainer.style.left = "10%";
         buttonContainer.style.display = "flex";
         buttonContainer.style.flexDirection = "column";
         document.body.appendChild(buttonContainer);
@@ -58,6 +59,7 @@ export class Player {
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
+            button.style.zIndex = "1";
             buttonContainer.appendChild(button);
         }
         
@@ -65,7 +67,7 @@ export class Player {
         const buttonContainer2 = document.createElement("div");
         buttonContainer2.style.position = "absolute";
         buttonContainer2.style.bottom = "25%";
-        buttonContainer2.style.right = "100px";
+        buttonContainer2.style.right = "5%";
         buttonContainer2.style.display = "flex";
         buttonContainer2.style.gap = "10px";
         buttonContainer2.style.flexDirection = "column";
@@ -85,6 +87,7 @@ export class Player {
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
+            button.style.zIndex = "1";
             buttonContainer2.appendChild(button);
         }
         
@@ -92,7 +95,7 @@ export class Player {
         const buttonContainer3 = document.createElement("div");
         buttonContainer3.style.position = "absolute";
         buttonContainer3.style.bottom = "5%";
-        buttonContainer3.style.left = "35%";
+        buttonContainer3.style.left = "30%";
         buttonContainer3.style.display = "flex";
         buttonContainer3.style.gap = "30px";
         document.body.appendChild(buttonContainer3);
@@ -111,6 +114,7 @@ export class Player {
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
+            button.style.zIndex = "1";
             buttonContainer3.appendChild(button);
         }
     }
@@ -240,6 +244,7 @@ export class Player {
         this.velocityDisplay.style.borderRadius = "5px";
         this.velocityDisplay.style.fontFamily = "Arial, sans-serif";
         this.velocityDisplay.style.fontSize = "14px";
+        this.velocityDisplay.style.zIndex = "1";
         document.body.appendChild(this.velocityDisplay);
     }
 
@@ -255,6 +260,7 @@ export class Player {
         this.accelerationDisplay.style.borderRadius = "5px";
         this.accelerationDisplay.style.fontFamily = "Arial, sans-serif";
         this.accelerationDisplay.style.fontSize = "14px";
+        this.accelerationDisplay.style.zIndex = "1";
         document.body.appendChild(this.accelerationDisplay);
     }
 
@@ -283,4 +289,26 @@ export class Player {
             this.accumulatedTime = 0;
         }
     }
+    
+    
+    // Functions to initialize rocket and track resource consumption
+    createRocket() {
+        // Create a div for the cockpit overlay
+        const cockpitOverlay = document.createElement("div");
+        cockpitOverlay.style.position = "absolute";
+        cockpitOverlay.style.top = "0";
+        cockpitOverlay.style.left = "0";
+        cockpitOverlay.style.width = "100%";
+        cockpitOverlay.style.height = "170%";
+        cockpitOverlay.style.backgroundImage = "url('Textures/Rocket/cockpit.png')";
+        cockpitOverlay.style.backgroundSize = "cover"; // Ensures the image covers the entire screen
+        cockpitOverlay.style.backgroundRepeat = "no-repeat";
+        cockpitOverlay.style.backgroundPosition = `center calc(50% - 200px)`; // Center horizontally, move 300px up
+        cockpitOverlay.style.pointerEvents = "none"; // Prevents interaction with the cockpit overlay
+        cockpitOverlay.style.zIndex = "0"; // Lower z-index to place it behind other elements
+    
+        // Add the overlay to the document body
+        document.body.appendChild(cockpitOverlay);
+    }
+    
 }
