@@ -6,11 +6,14 @@ export class Rocket {
      * @param {BABYLON.camera} camera - The camera to adjust render distance
      */
     constructor(rocketLocation, scene, camera) {
-        this.rocketSize = 20;
+        this.rocketSize = 15;
         this.rocketLocation = rocketLocation;
         this.rocketMass = 20;
         this.rocketTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
         this.scene = scene;
+        
+        // Resource parameters
+        this.deltaV = 676;
 
         // Create a cube (box)
         this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: this.rocketSize * 2 }, this.scene);
@@ -51,5 +54,23 @@ export class Rocket {
     setRotation(yRotation) {
         this.rotation = yRotation;
         this.cube.rotation.y = yRotation;
+    }
+    
+    
+    // Resource related functions
+    setDeltaV(change) {
+        this.deltaV = this.deltaV - change;
+        
+        // if delta V is less than zero
+        let currentDeltaV = this.deltaV;
+        if (currentDeltaV < 0) {
+            this.deltaV = 0;
+        }
+        
+        console.log(this.deltaV)
+    }
+    
+    getDeltaV() {
+        return this.deltaV;
     }
 }
