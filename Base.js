@@ -1,23 +1,24 @@
 export class Base {
     /**
      * Initializes the Base class
-     * @param {BABYLON.Vector3} planetLocation - Position in 3D space
+     * @param {BABYLON.Vector3} baseLocation - Position in 3D space
      * @param {BABYLON.Scene} scene - The Babylon scene
      * @param {BABYLON.camera} camera - The camera to adjust render distance
      */
-    constructor(planetLocation, scene, camera) {
-        this.planetRadius = 100;
-        this.planetLocation = planetLocation;
-        this.planetTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
+    constructor(baseLocation, scene, camera) {
+        this.baseRadius = 100;
+        this.baseLocation = baseLocation;
+        this.baseMass = 1000;
+        this.baseTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
         this.scene = scene;
-        this.planetName = "";
+        this.baseName = "";
 
         // Create a cube (box)
-        this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: this.planetRadius * 2 }, this.scene);
+        this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: this.baseRadius * 2 }, this.scene);
         
         // Create a gray material
         const cubeMaterial = new BABYLON.StandardMaterial("cubeMaterial", this.scene);
-        cubeMaterial.diffuseTexture = this.planetTexture;
+        cubeMaterial.diffuseTexture = this.baseTexture;
         cubeMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove highlights
         cubeMaterial.emissiveColor = new BABYLON.Color3(0, 0, 0); // No self-illumination
         
@@ -25,7 +26,7 @@ export class Base {
         this.cube.material = cubeMaterial;
 
         // Set cube position
-        this.cube.position = this.planetLocation;
+        this.cube.position = this.baseLocation;
         this.cube.renderingGroupId = 1;
     }
 	
@@ -36,18 +37,23 @@ export class Base {
     }
     
     getMass() {
-    	return this.planetMass;
+    	return this.baseMass;
     }
     
     getLocation() {
-    	return this.planetLocation;
+    	return this.baseLocation;
+    }
+    
+    setLocation(newLocation) {
+        this.baseLocation = newLocation;
+        this.cube.position = this.baseLocation;
     }
     
     setName(name) {
-    	this.planetName = name;
+    	this.baseName = name;
     }
     
     getName() {
-    	return this.planetName;
+    	return this.baseName;
     }
 }
