@@ -1,3 +1,5 @@
+import { Rocket } from './Rocket.js';
+
 export class Player {
     /**
      * Initializes the Player class
@@ -6,7 +8,7 @@ export class Player {
         this.camera = camera;
         this.scene = scene;
         this.camera.maxZ = 1200000000000;
-        this.camera.minZ = 50; // Prevents jittering of layers when adjusted for distance
+        this.camera.minZ = 5; // Prevents jittering of layers when adjusted for distance
 
         // Make zoom 10x faster for mouse wheel (PC)
         this.camera.wheelDeltaPercentage = 0.01; // Default is 0.001, so this is 10x faster
@@ -21,7 +23,13 @@ export class Player {
         // Calls function to initialize player controls
         this.setButtons();
         this.setControls();
-        this.createRocket();
+        
+        // Imports rocket class
+        const SolRadius = 58178.0;
+        const SolDistance = 21040000.0 + SolRadius;
+        this.rocketLocation = new BABYLON.Vector3(SolDistance + 299200.0 - 4500.0, -15.0, SolDistance + 13000.0);
+        this.rocket = new Rocket(this.rocketLocation, scene, camera);
+        //this.createRocket();
     }
     
     // Initializes buttons
@@ -208,8 +216,14 @@ export class Player {
             const deltaTime = this.scene.getEngine().getDeltaTime() / 1000; // Time in seconds
 
             // Update camera position based on velocity
-            this.camera.target.addInPlace(this.velocity);
-            this.camera.position.addInPlace(this.velocity);
+            //this.camera.target.addInPlace(this.velocity);
+            //this.camera.position.addInPlace(this.velocity);
+            this.rocketLocation = new BABYLON.Vector3(
+        		this.rocketLocation.x + this.velocity.x,
+        		this.rocketLocation.y + this.velocity.y,
+        		this.rocketLocation.z + this.velocity.z
+    		);
+            this.rocket.setLocation(this.rocketLocation);
 
             // Display current speed
             this.displayVelocity();
