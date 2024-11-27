@@ -19,6 +19,7 @@ export class Player {
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
         this.acceleration = 0.196; // Adjust acceleration as needed
+        this.accelerationFactor = 10; // Scale of acceleration
         
         // Calls function to initialize player controls
         this.setButtons();
@@ -29,7 +30,6 @@ export class Player {
         const SolDistance = 21040000.0 + SolRadius;
         this.rocketLocation = new BABYLON.Vector3(SolDistance + 299200.0 - 4500.0, -15.0, SolDistance + 13000.0);
         this.rocket = new Rocket(this.rocketLocation, scene, camera);
-        //this.createRocket();
     }
     
     // Initializes buttons
@@ -162,26 +162,33 @@ export class Player {
                     case "w":
                     case "W": // Accelerate forward
                         this.velocity.addInPlace(forward.scale(this.acceleration));
+                        // Sets the change in delta V
+                        this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "s":
                     case "S": // Accelerate backward
                         this.velocity.addInPlace(forward.scale(-this.acceleration));
+                        this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "a":
                     case "A": // Accelerate left
                         this.velocity.addInPlace(right.scale(this.acceleration));
+                        this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "d":
                     case "D": // Accelerate right
                         this.velocity.addInPlace(right.scale(-this.acceleration));
+                        this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "r":
                     case "R": // Move up
                         this.velocity.addInPlace(up.scale(this.acceleration));
+                        this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "f":
                     case "F": // Move down
                         this.velocity.addInPlace(up.scale(-this.acceleration));
+                        this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                         
                     case " ": // Space bar pressed
@@ -210,6 +217,7 @@ export class Player {
         // Create displays for speed and acceleration
         this.createVelocityDisplay();
         this.createAccelerationDisplay();
+        this.createDeltaVDisplay();
 
         // Update camera position and calculate acceleration in each render loop
         this.scene.onBeforeRenderObservable.add(() => {
@@ -225,8 +233,9 @@ export class Player {
     		);
             this.rocket.setLocation(this.rocketLocation);
 
-            // Display current speed
+            // Display current speed and deltaV
             this.displayVelocity();
+            this.displayDeltaV();
 
             // Accumulate velocity change and calculate acceleration every second
             this.accumulateAcceleration(deltaTime);
@@ -277,11 +286,34 @@ export class Player {
         this.accelerationDisplay.style.zIndex = "1";
         document.body.appendChild(this.accelerationDisplay);
     }
+    
+    // Creates delta V display
+    createDeltaVDisplay() {
+        this.deltaVDisplay = document.createElement("div");
+        this.deltaVDisplay.style.position = "absolute";
+        this.deltaVDisplay.style.bottom = "70px";
+        this.deltaVDisplay.style.left = "10px";
+        this.deltaVDisplay.style.color = "white";
+        this.deltaVDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.deltaVDisplay.style.padding = "5px";
+        this.deltaVDisplay.style.borderRadius = "5px";
+        this.deltaVDisplay.style.fontFamily = "Arial, sans-serif";
+        this.deltaVDisplay.style.fontSize = "14px";
+        this.deltaVDisplay.style.zIndex = "1";
+        document.body.appendChild(this.deltaVDisplay);
+    }
+    
 
     // Function to calculate and display the current speed in meters per second
     displayVelocity() {
-        const speed = (this.velocity.length()) * 10; // Magnitude of the velocity vector
+        const speed = (this.velocity.length()) * this.accelerationFactor; // Magnitude of the velocity vector
         this.velocityDisplay.innerText = `Speed: ${speed.toFixed(2)} m/s`;
+    }
+    
+    // Displays delta V
+    displayDeltaV() {
+        const deltaV = this.rocket.getDeltaV();
+        this.deltaVDisplay.innerText = `Delta-V: ${deltaV.toFixed(2)} m/s`;
     }
     
     // Function to accumulate velocity changes and display average acceleration per second
@@ -295,7 +327,7 @@ export class Player {
 
         // If one second has passed, calculate and display acceleration
         if (this.accumulatedTime >= 1) {
-            const acceleration = this.velocityChangeAccumulator.length() * 10; // Magnitude of accumulated change
+            const acceleration = this.velocityChangeAccumulator.length() * this.accelerationFactor; // Magnitude of accumulated change
             this.accelerationDisplay.innerText = `Acceleration: ${acceleration.toFixed(2)} m/s²`;
 
             // Reset accumulator and time
@@ -303,26 +335,4 @@ export class Player {
             this.accumulatedTime = 0;
         }
     }
-    
-    
-    // Functions to initialize rocket and track resource consumption
-    createRocket() {
-        // Create a div for the cockpit overlay
-        const cockpitOverlay = document.createElement("div");
-        cockpitOverlay.style.position = "absolute";
-        cockpitOverlay.style.top = "0";
-        cockpitOverlay.style.left = "0";
-        cockpitOverlay.style.width = "100%";
-        cockpitOverlay.style.height = "170%";
-        cockpitOverlay.style.backgroundImage = "url('Textures/Rocket/cockpit.png')";
-        cockpitOverlay.style.backgroundSize = "cover"; // Ensures the image covers the entire screen
-        cockpitOverlay.style.backgroundRepeat = "no-repeat";
-        cockpitOverlay.style.backgroundPosition = `center calc(50% - 200px)`; // Center horizontally, move 300px up
-        cockpitOverlay.style.pointerEvents = "none"; // Prevents interaction with the cockpit overlay
-        cockpitOverlay.style.zIndex = "0"; // Lower z-index to place it behind other elements
-    
-        // Add the overlay to the document body
-        document.body.appendChild(cockpitOverlay);
-    }
-    
 }
