@@ -66,8 +66,6 @@ export class Rocket {
         if (currentDeltaV < 0) {
             this.deltaV = 0;
         }
-        
-        console.log(this.deltaV)
     }
     
     getDeltaV() {
