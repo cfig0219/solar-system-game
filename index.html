@@ -180,7 +180,7 @@
 	  Earth.setName("earth");
       
       // Camera parameters
-      const cameraLocation = new BABYLON.Vector3(SolDistance + 299200 - 4500, 0, SolDistance + 13000);; // setting it equal to planet moves planet
+      const cameraLocation = new BABYLON.Vector3(SolDistance + 299200 - 4500, 0, SolDistance + 13000); // setting it equal to planet moves planet
       camera.setTarget(cameraLocation);
       camera.alpha = 2.1;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.6;   // Vertical rotation (90 degrees)
@@ -297,6 +297,7 @@
       // Updates player velocity to account for gravity
       scene.onBeforeRenderObservable.add(() => {
             player.setVelocity(planetList.getVelocity());
+            player.setPlanet(planetList.getPlanet());
       });
       
       // Resets gravitational velocity to zero when spacebar is pressed
