@@ -1,4 +1,6 @@
+// Imports rocket and display classes
 import { Rocket } from './Rocket.js';
+import { Display } from './Display.js';
 
 export class Player {
     /**
@@ -25,11 +27,17 @@ export class Player {
         this.setButtons();
         this.setControls();
         
-        // Imports rocket class
+        // Creates rocket class object
         const SolRadius = 58178.0;
         const SolDistance = 21040000.0 + SolRadius;
         this.rocketLocation = new BABYLON.Vector3(SolDistance + 299200.0 - 4500.0, -15.0, SolDistance + 13000.0);
         this.rocket = new Rocket(this.rocketLocation, scene, camera);
+        
+        // Creates performance parameters and resource display
+        this.display = new Display(scene, camera);
+        
+        // Tracks current planet
+        this.currentPlanet = null;
     }
     
     // Initializes buttons
@@ -129,11 +137,7 @@ export class Player {
 
     
     // Sets the keyboard and button controls to move player
-    setControls() {
-        // Initialize accumulation variables for acceleration
-        this.velocityChangeAccumulator = new BABYLON.Vector3(0, 0, 0);
-        this.accumulatedTime = 0;
-        
+    setControls() {        
         // Initialize variables for click rate capping
         this.clickCount = 0;
         this.lastClickTime = 0;
@@ -214,11 +218,6 @@ export class Player {
         });
 
 
-        // Create displays for speed and acceleration
-        this.createVelocityDisplay();
-        this.createAccelerationDisplay();
-        this.createDeltaVDisplay();
-
         // Update camera position and calculate acceleration in each render loop
         this.scene.onBeforeRenderObservable.add(() => {
             const deltaTime = this.scene.getEngine().getDeltaTime() / 1000; // Time in seconds
@@ -234,11 +233,11 @@ export class Player {
             this.rocket.setLocation(this.rocketLocation);
 
             // Display current speed and deltaV
-            this.displayVelocity();
-            this.displayDeltaV();
+            this.display.displayVelocity(this.velocity, this.accelerationFactor);
+            this.display.displayDeltaV(this.rocket);
 
             // Accumulate velocity change and calculate acceleration every second
-            this.accumulateAcceleration(deltaTime);
+            this.display.accumulateAcceleration(deltaTime, this.velocity, this.accelerationFactor, this.previousVelocity);
             
             // Update previous velocity for the next frame
             this.previousVelocity.copyFrom(this.velocity);
@@ -246,7 +245,7 @@ export class Player {
     }
     
     
-    // Functions to get and update velocity
+    // Functions to get and update velocity and current planet
     getVelocity() {
     	return this.velocity;
     }
@@ -254,85 +253,9 @@ export class Player {
     setVelocity(newVelocity) {
     	this.velocity = newVelocity;
     }
-	
-    // Function to create a DOM element to display the velocity
-    createVelocityDisplay() {
-        this.velocityDisplay = document.createElement("div");
-        this.velocityDisplay.style.position = "absolute";
-        this.velocityDisplay.style.bottom = "40px";
-        this.velocityDisplay.style.left = "10px";
-        this.velocityDisplay.style.color = "white";
-        this.velocityDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-        this.velocityDisplay.style.padding = "5px";
-        this.velocityDisplay.style.borderRadius = "5px";
-        this.velocityDisplay.style.fontFamily = "Arial, sans-serif";
-        this.velocityDisplay.style.fontSize = "14px";
-        this.velocityDisplay.style.zIndex = "1";
-        document.body.appendChild(this.velocityDisplay);
-    }
-
-    // Function to create a DOM element to display the acceleration
-    createAccelerationDisplay() {
-        this.accelerationDisplay = document.createElement("div");
-        this.accelerationDisplay.style.position = "absolute";
-        this.accelerationDisplay.style.bottom = "10px";
-        this.accelerationDisplay.style.left = "10px";
-        this.accelerationDisplay.style.color = "white";
-        this.accelerationDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-        this.accelerationDisplay.style.padding = "5px";
-        this.accelerationDisplay.style.borderRadius = "5px";
-        this.accelerationDisplay.style.fontFamily = "Arial, sans-serif";
-        this.accelerationDisplay.style.fontSize = "14px";
-        this.accelerationDisplay.style.zIndex = "1";
-        document.body.appendChild(this.accelerationDisplay);
-    }
     
-    // Creates delta V display
-    createDeltaVDisplay() {
-        this.deltaVDisplay = document.createElement("div");
-        this.deltaVDisplay.style.position = "absolute";
-        this.deltaVDisplay.style.bottom = "70px";
-        this.deltaVDisplay.style.left = "10px";
-        this.deltaVDisplay.style.color = "white";
-        this.deltaVDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-        this.deltaVDisplay.style.padding = "5px";
-        this.deltaVDisplay.style.borderRadius = "5px";
-        this.deltaVDisplay.style.fontFamily = "Arial, sans-serif";
-        this.deltaVDisplay.style.fontSize = "14px";
-        this.deltaVDisplay.style.zIndex = "1";
-        document.body.appendChild(this.deltaVDisplay);
-    }
-    
-
-    // Function to calculate and display the current speed in meters per second
-    displayVelocity() {
-        const speed = (this.velocity.length()) * this.accelerationFactor; // Magnitude of the velocity vector
-        this.velocityDisplay.innerText = `Speed: ${speed.toFixed(2)} m/s`;
-    }
-    
-    // Displays delta V
-    displayDeltaV() {
-        const deltaV = this.rocket.getDeltaV();
-        this.deltaVDisplay.innerText = `Delta-V: ${deltaV.toFixed(2)} m/s`;
-    }
-    
-    // Function to accumulate velocity changes and display average acceleration per second
-    accumulateAcceleration(deltaTime) {
-        // Calculate the change in velocity for this frame
-        const velocityChange = this.velocity.subtract(this.previousVelocity);
-        
-        // Accumulate the change in velocity
-        this.velocityChangeAccumulator.addInPlace(velocityChange);
-        this.accumulatedTime += deltaTime;
-
-        // If one second has passed, calculate and display acceleration
-        if (this.accumulatedTime >= 1) {
-            const acceleration = this.velocityChangeAccumulator.length() * this.accelerationFactor; // Magnitude of accumulated change
-            this.accelerationDisplay.innerText = `Acceleration: ${acceleration.toFixed(2)} m/s²`;
-
-            // Reset accumulator and time
-            this.velocityChangeAccumulator.set(0, 0, 0);
-            this.accumulatedTime = 0;
-        }
+    setPlanet(planet) {
+        this.currentPlanet = planet;
+        console.log(this.currentPlanet);
     }
 }
