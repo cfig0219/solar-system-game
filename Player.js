@@ -196,6 +196,10 @@ export class Player {
                         this.velocity.addInPlace(up.scale(-this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
+                    case "m":
+                    case "M": // Mine resources
+                        this.resources.mineResources();
+                        break;
                         
                     case " ": // Space bar pressed
                         if (!this.isBoosting) {
