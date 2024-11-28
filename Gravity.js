@@ -29,6 +29,10 @@ export class Gravity {
     addPlanet(planet) {
         this.planetList.push(planet);
     }
+    
+    getPlanet() {
+        return this.currentPlanet;
+    }
 
     currentPosition() {
         return this.playerPosition;
