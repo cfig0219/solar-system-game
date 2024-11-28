@@ -1,6 +1,7 @@
 // Imports rocket and display classes
 import { Rocket } from './Rocket.js';
 import { Display } from './Display.js';
+import { Resources } from './Resources.js';
 
 export class Player {
     /**
@@ -38,6 +39,7 @@ export class Player {
         
         // Tracks current planet
         this.currentPlanet = null;
+        this.resources = new Resources(scene, camera);
     }
     
     // Initializes buttons
@@ -221,6 +223,10 @@ export class Player {
         // Update camera position and calculate acceleration in each render loop
         this.scene.onBeforeRenderObservable.add(() => {
             const deltaTime = this.scene.getEngine().getDeltaTime() / 1000; // Time in seconds
+            
+            // Determines resources based on current planet
+            this.resources.setPlanet(this.currentPlanet);
+            this.resources.getResources();
 
             // Update camera position based on velocity
             //this.camera.target.addInPlace(this.velocity);
@@ -256,6 +262,5 @@ export class Player {
     
     setPlanet(planet) {
         this.currentPlanet = planet;
-        console.log(this.currentPlanet);
     }
 }
