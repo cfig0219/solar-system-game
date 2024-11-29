@@ -13,7 +13,8 @@ export class Rocket {
         this.scene = scene;
         
         // Resource parameters
-        this.deltaV = 676;
+        this.deltaV = 676; // m/s of delta v
+        this.oreCapacity = 10000; // kg of ore
 
         // Create a cube (box)
         this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: this.rocketSize * 2 }, this.scene);
@@ -70,5 +71,9 @@ export class Rocket {
     
     getDeltaV() {
         return this.deltaV;
+    }
+    
+    getOreCapacity() {
+        return this.oreCapacity;
     }
 }
