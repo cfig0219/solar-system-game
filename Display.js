@@ -15,6 +15,11 @@ export class Display {
         this.createVelocityDisplay();
         this.createAccelerationDisplay();
         this.createDeltaVDisplay();
+        
+        // Create displays for resources
+        this.createResourcesDisplay();
+        this.createMassDisplay();
+        this.createValueDisplay();
     }
 	
     
@@ -97,5 +102,68 @@ export class Display {
             this.velocityChangeAccumulator.set(0, 0, 0);
             this.accumulatedTime = 0;
         }
+    }
+    
+    
+    // Display for current planet resources
+    createResourcesDisplay() {
+        this.resourcesDisplay = document.createElement("div");
+        this.resourcesDisplay.style.position = "absolute";
+        this.resourcesDisplay.style.bottom = "70px";
+        this.resourcesDisplay.style.right = "10px";
+        this.resourcesDisplay.style.color = "white";
+        this.resourcesDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.resourcesDisplay.style.padding = "5px";
+        this.resourcesDisplay.style.borderRadius = "5px";
+        this.resourcesDisplay.style.fontFamily = "Arial, sans-serif";
+        this.resourcesDisplay.style.fontSize = "14px";
+        this.resourcesDisplay.style.zIndex = "1";
+        document.body.appendChild(this.resourcesDisplay);
+    }
+
+    // Display for ore mass
+    createMassDisplay() {
+        this.massDisplay = document.createElement("div");
+        this.massDisplay.style.position = "absolute";
+        this.massDisplay.style.bottom = "40px";
+        this.massDisplay.style.right = "10px";
+        this.massDisplay.style.color = "white";
+        this.massDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.massDisplay.style.padding = "5px";
+        this.massDisplay.style.borderRadius = "5px";
+        this.massDisplay.style.fontFamily = "Arial, sans-serif";
+        this.massDisplay.style.fontSize = "14px";
+        this.massDisplay.style.zIndex = "1";
+        document.body.appendChild(this.massDisplay);
+    }
+    
+    // Display for ore value
+    createValueDisplay() {
+        this.valueDisplay = document.createElement("div");
+        this.valueDisplay.style.position = "absolute";
+        this.valueDisplay.style.bottom = "10px";
+        this.valueDisplay.style.right = "10px";
+        this.valueDisplay.style.color = "white";
+        this.valueDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.valueDisplay.style.padding = "5px";
+        this.valueDisplay.style.borderRadius = "5px";
+        this.valueDisplay.style.fontFamily = "Arial, sans-serif";
+        this.valueDisplay.style.fontSize = "14px";
+        this.valueDisplay.style.zIndex = "1";
+        document.body.appendChild(this.valueDisplay);
+    }
+    
+    // Functions to update resource display functions
+    displayResources(resources) {
+        const resourceString = resources.join(', '); // Convert array to a comma-separated string
+        this.resourcesDisplay.innerText = `Resources: ${resourceString}`;
+    }
+    
+    displayOreMass(mass) {
+        this.massDisplay.innerText = `Ore Mass: ${mass.toFixed(2)} kg`;
+    }
+    
+    displayValue(value) {
+        this.valueDisplay.innerText = `Ore Value: ${value.toFixed(2)} $`;
     }
 }
