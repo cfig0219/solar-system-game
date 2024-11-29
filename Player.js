@@ -198,7 +198,10 @@ export class Player {
                         break;
                     case "m":
                     case "M": // Mine resources
-                        this.resources.mineResources();
+                        if (this.resources.getMass() < this.rocket.getOreCapacity()) {
+                            // if less than ore capacity
+                            this.resources.mineResources();
+                        }
                         break;
                         
                     case " ": // Space bar pressed
@@ -245,12 +248,16 @@ export class Player {
             // Display current speed and deltaV
             this.display.displayVelocity(this.velocity, this.accelerationFactor);
             this.display.displayDeltaV(this.rocket);
-
             // Accumulate velocity change and calculate acceleration every second
             this.display.accumulateAcceleration(deltaTime, this.velocity, this.accelerationFactor, this.previousVelocity);
             
             // Update previous velocity for the next frame
             this.previousVelocity.copyFrom(this.velocity);
+            
+            // Updates resource displays
+            this.display.displayResources(this.resources.getResources());
+            this.display.displayOreMass(this.resources.getMass());
+            this.display.displayValue(this.resources.getValue());
         });
     }
     
