@@ -11,6 +11,7 @@ export class Resources {
         this.resources = ["water", "oxygen", "iron", "aluminum"];
         this.currentPlanet = "planet";
         this.value = 0.0;
+        this.mass = 0.0;
     }
     
     // Obtain's the current planet's name
@@ -44,6 +45,8 @@ export class Resources {
         
         // Default resources if planet name is not found
         else { this.resources = ["water", "oxygen", "iron", "aluminum"]; }
+        
+        return this.resources;
     }
     
     // Determines the abundance of resources mined
@@ -110,12 +113,11 @@ export class Resources {
     
     
     // Mines and gathers value of resources mined
-    getValue() {
+    calculateValue() {
         const gatheredResource = this.determineResource();
         
         // If resource is present on current planet
         if (this.resources.includes(gatheredResource)) {
-            console.log(gatheredResource)
             
             if (gatheredResource == "water") { this.value = this.value + 0.1; }
             else if (gatheredResource == "sulfur") { this.value = this.value + 0.15; }
@@ -142,16 +144,30 @@ export class Resources {
             else if (gatheredResource == "plutonium") { this.value = this.value + 54000; }
             else if (gatheredResource == "tritium") { this.value = this.value + 324000; }
             else if (gatheredResource == "antimatter") { this.value = this.value + 2700000; }
+            
+            // Calculates mass of current ore mine batch
+            this.mass = this.mass + 1;
         }
-        
-        console.log(this.value);
-        return this.value;
     }
     
     mineResources() {
         for (let i = 0; i < 100; i++) {
-            this.getValue();
+            this.calculateValue();
         }
+    }
+    
+    // Gets current ore batch value and mass
+    getMass() {
+        return this.mass;
+    }
+    
+    getValue() {
+        return this.value;
+    }
+    
+    resetResources() {
+        this.mass = 0.0;
+        this.value = 0.0;
     }
 
 }
