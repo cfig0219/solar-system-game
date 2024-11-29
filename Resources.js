@@ -26,7 +26,7 @@ export class Resources {
     getResources() {
         const planetName = this.currentPlanet;
         
-        if (planetName == "luna") { this.resources = ["iron", "aluminum", "copper", "gold"]; }
+        if (planetName == "luna") { this.resources = ["water", "iron", "aluminum", "copper", "gold"]; }
         else if (planetName == "earth") { this.resources = ["water", "coal", "iron", "petroleum", "oxygen", "lead", "uranium", "diamonds"]; }
         else if (planetName == "sol") { this.resources = ["antimatter"]; }
         else if (planetName == "mercury") { this.resources = ["iron", "aluminum", "lead", "uranium", "gold", "tungsten"]; }
