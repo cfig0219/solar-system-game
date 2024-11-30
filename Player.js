@@ -31,7 +31,7 @@ export class Player {
         // Creates rocket class object
         const SolRadius = 58178.0;
         const SolDistance = 21040000.0 + SolRadius;
-        this.rocketLocation = new BABYLON.Vector3(SolDistance + 299200.0 - 4500.0, -15.0, SolDistance + 13000.0);
+        this.rocketLocation = new BABYLON.Vector3(SolDistance + 299200.0 - 5300.0, -15.0, SolDistance + 13000.0);
         this.rocket = new Rocket(this.rocketLocation, scene, camera);
         
         // Creates performance parameters and resource display
@@ -40,7 +40,14 @@ export class Player {
         // Tracks current planet
         this.currentPlanet = null;
         this.resources = new Resources(scene, camera);
+        
+        // Tracks current player money and tech tier
+        this.money = 0.0;
+        this.techTier = "chemical";
+        this.display.displayMoney(this.money);
+        this.display.displayTier(this.techTier);
     }
+    
     
     // Initializes buttons
     setButtons() {
@@ -62,7 +69,7 @@ export class Player {
         ];
         
         // Button displays
-        const buttonTexts = ["forward", "back", "left", "right"];
+        const buttonTexts = ["^", "v", "<", ">"];
     
         for (let i = 0; i < 4; i++) {
             const button = document.createElement("button");
@@ -91,7 +98,7 @@ export class Player {
         buttonContainer2.style.flexDirection = "column";
         document.body.appendChild(buttonContainer2);
         
-        const buttonTexts2 = ["up", "rcs", "down"];
+        const buttonTexts2 = ["^", "rcs", "v"];
         
         for (let i = 0; i < 3; i++) {
             const button = document.createElement("button");
@@ -196,12 +203,19 @@ export class Player {
                         this.velocity.addInPlace(up.scale(-this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
+                        
                     case "m":
                     case "M": // Mine resources
                         if (this.resources.getMass() < this.rocket.getOreCapacity()) {
                             // if less than ore capacity
                             this.resources.mineResources();
                         }
+                        break;
+                    case "o":
+                    case "O": // Sell ore
+                        this.money = this.money + this.resources.getValue();
+                        this.display.displayMoney(this.money);
+                        this.resources.resetResources();
                         break;
                         
                     case " ": // Space bar pressed
