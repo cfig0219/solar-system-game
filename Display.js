@@ -20,6 +20,10 @@ export class Display {
         this.createResourcesDisplay();
         this.createMassDisplay();
         this.createValueDisplay();
+        
+        // Create displays for money and tier
+        this.createMoneyDisplay();
+        this.createTierDisplay();
     }
 	
     
@@ -165,5 +169,47 @@ export class Display {
     
     displayValue(value) {
         this.valueDisplay.innerText = `Ore Value: ${value.toFixed(2)} $`;
+    }
+    
+    
+    // Display for total money
+    createMoneyDisplay() {
+        this.moneyDisplay = document.createElement("div");
+        this.moneyDisplay.style.position = "absolute";
+        this.moneyDisplay.style.top = "10px";
+        this.moneyDisplay.style.right = "10px";
+        this.moneyDisplay.style.color = "white";
+        this.moneyDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.moneyDisplay.style.padding = "5px";
+        this.moneyDisplay.style.borderRadius = "5px";
+        this.moneyDisplay.style.fontFamily = "Arial, sans-serif";
+        this.moneyDisplay.style.fontSize = "14px";
+        this.moneyDisplay.style.zIndex = "1";
+        document.body.appendChild(this.moneyDisplay);
+    }
+    
+    // Display for tech tier
+    createTierDisplay() {
+        this.tierDisplay = document.createElement("div");
+        this.tierDisplay.style.position = "absolute";
+        this.tierDisplay.style.top = "40px";
+        this.tierDisplay.style.right = "10px";
+        this.tierDisplay.style.color = "white";
+        this.tierDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.tierDisplay.style.padding = "5px";
+        this.tierDisplay.style.borderRadius = "5px";
+        this.tierDisplay.style.fontFamily = "Arial, sans-serif";
+        this.tierDisplay.style.fontSize = "14px";
+        this.tierDisplay.style.zIndex = "1";
+        document.body.appendChild(this.tierDisplay);
+    }
+    
+    // Functions to update resource display functions
+    displayMoney(money) {
+        this.moneyDisplay.innerText = `Total Money: ${money.toFixed(2)} $`;
+    }
+    
+    displayTier(tier) {
+        this.tierDisplay.innerText = `Current Tier: ${tier}`;
     }
 }
