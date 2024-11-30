@@ -217,6 +217,14 @@ export class Player {
                         this.display.displayMoney(this.money);
                         this.resources.resetResources();
                         break;
+                    case "u":
+                    case "U": // Upgrade tech tier
+                        this.techTier = this.rocket.upgrade(this.techTier, this.money);
+                        this.money = this.rocket.upgradeCost();
+                        // Updates money and tech displays
+                        this.display.displayTier(this.techTier);
+                        this.display.displayMoney(this.money);
+                        break;
                         
                     case " ": // Space bar pressed
                         if (!this.isBoosting) {
