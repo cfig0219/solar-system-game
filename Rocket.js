@@ -15,6 +15,7 @@ export class Rocket {
         // Resource parameters
         this.deltaV = 676; // m/s of delta v
         this.oreCapacity = 10000; // kg of ore
+        this.money = 0.0;
 
         // Create a cube (box)
         this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: this.rocketSize * 2 }, this.scene);
@@ -75,5 +76,56 @@ export class Rocket {
     
     getOreCapacity() {
         return this.oreCapacity;
+    }
+    
+    
+    // Functions to upgrade rocket
+    upgrade(tier, money) {
+        let newTier = "";
+        const nuclearCost = 100000;
+        const fusionCost = 500000;
+        const antimatterCost = 2500000;
+        const warpCost = 12500000;
+        this.money = money;
+        
+        // if not warp tier
+        if (tier != "warp") {
+            // Determines if upgrade cost is reached
+            if (tier == "chemical" && money > nuclearCost) {
+                newTier = "nuclear";
+                this.money = this.money - nuclearCost; // Updates money
+                this.deltaV = 1352; // Updates delta v
+            }
+            else if (tier == "nuclear" && money > fusionCost) {
+                newTier = "fusion";
+                this.money = this.money - fusionCost;
+                this.deltaV = 5050;
+            }
+            else if (tier == "fusion" && money > antimatterCost) {
+                newTier = "antimatter";
+                this.money = this.money - antimatterCost;
+                this.deltaV = 17675;
+            }
+            else if (tier == "antimatter" && money > warpCost) {
+                newTier = "warp";
+                this.money = this.money - warpCost;
+                this.deltaV = 70701;
+            }
+            // If upgrade cost has not been reached yet
+            else {
+                newTier = tier;
+            }
+        }
+        // Cap upgrades once warp tier is reached
+        else if (tier == "warp") {
+            newTier = "warp";
+        }
+        
+        return newTier
+    }
+    
+    // Returns new money balance after rocket upgrade
+    upgradeCost() {
+        return this.money;
     }
 }
