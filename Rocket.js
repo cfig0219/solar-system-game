@@ -43,32 +43,50 @@ export class Rocket {
     createLaser() {
         // Create a cylinder to represent the laser
         this.laser = BABYLON.MeshBuilder.CreateCylinder("laser", {
-            height: 5000,  // Length of the laser
+            height: 25000,  // Length of the laser
             diameter: 2 // Thin laser beam
         }, this.scene);
     
         // Create a material for the laser
         const laserMaterial = new BABYLON.StandardMaterial("laserMaterial", this.scene);
         laserMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove highlights
-        laserMaterial.emissiveColor = new BABYLON.Color3(0, 1, 0); // Glowing green laser
+        laserMaterial.emissiveColor = new BABYLON.Color3(1, 0, 0); // Glowing green laser
     
         // Apply the material to the laser
         this.laser.material = laserMaterial;
-        this.laser.renderingGroupId = 3;
+        this.laser.renderingGroupId = 1;
         
         // Makes laser child of rocket model
         this.laser.parent = this.cube;
-        this.laser.position = new BABYLON.Vector3(0, 0, 2500);
+        this.laser.position = new BABYLON.Vector3(0, 0, 12500);
     
         // Make the laser initially invisible
         this.laser.visibility = 0;
+        
+        // Add glow layer to the scene
+        if (!this.scene.glowLayer) {
+            this.scene.glowLayer = new BABYLON.GlowLayer("glowLayer", this.scene);
+        }
+        
+        // Set the glow intensity for the laser
+        this.scene.glowLayer.addIncludedOnlyMesh(this.laser);
+        this.scene.glowLayer.intensity = 0.5;
+        
+        // Set the cube to not glow
+        this.scene.glowLayer.addIncludedOnlyMesh(this.cube);
+        this.cube.material.emissiveColor = new BABYLON.Color3(0, 0, 0); // No emission
     }
     
     // Method to toggle laser visibility
-    toggleLaser() {
+    activateLaser() {
         if (this.laser) {
-            this.laser.visibility = this.laser.visibility === 0 ? 1 : 0;
-            console.log("toggle");
+            this.laser.visibility = 1;
+        }
+    }
+    
+    deactivateLaser() {
+        if (this.laser) {
+            this.laser.visibility = 0;
         }
     }
 	
