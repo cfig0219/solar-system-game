@@ -29,9 +29,7 @@ export class Player {
         this.setControls();
         
         // Creates rocket class object
-        const SolRadius = 58178.0;
-        const SolDistance = 21040000.0 + SolRadius;
-        this.rocketLocation = new BABYLON.Vector3(SolDistance + 299200.0 - 5300.0, -15.0, SolDistance + 13000.0);
+        this.rocketLocation = this.camera.target;
         this.rocket = new Rocket(this.rocketLocation, scene, camera);
         
         // Creates performance parameters and resource display
@@ -236,7 +234,7 @@ export class Player {
                         if (this.resources.getMass() < this.rocket.getOreCapacity()) {
                             // if less than ore capacity
                             this.resources.mineResources();
-                            this.rocket.toggleLaser();
+                            this.rocket.activateLaser();
                         }
                         break;
                     case "o":
@@ -274,6 +272,10 @@ export class Player {
                 this.isBoosting = false;
                 this.acceleration = 0.196;
             }
+            
+            if (event.key === "m" || event.key === "M") { // mining button released
+                this.rocket.deactivateLaser(); // deactivates laser
+            }
         });
 
 
@@ -291,13 +293,13 @@ export class Player {
             this.rocket.setRotation(yaw);
 
             // Update camera position based on velocity
-            //this.camera.target.addInPlace(this.velocity);
-            //this.camera.position.addInPlace(this.velocity);
+            this.camera.target.addInPlace(this.velocity);
+            this.camera.position.addInPlace(this.velocity);
             this.rocketLocation = new BABYLON.Vector3(
-        		this.rocketLocation.x + this.velocity.x,
-        		this.rocketLocation.y + this.velocity.y,
-        		this.rocketLocation.z + this.velocity.z
-    		);
+                this.camera.target.x,
+                this.camera.target.y - 15,
+                this.camera.target.z
+            );
             this.rocket.setLocation(this.rocketLocation);
 
             // Display current speed and deltaV
