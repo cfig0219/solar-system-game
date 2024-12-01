@@ -11,6 +11,7 @@ export class Rocket {
         this.rocketMass = 20;
         this.rocketTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
         this.scene = scene;
+        this.camera = camera;
         
         // Resource parameters
         this.deltaV = 676; // m/s of delta v
@@ -31,7 +32,44 @@ export class Rocket {
 
         // Set cube position
         this.cube.position = this.rocketLocation;
-        this.cube.renderingGroupId = 1;
+        this.cube.renderingGroupId = 3;
+        
+        // Creates laser
+        this.createLaser();
+    }
+    
+    
+    // Creates and toggles laser visibility
+    createLaser() {
+        // Create a cylinder to represent the laser
+        this.laser = BABYLON.MeshBuilder.CreateCylinder("laser", {
+            height: 5000,  // Length of the laser
+            diameter: 2 // Thin laser beam
+        }, this.scene);
+    
+        // Create a material for the laser
+        const laserMaterial = new BABYLON.StandardMaterial("laserMaterial", this.scene);
+        laserMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove highlights
+        laserMaterial.emissiveColor = new BABYLON.Color3(0, 1, 0); // Glowing green laser
+    
+        // Apply the material to the laser
+        this.laser.material = laserMaterial;
+        this.laser.renderingGroupId = 3;
+        
+        // Makes laser child of rocket model
+        this.laser.parent = this.cube;
+        this.laser.position = new BABYLON.Vector3(0, 0, 2500);
+    
+        // Make the laser initially invisible
+        this.laser.visibility = 0;
+    }
+    
+    // Method to toggle laser visibility
+    toggleLaser() {
+        if (this.laser) {
+            this.laser.visibility = this.laser.visibility === 0 ? 1 : 0;
+            console.log("toggle");
+        }
     }
 	
     
@@ -56,6 +94,9 @@ export class Rocket {
     setRotation(yRotation) {
         this.rotation = yRotation;
         this.cube.rotation.y = yRotation;
+        
+        // Set laser horizontal
+        this.laser.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
     }
     
     
