@@ -120,7 +120,7 @@ export class Player {
         const buttonContainer3 = document.createElement("div");
         buttonContainer3.style.position = "absolute";
         buttonContainer3.style.bottom = "5%";
-        buttonContainer3.style.left = "30%";
+        buttonContainer3.style.left = "35%";
         buttonContainer3.style.display = "flex";
         buttonContainer3.style.gap = "30px";
         document.body.appendChild(buttonContainer3);
@@ -141,6 +141,33 @@ export class Player {
             button.style.fontSize = "14px";
             button.style.zIndex = "1";
             buttonContainer3.appendChild(button);
+        }
+        
+        // Top buttons
+        const buttonContainer4 = document.createElement("div");
+        buttonContainer4.style.position = "absolute";
+        buttonContainer4.style.top = "5%";
+        buttonContainer4.style.left = "35%";
+        buttonContainer4.style.display = "flex";
+        buttonContainer4.style.gap = "30px";
+        document.body.appendChild(buttonContainer4);
+        
+        const buttonTexts4 = ["upgrade", "sell ore"];
+        
+        for (let i = 0; i < 2; i++) {
+            const button = document.createElement("button");
+            button.innerText = buttonTexts4[i];
+            button.style.width = "200px";
+            button.style.height = "60px";
+            button.style.backgroundColor = "#008000";
+            button.style.color = "white";
+            button.style.border = "none";
+            button.style.borderRadius = "5px";
+            button.style.cursor = "pointer";
+            button.style.fontFamily = "Arial, sans-serif";
+            button.style.fontSize = "14px";
+            button.style.zIndex = "1";
+            buttonContainer4.appendChild(button);
         }
     }
 
@@ -209,6 +236,7 @@ export class Player {
                         if (this.resources.getMass() < this.rocket.getOreCapacity()) {
                             // if less than ore capacity
                             this.resources.mineResources();
+                            this.rocket.toggleLaser();
                         }
                         break;
                     case "o":
@@ -256,6 +284,11 @@ export class Player {
             // Determines resources based on current planet
             this.resources.setPlanet(this.currentPlanet);
             this.resources.getResources();
+            
+            // Get camera forward vector
+            const forward = this.camera.getFrontPosition(1).subtract(this.camera.position).normalize();
+            const yaw = Math.atan2(forward.x, forward.z);
+            this.rocket.setRotation(yaw);
 
             // Update camera position based on velocity
             //this.camera.target.addInPlace(this.velocity);
