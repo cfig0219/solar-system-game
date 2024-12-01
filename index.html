@@ -107,7 +107,7 @@
       Mizraim.setName("mizraim");
 	  
 	  // Sol system star
-      const SolLight = new BABYLON.Color3(0.9, 0.95, 1);
+      const SolLight = new BABYLON.Color3(0.8, 0.9, 0.9);
       const SolRadius = 58178;
       const SolDistance = 21040000 + SolRadius;
       const SolHabitableZone = 299710 + SolRadius;
@@ -180,7 +180,7 @@
 	  Earth.setName("earth");
       
       // Camera parameters
-      const cameraLocation = new BABYLON.Vector3(SolDistance + 299200 - 5300, 0, SolDistance + 13000); // setting it equal to planet moves planet
+      const cameraLocation = new BABYLON.Vector3(0, 0, -(179026 + CanaanRadius - 4000));//new BABYLON.Vector3(SolDistance + 299200 - 5300, 0, SolDistance + 13000); // setting it equal to planet moves planet
       camera.setTarget(cameraLocation);
       camera.alpha = 1.95;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.6;   // Vertical rotation (90 degrees)
