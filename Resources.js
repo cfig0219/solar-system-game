@@ -37,17 +37,33 @@ export class Resources {
         else if (planetName == "uranus") { this.resources = ["hydrogen", "methane", "deuterium"]; }
         else if (planetName == "neptune") { this.resources = ["hydrogen", "methane", "deuterium"]; }
         else if (planetName == "canaan") { this.resources = ["antimatter"]; }
+        else if (planetName == "muspelheim") { this.resources = ["coal", "petroleum", "iron", "sulfur", "aluminum", "lithium", "uranium", "diamonds", "plutonium"]; }
+        else if (planetName == "diyu") { this.resources = ["iron", "titanium", "lead", "sulfur"]; }
         else if (planetName == "eden") { this.resources = ["water", "iron", "aluminum", "copper", "gold"]; }
         else if (planetName == "nysa") { this.resources = ["water", "iron", "sulfur", "petroleum", "oxygen", "lead", "uranium", "diamonds"]; }
         else if (planetName == "ararat") { this.resources = ["water", "methane", "iron", "lithium", "aluminum", "copper", "gold"]; }
+        else if (planetName == "zerzura") { this.resources = ["hydrogen", "deuterium", "tritium"]; }
+        else if (planetName == "thule") { this.resources = ["water", "deuterium", "ice7", "iron", "sulfur"]; }
         else if (planetName == "sinai") { this.resources = ["antimatter"]; }
+        else if (planetName == "hel") { this.resources = ["coal", "iron", "copper", "sulfur", "tungsten", "antimatter"]; }
+        else if (planetName == "meropis") { this.resources = ["water", "ice7", "methane", "oxygen", "lithium", "gold"]; }
+        else if (planetName == "babylon") { this.resources = ["water", "iron", "copper", "titanium", "lead", "uranium", "diamonds"]; }
+        else if (planetName == "gomorrah") { this.resources = ["water", "aluminum", "titanium", "deuterium"]; }
+        else if (planetName == "dorado") { this.resources = ["uranium", "sulfur", "neodymium", "osmium"]; }
         else if (planetName == "mizraim") { this.resources = ["antimatter"]; }
+        else if (planetName == "agartha") { this.resources = ["petroleum", "coal", "methane", "sulfur", "copper"]; }
+        else if (planetName == "lalotai") { this.resources = ["water", "oxygen", "ice7", "iron", "copper", "titanium", "diamonds"]; }
+        else if (planetName == "irkalla") { this.resources = ["water", "iron", "aluminum", "lead", "uranium", "tungsten", "osmium", "rhodium"]; }
+        else if (planetName == "gula") { this.resources = ["hydrogen", "oxygen", "methane", "deuterium"]; }
+        else if (planetName == "poliahu") { this.resources = ["water", "ice7", "sulfur", "iron", "lead", "neodymium"]; }
+        else if (planetName == "pohjola") { this.resources = ["water", "copper", "deuterium"]; }
         
         // Default resources if planet name is not found
         else { this.resources = ["water", "oxygen", "iron", "aluminum"]; }
         
         return this.resources;
     }
+    
     
     // Determines the abundance of resources mined
     determineResource() {
@@ -70,9 +86,9 @@ export class Resources {
             { resource: "gold", probability: 0.0022 },
             { resource: "uranium", probability: 0.0014 },
             { resource: "diamonds", probability: 0.0011 },
-            { resource: "ice7", probability: 0.001 },
-            { resource: "deuterium", probability: 0.00083},
-            { resource: "tungsten", probability: 0.00066 },
+            { resource: "ice7", probability: 0.00083 },
+            { resource: "deuterium", probability: 0.000066},
+            { resource: "tungsten", probability: 0.00048 },
             { resource: "neodymium", probability: 0.00027 },
             { resource: "osmium", probability: 0.00014 },
             { resource: "rhodium", probability: 0.000069 },
@@ -136,9 +152,9 @@ export class Resources {
             else if (gatheredResource == "uranium") { this.value = this.value + 180; }
             else if (gatheredResource == "diamonds") { this.value = this.value + 270; }
             else if (gatheredResource == "ice7") { this.value = this.value + 400; }
-            else if (gatheredResource == "deuterium") { this.value = this.value + 550; }
-            else if (gatheredResource == "tungsten") { this.value = this.value + 700; }
-            else if (gatheredResource == "neodymium") { this.value = this.value + 1500; }
+            else if (gatheredResource == "deuterium") { this.value = this.value + 750; }
+            else if (gatheredResource == "tungsten") { this.value = this.value + 1200; }
+            else if (gatheredResource == "neodymium") { this.value = this.value + 2100; }
             else if (gatheredResource == "osmium") { this.value = this.value + 4500; }
             else if (gatheredResource == "rhodium") { this.value = this.value + 18000; }
             else if (gatheredResource == "plutonium") { this.value = this.value + 54000; }
