@@ -51,7 +51,7 @@ export class Resources {
         else if (planetName == "gomorrah") { this.resources = ["water", "aluminum", "titanium", "deuterium"]; }
         else if (planetName == "dorado") { this.resources = ["uranium", "sulfur", "neodymium", "osmium"]; }
         else if (planetName == "mizraim") { this.resources = ["antimatter"]; }
-        else if (planetName == "agartha") { this.resources = ["petroleum", "coal", "methane", "sulfur", "copper"]; }
+        else if (planetName == "agartha") { this.resources = ["petroleum", "coal", "methane", "sulfur", "copper", "diamonds"]; }
         else if (planetName == "lalotai") { this.resources = ["water", "oxygen", "ice7", "iron", "copper", "titanium", "diamonds"]; }
         else if (planetName == "irkalla") { this.resources = ["water", "iron", "aluminum", "lead", "uranium", "tungsten", "osmium", "rhodium"]; }
         else if (planetName == "gula") { this.resources = ["hydrogen", "oxygen", "methane", "deuterium"]; }
