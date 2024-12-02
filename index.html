@@ -89,7 +89,7 @@
       // Second red star
       const SinaiLight = new BABYLON.Color3(1, 0.35, 0.1);
       const SinaiRadius = 12998;
-      const SinaiDistance = 1465774 + SinaiRadius;
+      const SinaiDistance = 2165774 + SinaiRadius;
       const SinaiHabitableZone = 15546 + SinaiRadius;
       const SinaiPosition = new BABYLON.Vector3(SinaiDistance/2, 0, -SinaiDistance);
       const Sinai = new Star(SinaiLight, SinaiRadius, SinaiPosition, SinaiHabitableZone, scene, camera);
@@ -122,7 +122,7 @@
       const atmosphereDepth = 50.8;
       const EdenLocation = new BABYLON.Vector3(0, 0, -(179026 + CanaanRadius));
       
-      // Calls on function to create first planet
+      // Creates first planet Eden
       const Eden = new Planet(EdenRadius, EdenLocation, scene, camera);
       Eden.createLandLayer();
       Eden.createCloudLayer();
@@ -133,7 +133,7 @@
       const starIntensity1 = Canaan.calculateIntensity(EdenLocation, CanaanPosition);
       const EdenRings = new Rings(EdenRadius, EdenLocation, CanaanLight, starIntensity1, CanaanPosition, scene, camera);
 
-      // Creates second planet
+      // Creates second planet Nysa
       const NysaRadius = 2958;
       const NysaLocation = new BABYLON.Vector3(0, 0, -(275491 + CanaanRadius));
       const Nysa = new Planet(NysaRadius, NysaLocation, scene, camera);
@@ -149,7 +149,7 @@
       Nysa.setMass(NysaRadius, 16.27);
       Nysa.setName("nysa");
       
-      // Creates third planet
+      // Creates Nysa's moon Ararat
       const AraratRadius = 1560;
       const AraratLocation = new BABYLON.Vector3(8113 + NysaRadius, 0, -(275491 + CanaanRadius));
       const Ararat = new Planet(AraratRadius, AraratLocation, scene, camera);
@@ -163,6 +163,112 @@
       Ararat.setAtmosphereOpacity(0.22);
       Ararat.setMass(AraratRadius, 6.79);
       Ararat.setName("ararat");
+      
+      // Creates Muspelheim
+      const MuspelheimRadius = 3486;
+      const MuspelheimLocation = new BABYLON.Vector3(0, 0, -(43553 + CanaanRadius));
+      const Muspelheim = new Planet(MuspelheimRadius, MuspelheimLocation, scene, camera);
+      Muspelheim.setMass(MuspelheimRadius, 33.32);
+	  Muspelheim.setName("muspelheim");
+	  
+	  // Creates Diyu
+      const DiyuRadius = 1012;
+      const DiyuLocation = new BABYLON.Vector3(0, 0, -(126916 + CanaanRadius));
+      const Diyu = new Planet(DiyuRadius, DiyuLocation, scene, camera);
+      Diyu.setMass(DiyuRadius, 4.6);
+	  Diyu.setName("diyu");
+	  
+	  // Creates Zerzura
+      const ZerzuraRadius = 9426;
+      const ZerzuraLocation = new BABYLON.Vector3(3465238/2, 0, -3465238);
+      const Zerzura = new Planet(ZerzuraRadius, ZerzuraLocation, scene, camera);
+      Zerzura.setMass(ZerzuraRadius, 4.6);
+	  Zerzura.setName("zerzura");
+	  
+	  // Creates Thule
+      const ThuleRadius = 3022;
+      const ThuleLocation = new BABYLON.Vector3(-5197857/2, 0, -5197857);
+      const Thule = new Planet(ThuleRadius, ThuleLocation, scene, camera);
+      Thule.setMass(ThuleRadius, 6.86);
+	  Thule.setName("thule");
+      
+      
+      // Creates Hel
+      const HelRadius = 1080;
+      const HelLocation = new BABYLON.Vector3(SinaiDistance/2 - (15546 + SinaiRadius), 0, -SinaiDistance);
+      const Hel = new Planet(HelRadius, HelLocation, scene, camera);
+      Hel.setMass(HelRadius, 4.38);
+	  Hel.setName("hel");
+      
+      // Creates Meropis
+      const MeropisRadius = 1582;
+      const MeropisLocation = new BABYLON.Vector3(SinaiDistance/2 - (23319 + SinaiRadius), 0, -SinaiDistance);
+      const Meropis = new Planet(MeropisRadius, MeropisLocation, scene, camera);
+      Meropis.setMass(MeropisRadius, 5.46); // Sets Earth's mass
+	  Meropis.setName("meropis");
+      
+      // Creates Babylon
+      const BabylonRadius = 2228;
+      const BabylonLocation = new BABYLON.Vector3(SinaiDistance/2 - (38865 + SinaiRadius), 0, -SinaiDistance);
+      const Babylon = new Planet(BabylonRadius, BabylonLocation, scene, camera);
+      Babylon.setMass(BabylonRadius, 8.87);
+      Babylon.setName("babylon");
+      
+      // Creates Gomorrah
+      const GomorrahRadius = 1258;
+      const GomorrahLocation = new BABYLON.Vector3(SinaiDistance/2 - (66071 + SinaiRadius), 0, -SinaiDistance);
+      const Gomorrah = new Planet(GomorrahRadius, GomorrahLocation, scene, camera);
+      Gomorrah.setMass(GomorrahRadius, 3.8);
+      Gomorrah.setName("gomorrah");
+      
+      // Creates Dorado
+      const DoradoRadius = 456;
+      const DoradoLocation = new BABYLON.Vector3(SinaiDistance/2 - (99106 + SinaiRadius), 0, -SinaiDistance);
+      const Dorado = new Planet(DoradoRadius, DoradoLocation, scene, camera);
+      Dorado.setMass(DoradoRadius, 3.25);
+      Dorado.setName("dorado");
+      
+      // Creates Agartha
+      const AgarthaRadius = 1524;
+      const AgarthaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (35559 + MizraimRadius));
+      const Agartha = new Planet(AgarthaRadius, AgarthaLocation, scene, camera);
+      Agartha.setMass(AgarthaRadius, 7.0);
+      Agartha.setName("agartha");
+      
+      // Creates Lalotai
+      const LalotaiRadius = 2790;
+      const LalotaiLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (52680 + MizraimRadius));
+      const Lalotai = new Planet(LalotaiRadius, LalotaiLocation, scene, camera);
+      Lalotai.setMass(LalotaiRadius, 11.17);
+      Lalotai.setName("lalotai");
+      
+      // Creates Irkalla
+      const IrkallaRadius = 3532;
+      const IrkallaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (92468 + MizraimRadius));
+      const Irkalla = new Planet(IrkallaRadius, IrkallaLocation, scene, camera);
+      Irkalla.setMass(IrkallaRadius, 21.36);
+      Irkalla.setName("irkalla");
+      
+      // Creates Gula
+      const GulaRadius = 1752;
+      const GulaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (194183 + MizraimRadius));
+      const Gula = new Planet(GulaRadius, GulaLocation, scene, camera);
+      Gula.setMass(GulaRadius, 4.49);
+      Gula.setName("gula");
+      
+      // Creates Poliahu
+      const PoliahuRadius = 1804;
+      const PoliahuLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (310693 + MizraimRadius));
+      const Poliahu = new Planet(PoliahuRadius, PoliahuLocation, scene, camera);
+      Poliahu.setMass(PoliahuRadius, 5.69);
+      Poliahu.setName("poliahu");
+      
+      // Creates Pohjola
+      const PohjolaRadius = 832;
+      const PohjolaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (776732 + MizraimRadius));
+      const Pohjola = new Planet(PohjolaRadius, PohjolaLocation, scene, camera);
+      Pohjola.setMass(PohjolaRadius, 2.46);
+      Pohjola.setName("pohjola");
       
       
       // Creates Earth
@@ -214,7 +320,7 @@
       Venus.createAtmosphere();
       Venus.setTexture(new BABYLON.Texture('Textures/Sol/Venus/VenusMap.jpg', scene));
       Venus.setClouds(new BABYLON.Texture('Textures/Sol/Venus/VenusClouds.jpg', scene));
-      Venus.setAtmosphereColor(new BABYLON.Color3(0.8, 0.7, 0.3))
+      Venus.setAtmosphereColor(new BABYLON.Color3(0.8, 0.7, 0.6))
       Venus.setAtmosphereOpacity(0.2);
       Venus.setMass(VenusRadius, 9.32);
       Venus.setName("venus");
@@ -225,7 +331,7 @@
       const Mars = new Planet(MarsRadius, MarsLocation, scene, camera);
       Mars.createAtmosphere();
       Mars.setTexture(new BABYLON.Texture('Textures/Sol/Mars/MarsMap.jpg', scene));
-      Mars.setAtmosphereColor(new BABYLON.Color3(0.8, 0.45, 0.15))
+      Mars.setAtmosphereColor(new BABYLON.Color3(0.8, 0.6, 0.5))
       Mars.setAtmosphereOpacity(0.12);
       Mars.setMass(MarsRadius, 6.03);
       Mars.setName("mars");
@@ -281,9 +387,24 @@
       planetList.addPlanet(Sinai);
       planetList.addPlanet(Mizraim);
       planetList.addPlanet(Sol);
+      planetList.addPlanet(Muspelheim);
+      planetList.addPlanet(Diyu);
       planetList.addPlanet(Eden);
       planetList.addPlanet(Nysa);
       planetList.addPlanet(Ararat);
+      planetList.addPlanet(Zerzura);
+      planetList.addPlanet(Thule);
+      planetList.addPlanet(Hel);
+      planetList.addPlanet(Meropis);
+      planetList.addPlanet(Babylon);
+      planetList.addPlanet(Gomorrah);
+      planetList.addPlanet(Dorado);
+      planetList.addPlanet(Agartha);
+      planetList.addPlanet(Lalotai);
+      planetList.addPlanet(Irkalla);
+      planetList.addPlanet(Gula);
+      planetList.addPlanet(Poliahu);
+      planetList.addPlanet(Pohjola);
       planetList.addPlanet(Mercury);
       planetList.addPlanet(Venus);
       planetList.addPlanet(Earth);
