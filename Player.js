@@ -295,12 +295,9 @@ export class Player {
             // Update camera position based on velocity
             this.camera.target.addInPlace(this.velocity);
             this.camera.position.addInPlace(this.velocity);
-            this.rocketLocation = new BABYLON.Vector3(
-                this.camera.target.x,
-                this.camera.target.y - 15,
-                this.camera.target.z
-            );
-            this.rocket.setLocation(this.rocketLocation);
+            // Sync camera with velocity
+            this.rocket.setLocation(this.camera.target);
+            //this.camera.target = this.camera.target.add(new BABYLON.Vector3(0, -15, 0));
 
             // Display current speed and deltaV
             this.display.displayVelocity(this.velocity, this.accelerationFactor);
