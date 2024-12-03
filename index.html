@@ -143,6 +143,7 @@
       Nysa.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Nysa.setTexture(new BABYLON.Texture('Textures/Nysa/NysaMap.png', scene));
       Nysa.setLand(new BABYLON.Texture('Textures/Nysa/NysaLand.png', scene));
+      Nysa.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Nysa.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 1));
       Nysa.setCloudColor(new BABYLON.Color3(0.8, 0.7, 0.5));
       Nysa.setAtmosphereOpacity(0.24);
@@ -168,6 +169,12 @@
       const MuspelheimRadius = 3486;
       const MuspelheimLocation = new BABYLON.Vector3(0, 0, -(43553 + CanaanRadius));
       const Muspelheim = new Planet(MuspelheimRadius, MuspelheimLocation, scene, camera);
+      Muspelheim.createAtmosphere();
+      Muspelheim.setTexture(new BABYLON.Texture('Textures/Canaan/InnerCanaan/MuspelheimMap.png', scene));
+      Muspelheim.setEmissiveness(new BABYLON.Color3(0.7, 0.7, 0.7));
+      Muspelheim.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 0.5));
+      Muspelheim.setAtmosphereOpacity(0.18);
+      Muspelheim.setPlanetRotation(0.0);
       Muspelheim.setMass(MuspelheimRadius, 33.32);
 	  Muspelheim.setName("muspelheim");
 	  
@@ -175,6 +182,7 @@
       const DiyuRadius = 1012;
       const DiyuLocation = new BABYLON.Vector3(0, 0, -(126916 + CanaanRadius));
       const Diyu = new Planet(DiyuRadius, DiyuLocation, scene, camera);
+      Diyu.setTexture(new BABYLON.Texture('Textures/Canaan/InnerCanaan/DiyuMap.png', scene));
       Diyu.setMass(DiyuRadius, 4.6);
 	  Diyu.setName("diyu");
 	  
@@ -182,6 +190,10 @@
       const ZerzuraRadius = 9426;
       const ZerzuraLocation = new BABYLON.Vector3(3465238/2, 0, -3465238);
       const Zerzura = new Planet(ZerzuraRadius, ZerzuraLocation, scene, camera);
+      Zerzura.createAtmosphere();
+      Zerzura.setTexture(new BABYLON.Texture('Textures/Canaan/Zerzura/ZerzuraMap.png', scene));
+      Zerzura.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 1));
+      Zerzura.setAtmosphereOpacity(0.15);
       Zerzura.setMass(ZerzuraRadius, 4.6);
 	  Zerzura.setName("zerzura");
 	  
@@ -189,6 +201,7 @@
       const ThuleRadius = 3022;
       const ThuleLocation = new BABYLON.Vector3(-5197857/2, 0, -5197857);
       const Thule = new Planet(ThuleRadius, ThuleLocation, scene, camera);
+      Thule.setTexture(new BABYLON.Texture('Textures/Canaan/Thule/ThuleMap.png', scene));
       Thule.setMass(ThuleRadius, 6.86);
 	  Thule.setName("thule");
       
@@ -197,6 +210,7 @@
       const HelRadius = 1080;
       const HelLocation = new BABYLON.Vector3(SinaiDistance/2 - (15546 + SinaiRadius), 0, -SinaiDistance);
       const Hel = new Planet(HelRadius, HelLocation, scene, camera);
+      Hel.setTexture(new BABYLON.Texture('Textures/Sinai/HelMap.png', scene));
       Hel.setMass(HelRadius, 4.38);
 	  Hel.setName("hel");
       
@@ -204,13 +218,20 @@
       const MeropisRadius = 1582;
       const MeropisLocation = new BABYLON.Vector3(SinaiDistance/2 - (23319 + SinaiRadius), 0, -SinaiDistance);
       const Meropis = new Planet(MeropisRadius, MeropisLocation, scene, camera);
-      Meropis.setMass(MeropisRadius, 5.46); // Sets Earth's mass
+      Meropis.createAtmosphere();
+      Meropis.setTexture(new BABYLON.Texture('Textures/Sinai/MeropisMap.png', scene));
+      Meropis.setAtmosphereOpacity(0.15);
+      Meropis.setMass(MeropisRadius, 5.46);
 	  Meropis.setName("meropis");
       
       // Creates Babylon
       const BabylonRadius = 2228;
       const BabylonLocation = new BABYLON.Vector3(SinaiDistance/2 - (38865 + SinaiRadius), 0, -SinaiDistance);
       const Babylon = new Planet(BabylonRadius, BabylonLocation, scene, camera);
+      Babylon.createAtmosphere();
+      Babylon.setTexture(new BABYLON.Texture('Textures/Sinai/BabylonMap.png', scene));
+      Babylon.setAtmosphereColor(new BABYLON.Color3(0.85, 0.7, 0.5))
+      Babylon.setAtmosphereOpacity(0.10);
       Babylon.setMass(BabylonRadius, 8.87);
       Babylon.setName("babylon");
       
@@ -218,6 +239,7 @@
       const GomorrahRadius = 1258;
       const GomorrahLocation = new BABYLON.Vector3(SinaiDistance/2 - (66071 + SinaiRadius), 0, -SinaiDistance);
       const Gomorrah = new Planet(GomorrahRadius, GomorrahLocation, scene, camera);
+      Gomorrah.setTexture(new BABYLON.Texture('Textures/Sinai/GomorrahMap.png', scene));
       Gomorrah.setMass(GomorrahRadius, 3.8);
       Gomorrah.setName("gomorrah");
       
@@ -225,6 +247,7 @@
       const DoradoRadius = 456;
       const DoradoLocation = new BABYLON.Vector3(SinaiDistance/2 - (99106 + SinaiRadius), 0, -SinaiDistance);
       const Dorado = new Planet(DoradoRadius, DoradoLocation, scene, camera);
+      Dorado.setTexture(new BABYLON.Texture('Textures/Sinai/DoradoMap.png', scene));
       Dorado.setMass(DoradoRadius, 3.25);
       Dorado.setName("dorado");
       
@@ -232,6 +255,10 @@
       const AgarthaRadius = 1524;
       const AgarthaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (35559 + MizraimRadius));
       const Agartha = new Planet(AgarthaRadius, AgarthaLocation, scene, camera);
+      Agartha.createAtmosphere();
+      Agartha.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/AgarthaMap.png', scene));
+      Agartha.setAtmosphereColor(new BABYLON.Color3(0.8, 0.6, 0.5))
+      Agartha.setAtmosphereOpacity(0.12);
       Agartha.setMass(AgarthaRadius, 7.0);
       Agartha.setName("agartha");
       
@@ -239,6 +266,11 @@
       const LalotaiRadius = 2790;
       const LalotaiLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (52680 + MizraimRadius));
       const Lalotai = new Planet(LalotaiRadius, LalotaiLocation, scene, camera);
+      Lalotai.createAtmosphere();
+      Lalotai.createCloudLayer();
+      Lalotai.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/LalotaiMap.png', scene));
+      Lalotai.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
+      Lalotai.setAtmosphereOpacity(0.25);
       Lalotai.setMass(LalotaiRadius, 11.17);
       Lalotai.setName("lalotai");
       
@@ -246,6 +278,12 @@
       const IrkallaRadius = 3532;
       const IrkallaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (92468 + MizraimRadius));
       const Irkalla = new Planet(IrkallaRadius, IrkallaLocation, scene, camera);
+      Irkalla.createAtmosphere();
+      Irkalla.createCloudLayer();
+      Irkalla.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/IrkallaMap.png', scene));
+      Irkalla.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
+      Irkalla.setAtmosphereColor(new BABYLON.Color3(0.9, 0.9, 0.9))
+      Irkalla.setAtmosphereOpacity(0.21);
       Irkalla.setMass(IrkallaRadius, 21.36);
       Irkalla.setName("irkalla");
       
@@ -253,6 +291,8 @@
       const GulaRadius = 1752;
       const GulaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (194183 + MizraimRadius));
       const Gula = new Planet(GulaRadius, GulaLocation, scene, camera);
+      Gula.createAtmosphere();
+      Gula.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/GulaMap.png', scene));
       Gula.setMass(GulaRadius, 4.49);
       Gula.setName("gula");
       
@@ -260,6 +300,7 @@
       const PoliahuRadius = 1804;
       const PoliahuLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (310693 + MizraimRadius));
       const Poliahu = new Planet(PoliahuRadius, PoliahuLocation, scene, camera);
+      Poliahu.setTexture(new BABYLON.Texture('Textures/Mizraim/OuterMizraim/PoliahuMap.png', scene));
       Poliahu.setMass(PoliahuRadius, 5.69);
       Poliahu.setName("poliahu");
       
@@ -267,6 +308,7 @@
       const PohjolaRadius = 832;
       const PohjolaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (776732 + MizraimRadius));
       const Pohjola = new Planet(PohjolaRadius, PohjolaLocation, scene, camera);
+      Pohjola.setTexture(new BABYLON.Texture('Textures/Mizraim/OuterMizraim/PohjolaMap.png', scene));
       Pohjola.setMass(PohjolaRadius, 2.46);
       Pohjola.setName("pohjola");
       
@@ -320,7 +362,7 @@
       Venus.createAtmosphere();
       Venus.setTexture(new BABYLON.Texture('Textures/Sol/Venus/VenusMap.jpg', scene));
       Venus.setClouds(new BABYLON.Texture('Textures/Sol/Venus/VenusClouds.jpg', scene));
-      Venus.setAtmosphereColor(new BABYLON.Color3(0.8, 0.7, 0.6))
+      Venus.setAtmosphereColor(new BABYLON.Color3(0.9, 0.9, 0.9))
       Venus.setAtmosphereOpacity(0.2);
       Venus.setMass(VenusRadius, 9.32);
       Venus.setName("venus");
@@ -342,7 +384,7 @@
       const Jupiter = new Planet(JupiterRadius, JupiterLocation, scene, camera);
       Jupiter.createAtmosphere();
       Jupiter.setTexture(new BABYLON.Texture('Textures/Sol/Jupiter/JupiterMap.jpg', scene));
-      Jupiter.setAtmosphereColor(new BABYLON.Color3(0.65, 0.5, 0.3))
+      Jupiter.setAtmosphereColor(new BABYLON.Color3(0.85, 0.7, 0.5))
       Jupiter.setAtmosphereOpacity(0.13);
       Jupiter.setMass(JupiterRadius, 24.79);
       Jupiter.setName("jupiter");
