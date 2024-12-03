@@ -166,6 +166,18 @@ export class Planet {
     	this.sphere.material.emissiveColor = newEmissiveColor;
     }
     
+    setPlanetRotation(newRotation) {
+        this.planetRotationSpeed = newRotation;
+    }
+    
+    setLandRotation(newRotation) {
+        this.landRotationSpeed = newRotation;
+    }
+    
+    setCloudRotation(newRotation) {
+        this.cloudRotationSpeed = newRotation;
+    }
+    
     
     // Physics related functions
     setMass(planetRadius, surfaceGravity) {
