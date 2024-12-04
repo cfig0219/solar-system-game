@@ -160,7 +160,6 @@
       Ararat.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Ararat.setTexture(new BABYLON.Texture('Textures/Ararat/AraratMap.png', scene));
       Ararat.setLand(new BABYLON.Texture('Textures/Ararat/AraratLand.png', scene));
-      Ararat.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Ararat.setAtmosphereOpacity(0.22);
       Ararat.setMass(AraratRadius, 6.79);
       Ararat.setName("ararat");
@@ -210,7 +209,10 @@
       const HelRadius = 1080;
       const HelLocation = new BABYLON.Vector3(SinaiDistance/2 - (15546 + SinaiRadius), 0, -SinaiDistance);
       const Hel = new Planet(HelRadius, HelLocation, scene, camera);
+      Hel.createLandLayer();
       Hel.setTexture(new BABYLON.Texture('Textures/Sinai/HelMap.png', scene));
+      Hel.setLand(new BABYLON.Texture('Textures/Sinai/HelLand.png', scene));
+      Hel.setEmissiveness(new BABYLON.Color3(0.7, 0.7, 0.7));
       Hel.setMass(HelRadius, 4.38);
 	  Hel.setName("hel");
       
@@ -218,8 +220,11 @@
       const MeropisRadius = 1582;
       const MeropisLocation = new BABYLON.Vector3(SinaiDistance/2 - (23319 + SinaiRadius), 0, -SinaiDistance);
       const Meropis = new Planet(MeropisRadius, MeropisLocation, scene, camera);
+      Meropis.createLandLayer();
       Meropis.createAtmosphere();
       Meropis.setTexture(new BABYLON.Texture('Textures/Sinai/MeropisMap.png', scene));
+      Meropis.setLand(new BABYLON.Texture('Textures/Sinai/MeropisLand.png', scene));
+      Meropis.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Meropis.setAtmosphereOpacity(0.15);
       Meropis.setMass(MeropisRadius, 5.46);
 	  Meropis.setName("meropis");
@@ -228,10 +233,13 @@
       const BabylonRadius = 2228;
       const BabylonLocation = new BABYLON.Vector3(SinaiDistance/2 - (38865 + SinaiRadius), 0, -SinaiDistance);
       const Babylon = new Planet(BabylonRadius, BabylonLocation, scene, camera);
+      Babylon.createLandLayer();
       Babylon.createAtmosphere();
       Babylon.setTexture(new BABYLON.Texture('Textures/Sinai/BabylonMap.png', scene));
+      Babylon.setLand(new BABYLON.Texture('Textures/Sinai/BabylonLand.png', scene));
+      Babylon.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Babylon.setAtmosphereColor(new BABYLON.Color3(0.85, 0.7, 0.5))
-      Babylon.setAtmosphereOpacity(0.10);
+      Babylon.setAtmosphereOpacity(0.12);
       Babylon.setMass(BabylonRadius, 8.87);
       Babylon.setName("babylon");
       
@@ -255,8 +263,11 @@
       const AgarthaRadius = 1524;
       const AgarthaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (35559 + MizraimRadius));
       const Agartha = new Planet(AgarthaRadius, AgarthaLocation, scene, camera);
+      Agartha.createLandLayer();
       Agartha.createAtmosphere();
       Agartha.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/AgarthaMap.png', scene));
+      Agartha.setLand(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/AgarthaLand.png', scene));
+      Agartha.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Agartha.setAtmosphereColor(new BABYLON.Color3(0.8, 0.6, 0.5))
       Agartha.setAtmosphereOpacity(0.12);
       Agartha.setMass(AgarthaRadius, 7.0);
@@ -269,6 +280,7 @@
       Lalotai.createAtmosphere();
       Lalotai.createCloudLayer();
       Lalotai.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/LalotaiMap.png', scene));
+      Lalotai.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Lalotai.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Lalotai.setAtmosphereOpacity(0.25);
       Lalotai.setMass(LalotaiRadius, 11.17);
@@ -278,10 +290,12 @@
       const IrkallaRadius = 3532;
       const IrkallaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (92468 + MizraimRadius));
       const Irkalla = new Planet(IrkallaRadius, IrkallaLocation, scene, camera);
+      Irkalla.createLandLayer();
       Irkalla.createAtmosphere();
       Irkalla.createCloudLayer();
       Irkalla.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/IrkallaMap.png', scene));
-      Irkalla.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
+      Irkalla.setLand(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/IrkallaLand.png', scene));
+      Irkalla.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Irkalla.setAtmosphereColor(new BABYLON.Color3(0.9, 0.9, 0.9))
       Irkalla.setAtmosphereOpacity(0.21);
       Irkalla.setMass(IrkallaRadius, 21.36);
