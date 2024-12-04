@@ -187,7 +187,7 @@
 	  
 	  // Creates Zerzura
       const ZerzuraRadius = 9426;
-      const ZerzuraLocation = new BABYLON.Vector3(3465238/2, 0, -3465238);
+      const ZerzuraLocation = new BABYLON.Vector3(3365238/2, 0, -3365238);
       const Zerzura = new Planet(ZerzuraRadius, ZerzuraLocation, scene, camera);
       Zerzura.createAtmosphere();
       Zerzura.setTexture(new BABYLON.Texture('Textures/Canaan/Zerzura/ZerzuraMap.png', scene));
@@ -196,9 +196,13 @@
       Zerzura.setMass(ZerzuraRadius, 4.6);
 	  Zerzura.setName("zerzura");
 	  
+	  const CanaanIntensity2 = Canaan.calculateIntensity(ZerzuraLocation, CanaanPosition);
+      const ZerzuraRings = new Rings(ZerzuraRadius, ZerzuraLocation, CanaanLight, CanaanIntensity2, CanaanPosition, scene, camera);
+      ZerzuraRings.setRingColor(new BABYLON.Color3(0.7, 0.4, 0.7));
+	  
 	  // Creates Thule
       const ThuleRadius = 3022;
-      const ThuleLocation = new BABYLON.Vector3(-5197857/2, 0, -5197857);
+      const ThuleLocation = new BABYLON.Vector3(-4497857/2, 0, -4497857);
       const Thule = new Planet(ThuleRadius, ThuleLocation, scene, camera);
       Thule.setTexture(new BABYLON.Texture('Textures/Canaan/Thule/ThuleMap.png', scene));
       Thule.setMass(ThuleRadius, 6.86);
@@ -301,6 +305,9 @@
       Irkalla.setMass(IrkallaRadius, 21.36);
       Irkalla.setName("irkalla");
       
+      const MizraimIntensity = Canaan.calculateIntensity(IrkallaLocation, MizraimPosition);
+      const IrkallaRings = new Rings(IrkallaRadius, IrkallaLocation, MizraimLight, MizraimIntensity, MizraimPosition, scene, camera);
+      
       // Creates Gula
       const GulaRadius = 1752;
       const GulaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (194183 + MizraimRadius));
@@ -320,7 +327,7 @@
       
       // Creates Pohjola
       const PohjolaRadius = 832;
-      const PohjolaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (776732 + MizraimRadius));
+      const PohjolaLocation = new BABYLON.Vector3(-MizraimDistance/2, 0, -MizraimDistance + (936732 + MizraimRadius));
       const Pohjola = new Planet(PohjolaRadius, PohjolaLocation, scene, camera);
       Pohjola.setTexture(new BABYLON.Texture('Textures/Mizraim/OuterMizraim/PohjolaMap.png', scene));
       Pohjola.setMass(PohjolaRadius, 2.46);
@@ -329,7 +336,7 @@
       
       // Creates Earth
       const EarthRadius = 2548;
-      const EarthLocation = new BABYLON.Vector3(SolDistance + 299200, 0, SolDistance);
+      const EarthLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200, 0, SolDistance);
       const Earth = new Planet(EarthRadius, EarthLocation, scene, camera);
       Earth.createLandLayer();
       Earth.createCloudLayer();
@@ -342,7 +349,7 @@
 	  Earth.setName("earth");
       
       // Camera parameters
-      const cameraLocation = new BABYLON.Vector3(0, 0, -(179026 + CanaanRadius - 4000));//new BABYLON.Vector3(SolDistance + 299200 - 5300, 0, SolDistance + 13000); // setting it equal to planet moves planet
+      const cameraLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + 13000); // setting it equal to planet moves planet
       camera.setTarget(cameraLocation);
       camera.alpha = 1.95;  // Horizontal rotation (45 degrees)
 	  camera.beta = 1.6;   // Vertical rotation (90 degrees)
@@ -350,19 +357,19 @@
       
       // Creates Luna
       const LunaRadius = 1076;
-      const LunaLocation = new BABYLON.Vector3(SolDistance + 299200 - 2000, 0, SolDistance + 10000);
+      const LunaLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 2000, 0, SolDistance + 10000);
       const Luna = new Planet(LunaRadius, LunaLocation, scene, camera);
       Luna.setTexture(new BABYLON.Texture('Textures/Sol/Earth/LunaMap.png', scene));
       Luna.setMass(LunaRadius, 3.98);
       Luna.setName("luna");
       
       // Creates base
-      const baseLocation = new BABYLON.Vector3(SolDistance + 299200 - 4500, 0, SolDistance + 12000);
+      const baseLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 4500, 0, SolDistance + 12000);
       const homeBase = new Base(baseLocation, scene, camera);
       
       // Creates Mercury
       const MercuryRadius = 1344;
-      const MercuryLocation = new BABYLON.Vector3(SolDistance + 115790, 0, SolDistance);
+      const MercuryLocation = new BABYLON.Vector3(SolDistance + SolRadius + 115790, 0, SolDistance);
       const Mercury = new Planet(MercuryRadius, MercuryLocation, scene, camera);
       Mercury.setTexture(new BABYLON.Texture('Textures/Sol/InnerSol/MercuryMap.jpg', scene));
       Mercury.setMass(MercuryRadius, 6.02);
@@ -370,7 +377,7 @@
       
       // Creates Venus
       const VenusRadius = 2438;
-      const VenusLocation = new BABYLON.Vector3(SolDistance + 215424, 0, SolDistance);
+      const VenusLocation = new BABYLON.Vector3(SolDistance + SolRadius + 215424, 0, SolDistance);
       const Venus = new Planet(VenusRadius, VenusLocation, scene, camera);
       Venus.createCloudLayer();
       Venus.createAtmosphere();
@@ -383,7 +390,7 @@
       
       // Creates Mars
       const MarsRadius = 1672;
-      const MarsLocation = new BABYLON.Vector3(SolDistance + 448800, 0, SolDistance);
+      const MarsLocation = new BABYLON.Vector3(SolDistance + SolRadius + 448800, 0, SolDistance);
       const Mars = new Planet(MarsRadius, MarsLocation, scene, camera);
       Mars.createAtmosphere();
       Mars.setTexture(new BABYLON.Texture('Textures/Sol/Mars/MarsMap.jpg', scene));
@@ -394,7 +401,7 @@
       
       // Creates Jupiter
       const JupiterRadius = 12582;
-      const JupiterLocation = new BABYLON.Vector3(SolDistance + 897442, 0, SolDistance);
+      const JupiterLocation = new BABYLON.Vector3(SolDistance + SolRadius + 897442, 0, SolDistance);
       const Jupiter = new Planet(JupiterRadius, JupiterLocation, scene, camera);
       Jupiter.createAtmosphere();
       Jupiter.setTexture(new BABYLON.Texture('Textures/Sol/Jupiter/JupiterMap.jpg', scene));
@@ -405,7 +412,7 @@
       
       // Creates Saturn
       const SaturnRadius = 10982;
-      const SaturnLocation = new BABYLON.Vector3(SolDistance + 1525651, 0, SolDistance);
+      const SaturnLocation = new BABYLON.Vector3(SolDistance + SolRadius + 1525651, 0, SolDistance);
       const Saturn = new Planet(SaturnRadius, SaturnLocation, scene, camera);
       Saturn.createAtmosphere();
       Saturn.setTexture(new BABYLON.Texture('Textures/Sol/Saturn/SaturnMap.jpg', scene));
@@ -419,7 +426,7 @@
       
       // Creates Uranus
       const UranusRadius = 6402;
-      const UranusLocation = new BABYLON.Vector3(SolDistance + 2441042, 0, SolDistance);
+      const UranusLocation = new BABYLON.Vector3(SolDistance + SolRadius + 2441042, 0, SolDistance);
       const Uranus = new Planet(UranusRadius, UranusLocation, scene, camera);
       Uranus.createAtmosphere();
       Uranus.setTexture(new BABYLON.Texture('Textures/Sol/Uranus/UranusMap.jpg', scene));
@@ -429,7 +436,7 @@
       
       // Creates Neptune
       const NeptuneRadius = 6276;
-      const NeptuneLocation = new BABYLON.Vector3(SolDistance + 3661563, 0, SolDistance);
+      const NeptuneLocation = new BABYLON.Vector3(SolDistance + SolRadius + 3661563, 0, SolDistance);
       const Neptune = new Planet(NeptuneRadius, NeptuneLocation, scene, camera);
       Neptune.createAtmosphere();
       Neptune.setTexture(new BABYLON.Texture('Textures/Sol/Neptune/NeptuneMap.jpg', scene));
