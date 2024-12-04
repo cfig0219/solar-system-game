@@ -156,6 +156,12 @@ export class Planet {
     setAtmosphereOpacity(newOpacity) {
     	this.atmosphereOpacity = newOpacity;
     	this.atmosphere.material.alpha = newOpacity;
+    	
+    	// Update Fresnel parameters to reflect the new opacity
+    	const opacityFresnel = this.atmosphere.material.opacityFresnelParameters;
+    	if (opacityFresnel) {
+    	    opacityFresnel.power = (this.atmosphereOpacity * 2.34) + this.atmosphereOpacity;
+    	}
     }
     
     setReflection(newSpecularColor) {
