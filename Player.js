@@ -242,6 +242,7 @@ export class Player {
                         this.money = this.money + this.resources.getValue();
                         this.display.displayMoney(this.money);
                         this.resources.resetResources();
+                        console.log(this.resources.getInventory());
                         break;
                     case "u":
                     case "U": // Upgrade tech tier
