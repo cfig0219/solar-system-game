@@ -297,7 +297,6 @@ export class Player {
             this.camera.position.addInPlace(this.velocity);
             // Sync camera with velocity
             this.rocket.setLocation(this.camera.target);
-            //this.camera.target = this.camera.target.add(new BABYLON.Vector3(0, -15, 0));
 
             // Display current speed and deltaV
             this.display.displayVelocity(this.velocity, this.accelerationFactor);
@@ -307,6 +306,19 @@ export class Player {
             
             // Update previous velocity for the next frame
             this.previousVelocity.copyFrom(this.velocity);
+            
+            // Gets distance from current planet
+            let distance = 0;
+            let name = "";
+            if (this.currentPlanet != null) {
+                distance = (this.rocket.getLocation().subtract(this.currentPlanet.getLocation())).length();
+                distance = distance - this.currentPlanet.getRadius(); // subtracts planet radius
+                name = this.currentPlanet.getName();
+            }
+            
+            // Displays distance and name
+            this.display.displayDistance(distance);
+            this.display.displayName(name);
             
             // Updates resource displays
             this.display.displayResources(this.resources.getResources());
