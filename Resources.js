@@ -11,7 +11,36 @@ export class Resources {
         this.resources = ["water", "oxygen", "iron", "aluminum"];
         this.currentPlanet = "planet";
         this.value = 0.0;
-        this.mass = 0.0;
+        this.totalMass = 0.0;
+        
+        // Tracks current resource inventory
+        this.resourceInventory = [
+            { resource: "water", mass: 0 },
+            { resource: "sulfur", mass: 0 },
+            { resource: "petroleum", mass: 0 },
+            { resource: "coal", mass: 0 },
+            { resource: "methane", mass: 0 },
+            { resource: "oxygen", mass: 0 },
+            { resource: "iron", mass: 0 },
+            { resource: "aluminum", mass: 0 },
+            { resource: "copper", mass: 0 },
+            { resource: "lead", mass: 0 },
+            { resource: "hydrogen", mass: 0 },
+            { resource: "lithium", mass: 0 },
+            { resource: "titanium", mass: 0 },
+            { resource: "gold", mass: 0 },
+            { resource: "uranium", mass: 0 },
+            { resource: "diamonds", mass: 0 },
+            { resource: "ice7", mass: 0 },
+            { resource: "deuterium", mass: 0 },
+            { resource: "tungsten", mass: 0 },
+            { resource: "neodymium", mass: 0 },
+            { resource: "osmium", mass: 0 },
+            { resource: "rhodium", mass: 0 },
+            { resource: "plutonium", mass: 0 },
+            { resource: "tritium", mass: 0 },
+            { resource: "antimatter", mass: 0 }
+        ];
     }
     
     // Obtain's the current planet's name
@@ -128,6 +157,22 @@ export class Resources {
     }
     
     
+    // Adds to the current inventory of mined resources
+    addResource() {
+        const gatheredResource = this.determineResource();
+    
+        // If resource is present on the current planet
+        if (this.resources.includes(gatheredResource)) {
+            // Find the matching resource in the inventory
+            this.resourceEntry = this.resourceInventory.find(item => item.resource === gatheredResource);
+    
+            if (this.resourceEntry) {
+                // Update the mass of the resource
+                this.resourceEntry.mass += 1;
+            }
+        }
+    }
+    
     // Mines and gathers value of resources mined
     calculateValue() {
         const gatheredResource = this.determineResource();
@@ -161,20 +206,22 @@ export class Resources {
             else if (gatheredResource == "tritium") { this.value = this.value + 324000; }
             else if (gatheredResource == "antimatter") { this.value = this.value + 2700000; }
             
-            // Calculates mass of current ore mine batch
-            this.mass = this.mass + 1;
+            // Calculates total mass of current ore mine batch
+            this.totalMass = this.totalMass + 1;
         }
     }
+    
     
     mineResources() {
         for (let i = 0; i < 100; i++) {
             this.calculateValue();
+            this.addResource();
         }
     }
     
-    // Gets current ore batch value and mass
+    // Gets current ore batch value and totalMass
     getMass() {
-        return this.mass;
+        return this.totalMass;
     }
     
     getValue() {
@@ -182,8 +229,13 @@ export class Resources {
     }
     
     resetResources() {
-        this.mass = 0.0;
+        this.totalMass = 0.0;
         this.value = 0.0;
+    }
+    
+    // Gets the total inventory of mined resources
+    getInventory() {
+        return this.resourceInventory;
     }
 
 }
