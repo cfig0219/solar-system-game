@@ -21,8 +21,8 @@ export class Player {
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
-        this.acceleration = 0.196; // Adjust acceleration as needed
-        this.accelerationFactor = 10; // Scale of acceleration
+        this.acceleration = 0.0392; // Adjust acceleration as needed
+        this.accelerationFactor = 50; // Scale of acceleration
         
         // Calls function to initialize player controls
         this.setButtons();
@@ -270,7 +270,7 @@ export class Player {
             if (event.key === " " && this.isBoosting) { // Space bar released
                 this.velocity = this.originalVelocity.clone(); // Revert to original velocity
                 this.isBoosting = false;
-                this.acceleration = 0.196;
+                this.acceleration = 0.0392;
             }
             
             if (event.key === "m" || event.key === "M") { // mining button released
