@@ -61,7 +61,7 @@ export class Gravity {
         }
     
         // Calculate acceleration due to gravity, divides by frame rate x 10
-        const acceleration = (gConstant * mass / (distance * distance)) / (this.frameRate * 10); 
+        const acceleration = (gConstant * mass / (distance * distance)) / (this.frameRate * 50); 
         return acceleration; // Acceleration in m/s²
     }
     
