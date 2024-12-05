@@ -158,9 +158,7 @@ export class Resources {
     
     
     // Adds to the current inventory of mined resources
-    addResource() {
-        const gatheredResource = this.determineResource();
-    
+    addResource(gatheredResource) {
         // If resource is present on the current planet
         if (this.resources.includes(gatheredResource)) {
             // Find the matching resource in the inventory
@@ -174,9 +172,7 @@ export class Resources {
     }
     
     // Mines and gathers value of resources mined
-    calculateValue() {
-        const gatheredResource = this.determineResource();
-        
+    calculateValue(gatheredResource) {
         // If resource is present on current planet
         if (this.resources.includes(gatheredResource)) {
             
@@ -214,8 +210,9 @@ export class Resources {
     
     mineResources() {
         for (let i = 0; i < 100; i++) {
-            this.calculateValue();
-            this.addResource();
+            let gatheredResource = this.determineResource();
+            this.calculateValue(gatheredResource);
+            this.addResource(gatheredResource);
         }
     }
     
