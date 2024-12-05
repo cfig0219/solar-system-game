@@ -24,6 +24,10 @@ export class Display {
         // Create displays for money and tier
         this.createMoneyDisplay();
         this.createTierDisplay();
+        
+        // Displays for planet distance and name
+        this.createDistanceDisplay();
+        this.createNameDisplay();
     }
 	
     
@@ -75,6 +79,22 @@ export class Display {
         document.body.appendChild(this.deltaVDisplay);
     }
     
+    // Creates distance display
+    createDistanceDisplay() {
+        this.distanceDisplay = document.createElement("div");
+        this.distanceDisplay.style.position = "absolute";
+        this.distanceDisplay.style.bottom = "100px";
+        this.distanceDisplay.style.left = "10px";
+        this.distanceDisplay.style.color = "white";
+        this.distanceDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.distanceDisplay.style.padding = "5px";
+        this.distanceDisplay.style.borderRadius = "5px";
+        this.distanceDisplay.style.fontFamily = "Arial, sans-serif";
+        this.distanceDisplay.style.fontSize = "14px";
+        this.distanceDisplay.style.zIndex = "1";
+        document.body.appendChild(this.distanceDisplay);
+    }
+    
 
     // Function to calculate and display the current speed in meters per second
     displayVelocity(velocity, accelerationFactor) {
@@ -86,6 +106,11 @@ export class Display {
     displayDeltaV(rocket) {
         const deltaV = rocket.getDeltaV();
         this.deltaVDisplay.innerText = `Delta-V: ${deltaV.toFixed(2)} m/s`;
+    }
+    
+    // Displays current planet distance
+    displayDistance(distance) {
+        this.distanceDisplay.innerText = `Distance: ${distance.toFixed(2)} m/s`;
     }
     
     // Function to accumulate velocity changes and display average acceleration per second
@@ -108,6 +133,22 @@ export class Display {
         }
     }
     
+    
+    // Display for current planet name
+    createNameDisplay() {
+        this.nameDisplay = document.createElement("div");
+        this.nameDisplay.style.position = "absolute";
+        this.nameDisplay.style.bottom = "100px";
+        this.nameDisplay.style.right = "10px";
+        this.nameDisplay.style.color = "white";
+        this.nameDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        this.nameDisplay.style.padding = "5px";
+        this.nameDisplay.style.borderRadius = "5px";
+        this.nameDisplay.style.fontFamily = "Arial, sans-serif";
+        this.nameDisplay.style.fontSize = "14px";
+        this.nameDisplay.style.zIndex = "1";
+        document.body.appendChild(this.nameDisplay);
+    }
     
     // Display for current planet resources
     createResourcesDisplay() {
@@ -169,6 +210,11 @@ export class Display {
     
     displayValue(value) {
         this.valueDisplay.innerText = `Ore Value: ${value.toFixed(2)} $`;
+    }
+    
+    // Function to display name
+    displayName(name) {
+        this.nameDisplay.innerText = `Current Planet: ${name}`;
     }
     
     
