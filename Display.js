@@ -110,7 +110,7 @@ export class Display {
     
     // Displays current planet distance
     displayDistance(distance) {
-        this.distanceDisplay.innerText = `Distance: ${distance.toFixed(2)} m/s`;
+        this.distanceDisplay.innerText = `Distance: ${distance.toFixed(2)} m`;
     }
     
     // Function to accumulate velocity changes and display average acceleration per second
