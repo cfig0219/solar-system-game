@@ -6,9 +6,10 @@ export class Buttons {
      */
     constructor(scene, camera) {
         this.scene = scene;
-        
         this.setButtons();
         
+        // Variable to determine the current button pressed
+        this.buttonPressed = "none";
     }
     
     
@@ -32,7 +33,7 @@ export class Buttons {
         ];
         
         // Button displays
-        const buttonTexts = ["^", "v", "<", ">"];
+        const buttonTexts = ["^", "v", "<", ">"]; // Unique button identifiers
     
         for (let i = 0; i < 4; i++) {
             const button = document.createElement("button");
@@ -48,6 +49,20 @@ export class Buttons {
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
             button.style.zIndex = "1";
+            
+            // Set buttonPressed on mouse down and reset on mouse up
+            button.addEventListener("mousedown", () => {
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("mouseup", () => {
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+
+            // Handle mouse leaving the button while pressed
+            button.addEventListener("mouseleave", () => {
+                this.buttonPressed = "none"; // Reset to "none" if mouse leaves
+            });
+            
             buttonContainer.appendChild(button);
         }
         
@@ -61,7 +76,7 @@ export class Buttons {
         buttonContainer2.style.flexDirection = "column";
         document.body.appendChild(buttonContainer2);
         
-        const buttonTexts2 = ["^", "rcs", "v"];
+        const buttonTexts2 = ["up", "rcs", "down"];
         
         for (let i = 0; i < 3; i++) {
             const button = document.createElement("button");
@@ -76,6 +91,20 @@ export class Buttons {
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
             button.style.zIndex = "1";
+            
+            // Set buttonPressed on mouse down and reset on mouse up
+            button.addEventListener("mousedown", () => {
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("mouseup", () => {
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+
+            // Handle mouse leaving the button while pressed
+            button.addEventListener("mouseleave", () => {
+                this.buttonPressed = "none"; // Reset to "none" if mouse leaves
+            });
+            
             buttonContainer2.appendChild(button);
         }
         
@@ -93,7 +122,7 @@ export class Buttons {
         for (let i = 0; i < 2; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts3[i];
-            button.style.width = "200px";
+            button.style.width = "120px";
             button.style.height = "60px";
             button.style.backgroundColor = "#008000";
             button.style.color = "white";
@@ -103,6 +132,20 @@ export class Buttons {
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
             button.style.zIndex = "1";
+            
+            // Set buttonPressed on mouse down and reset on mouse up
+            button.addEventListener("mousedown", () => {
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("mouseup", () => {
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+
+            // Handle mouse leaving the button while pressed
+            button.addEventListener("mouseleave", () => {
+                this.buttonPressed = "none"; // Reset to "none" if mouse leaves
+            });
+            
             buttonContainer3.appendChild(button);
         }
         
@@ -120,7 +163,7 @@ export class Buttons {
         for (let i = 0; i < 2; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts4[i];
-            button.style.width = "200px";
+            button.style.width = "120px";
             button.style.height = "60px";
             button.style.backgroundColor = "#008000";
             button.style.color = "white";
@@ -130,8 +173,28 @@ export class Buttons {
             button.style.fontFamily = "Arial, sans-serif";
             button.style.fontSize = "14px";
             button.style.zIndex = "1";
+            
+            // Set buttonPressed on mouse down and reset on mouse up
+            button.addEventListener("mousedown", () => {
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("mouseup", () => {
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+
+            // Handle mouse leaving the button while pressed
+            button.addEventListener("mouseleave", () => {
+                this.buttonPressed = "none"; // Reset to "none" if mouse leaves
+            });
+            
             buttonContainer4.appendChild(button);
         }
+    }
+    
+    
+    // Gets current button pressed
+    getButton() {
+        return this.buttonPressed;
     }
 	
 }
