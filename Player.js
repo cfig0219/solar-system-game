@@ -33,6 +33,7 @@ export class Player {
         // Creates rocket class object
         this.rocketLocation = this.camera.target;
         this.rocket = new Rocket(this.rocketLocation, scene, camera);
+        this.spawnLocation = new BABYLON.Vector3(0, 0, 0);
         
         // Creates performance parameters and resource display
         this.display = new Display(scene, camera);
@@ -40,6 +41,7 @@ export class Player {
         // Tracks current planet
         this.currentPlanet = null;
         this.resources = new Resources(scene, camera);
+        this.planetDistance = 0;
         
         // Tracks current player money and tech tier
         this.money = 0.0;
@@ -109,16 +111,6 @@ export class Player {
                 this.clickCount = 0;
                 this.lastClickTime = currentTime;
             }
-            
-            // Reset button-specific actions on release
-            if (this.currentButton === "none") {
-                if (this.isBoosting) {
-                    this.velocity = this.originalVelocity.clone(); // Revert to original velocity
-                    this.isBoosting = false;
-                    this.acceleration = 0.0392;
-                }
-                this.rocket.deactivateLaser(); // Deactivate laser
-            }
     
             // Limit click rate
             if ((this.clickCount < this.clickRateCap) && (this.currentButton !== "none")) {
@@ -145,13 +137,13 @@ export class Player {
                         break;
                     case "a":
                     case "A":
-                    case ">": // Accelerate left
+                    case "<": // Accelerate left
                         this.velocity.addInPlace(right.scale(this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "d":
                     case "D":
-                    case "<": // Accelerate right
+                    case ">": // Accelerate right
                         this.velocity.addInPlace(right.scale(-this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
@@ -239,16 +231,15 @@ export class Player {
             this.previousVelocity.copyFrom(this.velocity);
             
             // Gets distance from current planet
-            let distance = 0;
             let name = "";
             if (this.currentPlanet != null) {
-                distance = (this.rocket.getLocation().subtract(this.currentPlanet.getLocation())).length();
-                distance = distance - this.currentPlanet.getRadius(); // subtracts planet radius
+                this.planetDistance = (this.rocket.getLocation().subtract(this.currentPlanet.getLocation())).length();
+                this.planetDistance = this.planetDistance - this.currentPlanet.getRadius(); // subtracts planet radius
                 name = this.currentPlanet.getName();
             }
             
             // Displays distance and name
-            this.display.displayDistance(distance);
+            this.display.displayDistance(this.planetDistance);
             this.display.displayName(name);
             
             // Updates resource displays
@@ -270,5 +261,35 @@ export class Player {
     
     setPlanet(planet) {
         this.currentPlanet = planet;
+    }
+    
+    getResourceInventory() {
+        let inventory = this.resources.getInventory();
+        return inventory;
+    }
+    
+    // Functions to update location of player
+    setLocation(newLocation) {
+        this.camera.setTarget(newLocation);
+        this.camera.alpha = 1.95;  // Horizontal rotation (45 degrees)
+        this.camera.beta = 1.6;   // Vertical rotation (90 degrees)
+        this.camera.radius = 100; // adjusts default camera distance
+        
+        this.rocket.setLocation(this.camera.target); // Sets Rocket Location
+    }
+    
+    setSpawn(newSpawn) {
+        this.spawnLocation = newSpawn;
+    }
+    
+    getLocation() {
+        return this.camera.target;
+    }
+    
+    objectCollision() {
+        // Respawns player if collision with object
+        if (this.planetDistance < 0) {
+            this.setLocation(this.spawnLocation);
+        }
     }
 }
