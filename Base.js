@@ -8,7 +8,7 @@ export class Base {
     constructor(baseLocation, scene, camera) {
         this.baseRadius = 100;
         this.baseLocation = baseLocation;
-        this.baseMass = 1000;
+        this.baseMass = 100;
         this.baseTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
         this.scene = scene;
         this.baseName = "";
@@ -28,6 +28,11 @@ export class Base {
         // Set cube position
         this.cube.position = this.baseLocation;
         this.cube.renderingGroupId = 1;
+        
+        // Resource and player parameters
+        this.playerDistance = 0;
+        this.playerSpawn = new BABYLON.Vector3(0, 0, 0);
+        this.resources = null;
     }
 	
     
@@ -55,5 +60,37 @@ export class Base {
     
     getName() {
     	return this.baseName;
+    }
+    
+    
+    // Functions to update location of player
+    getDistance(playerLocation) {
+        this.playerDistance = (this.baseLocation.subtract(playerLocation)).length();
+        return this.playerDistance;
+    }
+    
+    setPlayerLocation(player, newLocation) {
+        player.setLocation(newLocation);
+    }
+    
+    setPlayerSpawn(newSpawn) {
+        this.playerSpawn = newSpawn;
+    }
+    
+    setResources(resources) {
+        this.resources = resources;
+    }
+    
+    getResources() {
+        return this.resources;
+    }
+    
+    // Functions to reset location while in menu
+    inMenu(player) {
+    
+        // places player back in spawn if close to base
+        if (this.playerDistance < 300) {
+            player.setLocation(this.playerSpawn);
+        }
     }
 }
