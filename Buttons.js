@@ -63,6 +63,20 @@ export class Buttons {
                 this.buttonPressed = "none"; // Reset to "none" if mouse leaves
             });
             
+            // Add touch support
+            button.addEventListener("touchstart", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("touchend", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+            button.addEventListener("touchcancel", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" if touch is canceled
+            });
+            
             buttonContainer.appendChild(button);
         }
         
@@ -103,6 +117,20 @@ export class Buttons {
             // Handle mouse leaving the button while pressed
             button.addEventListener("mouseleave", () => {
                 this.buttonPressed = "none"; // Reset to "none" if mouse leaves
+            });
+            
+            // Add touch support
+            button.addEventListener("touchstart", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("touchend", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+            button.addEventListener("touchcancel", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" if touch is canceled
             });
             
             buttonContainer2.appendChild(button);
@@ -146,6 +174,20 @@ export class Buttons {
                 this.buttonPressed = "none"; // Reset to "none" if mouse leaves
             });
             
+            // Add touch support
+            button.addEventListener("touchstart", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("touchend", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+            button.addEventListener("touchcancel", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" if touch is canceled
+            });
+            
             buttonContainer3.appendChild(button);
         }
         
@@ -185,6 +227,20 @@ export class Buttons {
             // Handle mouse leaving the button while pressed
             button.addEventListener("mouseleave", () => {
                 this.buttonPressed = "none"; // Reset to "none" if mouse leaves
+            });
+            
+            // Add touch support
+            button.addEventListener("touchstart", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = button.innerText; // Set the pressed button's name
+            });
+            button.addEventListener("touchend", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" when released
+            });
+            button.addEventListener("touchcancel", (event) => {
+                event.preventDefault(); // Prevent mouse event emulation
+                this.buttonPressed = "none"; // Reset to "none" if touch is canceled
             });
             
             buttonContainer4.appendChild(button);
