@@ -211,7 +211,7 @@
       
       // Creates Hel
       const HelRadius = 1080;
-      const HelLocation = new BABYLON.Vector3(SinaiDistance/2 - (15546 + SinaiRadius), 0, -SinaiDistance);
+      const HelLocation = new BABYLON.Vector3(SinaiDistance/2 - (21879 + SinaiRadius), 0, -SinaiDistance);
       const Hel = new Planet(HelRadius, HelLocation, scene, camera);
       Hel.createLandLayer();
       Hel.setTexture(new BABYLON.Texture('Textures/Sinai/HelMap.png', scene));
@@ -222,7 +222,7 @@
       
       // Creates Meropis
       const MeropisRadius = 1582;
-      const MeropisLocation = new BABYLON.Vector3(SinaiDistance/2 - (23319 + SinaiRadius), 0, -SinaiDistance);
+      const MeropisLocation = new BABYLON.Vector3(SinaiDistance/2 - (32819 + SinaiRadius), 0, -SinaiDistance);
       const Meropis = new Planet(MeropisRadius, MeropisLocation, scene, camera);
       Meropis.createLandLayer();
       Meropis.createAtmosphere();
@@ -235,7 +235,7 @@
       
       // Creates Babylon
       const BabylonRadius = 2228;
-      const BabylonLocation = new BABYLON.Vector3(SinaiDistance/2 - (38865 + SinaiRadius), 0, -SinaiDistance);
+      const BabylonLocation = new BABYLON.Vector3(SinaiDistance/2 - (55793 + SinaiRadius), 0, -SinaiDistance);
       const Babylon = new Planet(BabylonRadius, BabylonLocation, scene, camera);
       Babylon.createLandLayer();
       Babylon.createAtmosphere();
@@ -249,7 +249,7 @@
       
       // Creates Gomorrah
       const GomorrahRadius = 1258;
-      const GomorrahLocation = new BABYLON.Vector3(SinaiDistance/2 - (66071 + SinaiRadius), 0, -SinaiDistance);
+      const GomorrahLocation = new BABYLON.Vector3(SinaiDistance/2 - (97637 + SinaiRadius), 0, -SinaiDistance);
       const Gomorrah = new Planet(GomorrahRadius, GomorrahLocation, scene, camera);
       Gomorrah.setTexture(new BABYLON.Texture('Textures/Sinai/GomorrahMap.png', scene));
       Gomorrah.setMass(GomorrahRadius, 3.8);
@@ -257,7 +257,7 @@
       
       // Creates Dorado
       const DoradoRadius = 456;
-      const DoradoLocation = new BABYLON.Vector3(SinaiDistance/2 - (99106 + SinaiRadius), 0, -SinaiDistance);
+      const DoradoLocation = new BABYLON.Vector3(SinaiDistance/2 - (151337 + SinaiRadius), 0, -SinaiDistance);
       const Dorado = new Planet(DoradoRadius, DoradoLocation, scene, camera);
       Dorado.setTexture(new BABYLON.Texture('Textures/Sinai/DoradoMap.png', scene));
       Dorado.setMass(DoradoRadius, 3.25);
@@ -349,23 +349,23 @@
 	  Earth.setName("earth");
       
       // Camera parameters
-      const cameraLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + 13000); // setting it equal to planet moves planet
-      camera.setTarget(cameraLocation);
-      camera.alpha = 1.95;  // Horizontal rotation (45 degrees)
-	  camera.beta = 1.6;   // Vertical rotation (90 degrees)
-      camera.radius = 100; // adjusts default camera distance
+      const spawnLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + EarthRadius + 18158); // setting it equal to planet moves planet
+      player.setLocation(spawnLocation);
+      player.setSpawn(new BABYLON.Vector3(spawnLocation.x, spawnLocation.y, spawnLocation.z));
       
       // Creates Luna
       const LunaRadius = 1076;
-      const LunaLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 2000, 0, SolDistance + 10000);
+      const LunaLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 2000, 0, SolDistance + EarthRadius + 15158);
       const Luna = new Planet(LunaRadius, LunaLocation, scene, camera);
       Luna.setTexture(new BABYLON.Texture('Textures/Sol/Earth/LunaMap.png', scene));
       Luna.setMass(LunaRadius, 3.98);
       Luna.setName("luna");
       
       // Creates base
-      const baseLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 4500, 0, SolDistance + 12000);
+      const baseLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 4500, 0, SolDistance + EarthRadius + 17158);
       const homeBase = new Base(baseLocation, scene, camera);
+      // must be assigned in the format below due to quirks with Javascript changing spawn location
+      homeBase.setPlayerSpawn(new BABYLON.Vector3(spawnLocation.x, spawnLocation.y, spawnLocation.z));
       
       // Creates Mercury
       const MercuryRadius = 1344;
@@ -480,8 +480,16 @@
       
       // Updates player velocity to account for gravity
       scene.onBeforeRenderObservable.add(() => {
-            player.setVelocity(planetList.getVelocity());
-            player.setPlanet(planetList.getPlanet());
+          player.setVelocity(planetList.getVelocity());
+          player.setPlanet(planetList.getPlanet());
+          player.objectCollision();
+          
+          // Updates base with player resources and location
+          homeBase.setResources(player.getResourceInventory());
+          homeBase.getDistance(player.getLocation());
+          
+          // Sets player location back to spawn while in menu
+          homeBase.inMenu(player);
       });
       
       // Resets gravitational velocity to zero when spacebar is pressed
