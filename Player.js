@@ -27,6 +27,7 @@ export class Player {
         
         // Calls function to initialize player controls
         this.buttons = new Buttons(scene, camera);
+        this.currentButton = "none";
         this.setControls();
         
         // Creates rocket class object
@@ -49,111 +50,162 @@ export class Player {
     
     
     // Sets the keyboard and button controls to move player
-    setControls() {        
-        // Initialize variables for click rate capping
-        this.clickCount = 0;
-        this.lastClickTime = 0;
+    setControls() {
+        this.clickCount = 0; // Tracks the number of clicks
+        this.lastClickTime = 0; // Tracks the last click time
         this.clickRateCap = 10; // Max clicks per second allowed
-
-        // Function to handle key down events and adjust velocity
+        this.lastKeyPressed = "none"; // Tracks the last key pressed
+        this.currentButton = "none"; // Tracks the last button pressed
+        const keyState = {}; // Tracks the state of pressed keys
+    
+        // Listen for keydown events
         window.addEventListener("keydown", (event) => {
-            const currentTime = performance.now() / 1000; // Current time in seconds
-
+            keyState[event.key] = true; // Mark the key as pressed
+            this.lastKeyPressed = event.key; // Update the last key pressed
+    
             // Reset click count every second
+            const currentTime = performance.now() / 1000; // Current time in seconds
             if (currentTime - this.lastClickTime >= 1) {
                 this.clickCount = 0;
                 this.lastClickTime = currentTime;
             }
-
-            // If clicks this second are under the cap, proceed
+    
+            // Limit click rate
             if (this.clickCount < this.clickRateCap) {
-                this.clickCount++; // Count the key press
-
-                // Calculate forward and right vectors relative to the camera's current orientation
+                this.clickCount++; // Count the click
+            }
+        });
+    
+        // Listen for keyup events
+        window.addEventListener("keyup", (event) => {
+            keyState[event.key] = false; // Mark the key as released
+    
+            if (event.key === " ") { // Handle boost release
+                if (this.isBoosting) {
+                    this.velocity = this.originalVelocity.clone(); // Revert to original velocity
+                    this.isBoosting = false;
+                    this.acceleration = 0.0392;
+                }
+            }
+    
+            if (event.key === "m" || event.key === "M") { // Handle mining button release
+                this.rocket.deactivateLaser(); // Deactivate laser
+            }
+    
+            this.lastKeyPressed = "none"; // Reset the key state
+        });
+    
+        // Update button and key states on every frame
+        this.scene.onBeforeRenderObservable.add(() => {
+            const buttonInput = this.buttons.getButton() || "none"; // Get the current button
+            const activeKey = this.lastKeyPressed || "none"; // Get the current key
+    
+            // Combine inputs: prioritize button input over keyboard
+            this.currentButton = buttonInput !== "none" ? buttonInput : activeKey;
+    
+            // Reset click count every second
+            const currentTime = performance.now() / 1000; // Current time in seconds
+            if (currentTime - this.lastClickTime >= 1) {
+                this.clickCount = 0;
+                this.lastClickTime = currentTime;
+            }
+            
+            // Reset button-specific actions on release
+            if (this.currentButton === "none") {
+                if (this.isBoosting) {
+                    this.velocity = this.originalVelocity.clone(); // Revert to original velocity
+                    this.isBoosting = false;
+                    this.acceleration = 0.0392;
+                }
+                this.rocket.deactivateLaser(); // Deactivate laser
+            }
+    
+            // Limit click rate
+            if ((this.clickCount < this.clickRateCap) && (this.currentButton !== "none")) {
+                this.clickCount++; // Count the click
+    
+                // Calculate movement vectors
                 const forward = this.camera.getFrontPosition(1).subtract(this.camera.position).normalize();
                 const right = BABYLON.Vector3.Cross(forward, BABYLON.Vector3.Up()).normalize();
                 const up = BABYLON.Vector3.Up(); // Y-axis direction for up and down movement
-
-                switch (event.key) {
+    
+                // Handle movement and actions based on combined inputs
+                switch (this.currentButton) {
                     case "w":
-                    case "W": // Accelerate forward
+                    case "W":
+                    case "^": // Accelerate forward
                         this.velocity.addInPlace(forward.scale(this.acceleration));
-                        // Sets the change in delta V
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "s":
-                    case "S": // Accelerate backward
+                    case "S":
+                    case "v": // Accelerate backward
                         this.velocity.addInPlace(forward.scale(-this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "a":
-                    case "A": // Accelerate left
+                    case "A":
+                    case ">": // Accelerate left
                         this.velocity.addInPlace(right.scale(this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "d":
-                    case "D": // Accelerate right
+                    case "D":
+                    case "<": // Accelerate right
                         this.velocity.addInPlace(right.scale(-this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "r":
-                    case "R": // Move up
+                    case "R":
+                    case "up": // Move up
                         this.velocity.addInPlace(up.scale(this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                     case "f":
-                    case "F": // Move down
+                    case "F":
+                    case "down": // Move down
                         this.velocity.addInPlace(up.scale(-this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
                         break;
                         
                     case "m":
-                    case "M": // Mine resources
+                    case "M":
+                    case "drill": // Mine resources
                         if (this.resources.getMass() < this.rocket.getOreCapacity()) {
-                            // if less than ore capacity
-                            this.resources.mineResources();
-                            this.rocket.activateLaser();
+                            this.resources.mineResources(); // Mine resources
+                            this.rocket.activateLaser(); // Activate laser
                         }
                         break;
                     case "o":
-                    case "O": // Sell ore
-                        this.money = this.money + this.resources.getValue();
+                    case "O":
+                    case "sell ore": // Sell ore
+                        this.money += this.resources.getValue();
                         this.display.displayMoney(this.money);
-                        this.resources.resetResources();
-                        console.log(this.resources.getInventory());
+                        this.resources.resetResources(); // Reset resources
                         break;
                     case "u":
-                    case "U": // Upgrade tech tier
+                    case "U":
+                    case "upgrade": // Upgrade tech tier
                         this.techTier = this.rocket.upgrade(this.techTier, this.money);
                         this.money = this.rocket.upgradeCost();
-                        // Updates money and tech displays
                         this.display.displayTier(this.techTier);
                         this.display.displayMoney(this.money);
                         break;
                         
-                    case " ": // Space bar pressed
+                    case " ":
+                    case "warp": // Boost
                         if (!this.isBoosting) {
                             this.isBoosting = true;
-                            this.originalVelocity = this.velocity.clone(); // Store the original velocity
-                            this.velocity.scaleInPlace(100); // Boost velocity by 100x
+                            this.originalVelocity = this.velocity.clone();
+                            this.velocity.scaleInPlace(100); // Boost velocity
                             this.acceleration = 200;
                         }
                         break;
+                        
+                    case "none":
+                        this.rocket.deactivateLaser(); // Deactivate laser
+                        break;
                 }
-            }
-            
-        });
-        
-        // Check for key release
-        window.addEventListener("keyup", (event) => {
-            if (event.key === " " && this.isBoosting) { // Space bar released
-                this.velocity = this.originalVelocity.clone(); // Revert to original velocity
-                this.isBoosting = false;
-                this.acceleration = 0.0392;
-            }
-            
-            if (event.key === "m" || event.key === "M") { // mining button released
-                this.rocket.deactivateLaser(); // deactivates laser
             }
         });
 
