@@ -182,6 +182,7 @@ export class Player {
                         this.money = this.rocket.upgradeCost();
                         this.display.displayTier(this.techTier);
                         this.display.displayMoney(this.money);
+                        this.buttons.determineColor(this.techTier);
                         break;
                         
                     case " ":
