@@ -35,14 +35,14 @@ export class Display {
     createVelocityDisplay() {
         this.velocityDisplay = document.createElement("div");
         this.velocityDisplay.style.position = "absolute";
-        this.velocityDisplay.style.bottom = "40px";
+        this.velocityDisplay.style.bottom = "30px";
         this.velocityDisplay.style.left = "10px";
         this.velocityDisplay.style.color = "white";
         this.velocityDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.velocityDisplay.style.padding = "5px";
         this.velocityDisplay.style.borderRadius = "5px";
         this.velocityDisplay.style.fontFamily = "Arial, sans-serif";
-        this.velocityDisplay.style.fontSize = "14px";
+        this.velocityDisplay.style.fontSize = "12px";
         this.velocityDisplay.style.zIndex = "1";
         document.body.appendChild(this.velocityDisplay);
     }
@@ -58,7 +58,7 @@ export class Display {
         this.accelerationDisplay.style.padding = "5px";
         this.accelerationDisplay.style.borderRadius = "5px";
         this.accelerationDisplay.style.fontFamily = "Arial, sans-serif";
-        this.accelerationDisplay.style.fontSize = "14px";
+        this.accelerationDisplay.style.fontSize = "12px";
         this.accelerationDisplay.style.zIndex = "1";
         document.body.appendChild(this.accelerationDisplay);
     }
@@ -67,14 +67,14 @@ export class Display {
     createDeltaVDisplay() {
         this.deltaVDisplay = document.createElement("div");
         this.deltaVDisplay.style.position = "absolute";
-        this.deltaVDisplay.style.bottom = "70px";
+        this.deltaVDisplay.style.bottom = "50px";
         this.deltaVDisplay.style.left = "10px";
         this.deltaVDisplay.style.color = "white";
         this.deltaVDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.deltaVDisplay.style.padding = "5px";
         this.deltaVDisplay.style.borderRadius = "5px";
         this.deltaVDisplay.style.fontFamily = "Arial, sans-serif";
-        this.deltaVDisplay.style.fontSize = "14px";
+        this.deltaVDisplay.style.fontSize = "12px";
         this.deltaVDisplay.style.zIndex = "1";
         document.body.appendChild(this.deltaVDisplay);
     }
@@ -83,14 +83,14 @@ export class Display {
     createDistanceDisplay() {
         this.distanceDisplay = document.createElement("div");
         this.distanceDisplay.style.position = "absolute";
-        this.distanceDisplay.style.bottom = "100px";
+        this.distanceDisplay.style.bottom = "70px";
         this.distanceDisplay.style.left = "10px";
         this.distanceDisplay.style.color = "white";
         this.distanceDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.distanceDisplay.style.padding = "5px";
         this.distanceDisplay.style.borderRadius = "5px";
         this.distanceDisplay.style.fontFamily = "Arial, sans-serif";
-        this.distanceDisplay.style.fontSize = "14px";
+        this.distanceDisplay.style.fontSize = "12px";
         this.distanceDisplay.style.zIndex = "1";
         document.body.appendChild(this.distanceDisplay);
     }
@@ -138,14 +138,14 @@ export class Display {
     createNameDisplay() {
         this.nameDisplay = document.createElement("div");
         this.nameDisplay.style.position = "absolute";
-        this.nameDisplay.style.bottom = "100px";
+        this.nameDisplay.style.bottom = "70px";
         this.nameDisplay.style.right = "10px";
         this.nameDisplay.style.color = "white";
         this.nameDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.nameDisplay.style.padding = "5px";
         this.nameDisplay.style.borderRadius = "5px";
         this.nameDisplay.style.fontFamily = "Arial, sans-serif";
-        this.nameDisplay.style.fontSize = "14px";
+        this.nameDisplay.style.fontSize = "12px";
         this.nameDisplay.style.zIndex = "1";
         document.body.appendChild(this.nameDisplay);
     }
@@ -154,14 +154,14 @@ export class Display {
     createResourcesDisplay() {
         this.resourcesDisplay = document.createElement("div");
         this.resourcesDisplay.style.position = "absolute";
-        this.resourcesDisplay.style.bottom = "70px";
+        this.resourcesDisplay.style.bottom = "50px";
         this.resourcesDisplay.style.right = "10px";
         this.resourcesDisplay.style.color = "white";
         this.resourcesDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.resourcesDisplay.style.padding = "5px";
         this.resourcesDisplay.style.borderRadius = "5px";
         this.resourcesDisplay.style.fontFamily = "Arial, sans-serif";
-        this.resourcesDisplay.style.fontSize = "14px";
+        this.resourcesDisplay.style.fontSize = "12px";
         this.resourcesDisplay.style.zIndex = "1";
         document.body.appendChild(this.resourcesDisplay);
     }
@@ -170,14 +170,14 @@ export class Display {
     createMassDisplay() {
         this.massDisplay = document.createElement("div");
         this.massDisplay.style.position = "absolute";
-        this.massDisplay.style.bottom = "40px";
+        this.massDisplay.style.bottom = "30px";
         this.massDisplay.style.right = "10px";
         this.massDisplay.style.color = "white";
         this.massDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.massDisplay.style.padding = "5px";
         this.massDisplay.style.borderRadius = "5px";
         this.massDisplay.style.fontFamily = "Arial, sans-serif";
-        this.massDisplay.style.fontSize = "14px";
+        this.massDisplay.style.fontSize = "12px";
         this.massDisplay.style.zIndex = "1";
         document.body.appendChild(this.massDisplay);
     }
@@ -193,7 +193,7 @@ export class Display {
         this.valueDisplay.style.padding = "5px";
         this.valueDisplay.style.borderRadius = "5px";
         this.valueDisplay.style.fontFamily = "Arial, sans-serif";
-        this.valueDisplay.style.fontSize = "14px";
+        this.valueDisplay.style.fontSize = "12px";
         this.valueDisplay.style.zIndex = "1";
         document.body.appendChild(this.valueDisplay);
     }
@@ -229,7 +229,7 @@ export class Display {
         this.moneyDisplay.style.padding = "5px";
         this.moneyDisplay.style.borderRadius = "5px";
         this.moneyDisplay.style.fontFamily = "Arial, sans-serif";
-        this.moneyDisplay.style.fontSize = "14px";
+        this.moneyDisplay.style.fontSize = "12px";
         this.moneyDisplay.style.zIndex = "1";
         document.body.appendChild(this.moneyDisplay);
     }
@@ -238,14 +238,14 @@ export class Display {
     createTierDisplay() {
         this.tierDisplay = document.createElement("div");
         this.tierDisplay.style.position = "absolute";
-        this.tierDisplay.style.top = "40px";
+        this.tierDisplay.style.top = "30px";
         this.tierDisplay.style.right = "10px";
         this.tierDisplay.style.color = "white";
         this.tierDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
         this.tierDisplay.style.padding = "5px";
         this.tierDisplay.style.borderRadius = "5px";
         this.tierDisplay.style.fontFamily = "Arial, sans-serif";
-        this.tierDisplay.style.fontSize = "14px";
+        this.tierDisplay.style.fontSize = "12px";
         this.tierDisplay.style.zIndex = "1";
         document.body.appendChild(this.tierDisplay);
     }
