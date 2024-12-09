@@ -280,7 +280,8 @@ export class Player {
     }
     
     setSpawn(newSpawn) {
-        this.spawnLocation = newSpawn;
+        const spawn = newSpawn;
+        this.spawnLocation = spawn;
     }
     
     getLocation() {
