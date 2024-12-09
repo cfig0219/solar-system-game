@@ -150,7 +150,7 @@ export class Buttons {
         this.buttonContainer3 = document.createElement("div");
         this.buttonContainer3.style.position = "absolute";
         this.buttonContainer3.style.bottom = "5%";
-        this.buttonContainer3.style.left = "35%";
+        this.buttonContainer3.style.left = "40%";
         this.buttonContainer3.style.display = "flex";
         this.buttonContainer3.style.gap = "30px";
         document.body.appendChild(this.buttonContainer3);
@@ -206,7 +206,7 @@ export class Buttons {
         this.buttonContainer4 = document.createElement("div");
         this.buttonContainer4.style.position = "absolute";
         this.buttonContainer4.style.top = "5%";
-        this.buttonContainer4.style.left = "35%";
+        this.buttonContainer4.style.left = "40%";
         this.buttonContainer4.style.display = "flex";
         this.buttonContainer4.style.gap = "30px";
         document.body.appendChild(this.buttonContainer4);
