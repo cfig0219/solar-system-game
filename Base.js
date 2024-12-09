@@ -74,7 +74,8 @@ export class Base {
     }
     
     setPlayerSpawn(newSpawn) {
-        this.playerSpawn = newSpawn;
+        const spawn = newSpawn;
+        this.playerSpawn = spawn;
     }
     
     setResources(resources) {
