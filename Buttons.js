@@ -6,30 +6,38 @@ export class Buttons {
      */
     constructor(scene, camera) {
         this.scene = scene;
-        this.setButtons();
+        
+        // Arrays to store all buttons
+        this.buttons = [];
+        this.buttons2 = [];
+        this.buttons3 = [];
+        this.buttons4 = [];
         
         // Variable to determine the current button pressed
         this.buttonPressed = "none";
+        
+        // Create buttons with a default color
+        this.setButtons("#e67300");
     }
     
     
     // Initializes buttons
-    setButtons() {
+    setButtons(buttonColor) {
         // Left side buttons
-        const buttonContainer = document.createElement("div");
-        buttonContainer.style.position = "absolute";
-        buttonContainer.style.bottom = "20%";
-        buttonContainer.style.left = "10%";
-        buttonContainer.style.display = "flex";
-        buttonContainer.style.flexDirection = "column";
-        document.body.appendChild(buttonContainer);
+        this.buttonContainer = document.createElement("div");
+        this.buttonContainer.style.position = "absolute";
+        this.buttonContainer.style.bottom = "20%";
+        this.buttonContainer.style.left = "10%";
+        this.buttonContainer.style.display = "flex";
+        this.buttonContainer.style.flexDirection = "column";
+        document.body.appendChild(this.buttonContainer);
         
         // X and Y offsets for positioning buttons
         const buttonOffsets = [
             { x: 0, y: 0 },  // Top button
-            { x: 0, y: 80 },  // Bottom button
-            { x: -70, y: -50 }, // Left button
-            { x: 70, y: -110 },  // Right button
+            { x: 0, y: 57 },  // Bottom button
+            { x: -45, y: -30 }, // Left button
+            { x: 45, y: -70 },  // Right button
         ];
         
         // Button displays
@@ -38,16 +46,16 @@ export class Buttons {
         for (let i = 0; i < 4; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts[i];
-            button.style.width = "60px";
-            button.style.height = "60px";
-            button.style.backgroundColor = "#008000";
+            button.style.width = "40px";
+            button.style.height = "40px";
+            button.style.backgroundColor = buttonColor;
             button.style.transform = `translate(${buttonOffsets[i].x}px, ${buttonOffsets[i].y}px)`;
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
-            button.style.fontSize = "14px";
+            button.style.fontSize = "12px";
             button.style.zIndex = "1";
             
             // Set buttonPressed on mouse down and reset on mouse up
@@ -77,33 +85,34 @@ export class Buttons {
                 this.buttonPressed = "none"; // Reset to "none" if touch is canceled
             });
             
-            buttonContainer.appendChild(button);
+            this.buttonContainer.appendChild(button);
+            this.buttons.push(button); // Store reference to the button
         }
         
         // Right side buttons
-        const buttonContainer2 = document.createElement("div");
-        buttonContainer2.style.position = "absolute";
-        buttonContainer2.style.bottom = "25%";
-        buttonContainer2.style.right = "5%";
-        buttonContainer2.style.display = "flex";
-        buttonContainer2.style.gap = "10px";
-        buttonContainer2.style.flexDirection = "column";
-        document.body.appendChild(buttonContainer2);
+        this.buttonContainer2 = document.createElement("div");
+        this.buttonContainer2.style.position = "absolute";
+        this.buttonContainer2.style.bottom = "25%";
+        this.buttonContainer2.style.right = "5%";
+        this.buttonContainer2.style.display = "flex";
+        this.buttonContainer2.style.gap = "15px";
+        this.buttonContainer2.style.flexDirection = "column";
+        document.body.appendChild(this.buttonContainer2);
         
         const buttonTexts2 = ["up", "rcs", "down"];
         
         for (let i = 0; i < 3; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts2[i];
-            button.style.width = "60px";
-            button.style.height = "60px";
-            button.style.backgroundColor = "#008000";
+            button.style.width = "40px";
+            button.style.height = "40px";
+            button.style.backgroundColor = buttonColor;
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
-            button.style.fontSize = "14px";
+            button.style.fontSize = "12px";
             button.style.zIndex = "1";
             
             // Set buttonPressed on mouse down and reset on mouse up
@@ -133,32 +142,33 @@ export class Buttons {
                 this.buttonPressed = "none"; // Reset to "none" if touch is canceled
             });
             
-            buttonContainer2.appendChild(button);
+            this.buttonContainer2.appendChild(button);
+            this.buttons2.push(button); // Store reference to the button
         }
         
         // Bottom buttons
-        const buttonContainer3 = document.createElement("div");
-        buttonContainer3.style.position = "absolute";
-        buttonContainer3.style.bottom = "5%";
-        buttonContainer3.style.left = "35%";
-        buttonContainer3.style.display = "flex";
-        buttonContainer3.style.gap = "30px";
-        document.body.appendChild(buttonContainer3);
+        this.buttonContainer3 = document.createElement("div");
+        this.buttonContainer3.style.position = "absolute";
+        this.buttonContainer3.style.bottom = "5%";
+        this.buttonContainer3.style.left = "35%";
+        this.buttonContainer3.style.display = "flex";
+        this.buttonContainer3.style.gap = "30px";
+        document.body.appendChild(this.buttonContainer3);
         
         const buttonTexts3 = ["drill", "warp"];
         
         for (let i = 0; i < 2; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts3[i];
-            button.style.width = "120px";
-            button.style.height = "60px";
-            button.style.backgroundColor = "#008000";
+            button.style.width = "80px";
+            button.style.height = "40px";
+            button.style.backgroundColor = buttonColor;
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
-            button.style.fontSize = "14px";
+            button.style.fontSize = "12px";
             button.style.zIndex = "1";
             
             // Set buttonPressed on mouse down and reset on mouse up
@@ -188,32 +198,33 @@ export class Buttons {
                 this.buttonPressed = "none"; // Reset to "none" if touch is canceled
             });
             
-            buttonContainer3.appendChild(button);
+            this.buttonContainer3.appendChild(button);
+            this.buttons3.push(button); // Store reference to the button
         }
         
         // Top buttons
-        const buttonContainer4 = document.createElement("div");
-        buttonContainer4.style.position = "absolute";
-        buttonContainer4.style.top = "5%";
-        buttonContainer4.style.left = "35%";
-        buttonContainer4.style.display = "flex";
-        buttonContainer4.style.gap = "30px";
-        document.body.appendChild(buttonContainer4);
+        this.buttonContainer4 = document.createElement("div");
+        this.buttonContainer4.style.position = "absolute";
+        this.buttonContainer4.style.top = "5%";
+        this.buttonContainer4.style.left = "35%";
+        this.buttonContainer4.style.display = "flex";
+        this.buttonContainer4.style.gap = "30px";
+        document.body.appendChild(this.buttonContainer4);
         
         const buttonTexts4 = ["upgrade", "sell ore"];
         
         for (let i = 0; i < 2; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts4[i];
-            button.style.width = "120px";
-            button.style.height = "60px";
-            button.style.backgroundColor = "#008000";
+            button.style.width = "80px";
+            button.style.height = "40px";
+            button.style.backgroundColor = buttonColor;
             button.style.color = "white";
             button.style.border = "none";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
-            button.style.fontSize = "14px";
+            button.style.fontSize = "12px";
             button.style.zIndex = "1";
             
             // Set buttonPressed on mouse down and reset on mouse up
@@ -243,7 +254,8 @@ export class Buttons {
                 this.buttonPressed = "none"; // Reset to "none" if touch is canceled
             });
             
-            buttonContainer4.appendChild(button);
+            this.buttonContainer4.appendChild(button);
+            this.buttons4.push(button); // Store reference to the button
         }
     }
     
@@ -251,6 +263,24 @@ export class Buttons {
     // Gets current button pressed
     getButton() {
         return this.buttonPressed;
+    }
+    
+    // Changes button color
+    setColor(newColor) {
+        // Update colors for all buttons in each array
+        this.buttons.forEach((button) => (button.style.backgroundColor = newColor));
+        this.buttons2.forEach((button) => (button.style.backgroundColor = newColor));
+        this.buttons3.forEach((button) => (button.style.backgroundColor = newColor));
+        this.buttons4.forEach((button) => (button.style.backgroundColor = newColor));
+    }
+    
+    // Determines color based on tier
+    determineColor(tier) {
+        if (tier == "chemical") { this.setColor("#e67300"); }
+        else if (tier == "nuclear") { this.setColor("#ff3385"); }
+        else if (tier == "fusion") { this.setColor("#1a75ff"); }
+        else if (tier == "antimatter") { this.setColor("#33ccff"); }
+        else if (tier == "warp") { this.setColor("#9999ff"); }
     }
 	
 }
