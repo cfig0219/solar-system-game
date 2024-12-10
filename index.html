@@ -143,7 +143,6 @@
       Nysa.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Nysa.setTexture(new BABYLON.Texture('Textures/Nysa/NysaMap.png', scene));
       Nysa.setLand(new BABYLON.Texture('Textures/Nysa/NysaLand.png', scene));
-      Nysa.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Nysa.setAtmosphereColor(new BABYLON.Color3(1, 0.7, 1));
       Nysa.setCloudColor(new BABYLON.Color3(0.8, 0.7, 0.5));
       Nysa.setAtmosphereOpacity(0.24);
@@ -160,6 +159,7 @@
       Ararat.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Ararat.setTexture(new BABYLON.Texture('Textures/Ararat/AraratMap2.png', scene));
       Ararat.setLand(new BABYLON.Texture('Textures/Ararat/AraratLand2.png', scene));
+      Ararat.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
       Ararat.setAtmosphereOpacity(0.22);
       Ararat.setMass(AraratRadius, 6.79);
       Ararat.setName("ararat");
@@ -383,7 +383,7 @@
       Venus.createCloudLayer();
       Venus.createAtmosphere();
       Venus.setTexture(new BABYLON.Texture('Textures/Sol/Venus/VenusMap.jpg', scene));
-      Venus.setClouds(new BABYLON.Texture('Textures/Clouds/VenusClouds2.png', scene));
+      Venus.setClouds(new BABYLON.Texture('Textures/Clouds/VenusClouds.png', scene));
       Venus.setAtmosphereColor(new BABYLON.Color3(0.9, 0.9, 0.9))
       Venus.setAtmosphereOpacity(0.2);
       Venus.setMass(VenusRadius, 9.32);
