@@ -33,7 +33,6 @@ export class Player {
         // Creates rocket class object
         this.rocketLocation = this.camera.target;
         this.rocket = new Rocket(this.rocketLocation, scene, camera);
-        this.spawnLocation = new BABYLON.Vector3(0, 0, 0);
         
         // Creates performance parameters and resource display
         this.display = new Display(scene, camera);
@@ -279,19 +278,15 @@ export class Player {
         this.rocket.setLocation(this.camera.target); // Sets Rocket Location
     }
     
-    setSpawn(newSpawn) {
-        const spawn = newSpawn;
-        this.spawnLocation = spawn;
-    }
-    
     getLocation() {
         return this.camera.target;
     }
     
-    objectCollision() {
+    objectCollision(spawnLocation) {
         // Respawns player if collision with object
         if (this.planetDistance < 0) {
-            this.setLocation(this.spawnLocation);
+            this.setLocation(spawnLocation);
+            console.log(spawnLocation);
         }
     }
 }
