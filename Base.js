@@ -31,7 +31,6 @@ export class Base {
         
         // Resource and player parameters
         this.playerDistance = 0;
-        this.playerSpawn = new BABYLON.Vector3(0, 0, 0);
         this.resources = null;
     }
 	
@@ -73,11 +72,6 @@ export class Base {
         player.setLocation(newLocation);
     }
     
-    setPlayerSpawn(newSpawn) {
-        const spawn = newSpawn;
-        this.playerSpawn = spawn;
-    }
-    
     setResources(resources) {
         this.resources = resources;
     }
@@ -87,11 +81,12 @@ export class Base {
     }
     
     // Functions to reset location while in menu
-    inMenu(player) {
+    inMenu(player, spawnLocation) {
     
         // places player back in spawn if close to base
         if (this.playerDistance < 300) {
-            player.setLocation(this.playerSpawn);
+            player.setLocation(spawnLocation);
+            console.log(spawnLocation)
         }
     }
 }
