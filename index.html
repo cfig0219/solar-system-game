@@ -350,9 +350,8 @@
 	  Earth.setName("earth");
       
       // Camera parameters
-      const spawnLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + EarthRadius + 18158); // setting it equal to planet moves planet
-      player.setLocation(spawnLocation);
-      player.setSpawn(new BABYLON.Vector3(spawnLocation.x, spawnLocation.y, spawnLocation.z));
+      let spawnLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + EarthRadius + 18158); // setting it equal to planet moves planet
+      player.setLocation(new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + EarthRadius + 18158));
       
       // Creates Luna
       const LunaRadius = 1076;
@@ -365,8 +364,6 @@
       // Creates base
       const baseLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 4500, 0, SolDistance + EarthRadius + 17158);
       const homeBase = new Base(baseLocation, scene, camera);
-      // must be assigned in the format below due to quirks with Javascript changing spawn location
-      homeBase.setPlayerSpawn(new BABYLON.Vector3(spawnLocation.x, spawnLocation.y, spawnLocation.z));
       
       // Creates Mercury
       const MercuryRadius = 1344;
@@ -483,14 +480,16 @@
       scene.onBeforeRenderObservable.add(() => {
           player.setVelocity(planetList.getVelocity());
           player.setPlanet(planetList.getPlanet());
-          player.objectCollision();
+          player.objectCollision(spawnLocation);
           
           // Updates base with player resources and location
           homeBase.setResources(player.getResourceInventory());
           homeBase.getDistance(player.getLocation());
           
           // Sets player location back to spawn while in menu
-          homeBase.inMenu(player);
+          // Forces spawnLocation to remain constant
+          spawnLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + EarthRadius + 18158);
+          homeBase.inMenu(player, spawnLocation);
       });
       
       // Resets gravitational velocity to zero when spacebar is pressed
