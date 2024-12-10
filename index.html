@@ -158,8 +158,8 @@
       Ararat.createCloudLayer();
       Ararat.createAtmosphere();
       Ararat.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
-      Ararat.setTexture(new BABYLON.Texture('Textures/Ararat/AraratMap.png', scene));
-      Ararat.setLand(new BABYLON.Texture('Textures/Ararat/AraratLand.png', scene));
+      Ararat.setTexture(new BABYLON.Texture('Textures/Ararat/AraratMap2.png', scene));
+      Ararat.setLand(new BABYLON.Texture('Textures/Ararat/AraratLand2.png', scene));
       Ararat.setAtmosphereOpacity(0.22);
       Ararat.setMass(AraratRadius, 6.79);
       Ararat.setName("ararat");
@@ -284,7 +284,7 @@
       Lalotai.createAtmosphere();
       Lalotai.createCloudLayer();
       Lalotai.setTexture(new BABYLON.Texture('Textures/Mizraim/InnerMizraim/LalotaiMap.png', scene));
-      Lalotai.setClouds(new BABYLON.Texture('Textures/Clouds/EarthClouds2.png', scene));
+      Lalotai.setClouds(new BABYLON.Texture('Textures/Clouds/VenusClouds2.png', scene));
       Lalotai.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
       Lalotai.setAtmosphereOpacity(0.25);
       Lalotai.setMass(LalotaiRadius, 11.17);
@@ -342,8 +342,9 @@
       Earth.createCloudLayer();
       Earth.createAtmosphere();
       Earth.setReflection(new BABYLON.Color3(1, 0.9, 0.9));
-      Earth.setTexture(new BABYLON.Texture('Textures/Sol/Earth/EarthMap.png', scene));
-      Earth.setLand(new BABYLON.Texture('Textures/Sol/Earth/EarthLand.png', scene));
+      Earth.setTexture(new BABYLON.Texture('Textures/Sol/Earth/EarthMap2.png', scene));
+      Earth.setLand(new BABYLON.Texture('Textures/Sol/Earth/EarthLand2.png', scene));
+      Earth.setAtmosphereColor(new BABYLON.Color3(0.7, 0.6, 0.8))
       Earth.setAtmosphereOpacity(0.17);
 	  Earth.setMass(EarthRadius, 9.8); // Sets Earth's mass
 	  Earth.setName("earth");
@@ -382,7 +383,7 @@
       Venus.createCloudLayer();
       Venus.createAtmosphere();
       Venus.setTexture(new BABYLON.Texture('Textures/Sol/Venus/VenusMap.jpg', scene));
-      Venus.setClouds(new BABYLON.Texture('Textures/Sol/Venus/VenusClouds.jpg', scene));
+      Venus.setClouds(new BABYLON.Texture('Textures/Clouds/VenusClouds2.png', scene));
       Venus.setAtmosphereColor(new BABYLON.Color3(0.9, 0.9, 0.9))
       Venus.setAtmosphereOpacity(0.2);
       Venus.setMass(VenusRadius, 9.32);
