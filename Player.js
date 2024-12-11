@@ -26,7 +26,7 @@ export class Player {
         this.accelerationFactor = 50; // Scale of acceleration
         
         // Calls function to initialize player controls
-        this.buttons = new Buttons(scene, camera);
+        this.buttons = new Buttons();
         this.currentButton = "none";
         this.setControls();
         

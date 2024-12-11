@@ -1,11 +1,8 @@
 export class Buttons {
     /**
-     * Initializes the Base class
-     * @param {BABYLON.Scene} scene - The Babylon scene
-     * @param {BABYLON.camera} camera - The camera to adjust render distance
+     * Initializes the Buttons class
      */
-    constructor(scene, camera) {
-        this.scene = scene;
+    constructor() {
         
         // Arrays to store all buttons
         this.buttons = [];

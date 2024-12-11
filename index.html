@@ -34,7 +34,12 @@
     import { Base } from './Base.js';
     import { Menu } from './Menu.js';
     
+    // Initializes Menu and canvas
     const canvas = document.getElementById("renderCanvas");
+    const menu = new Menu();
+    
+    
+    // Initializes 3D scene
     const createScene = async (engine) => {
       const scene = new BABYLON.Scene(engine);
       
@@ -58,9 +63,6 @@
       const camera = new BABYLON.ArcRotateCamera("camera1", 0.3, 1.5, (3000), new BABYLON.Vector3(0, 0, 0), scene);
       camera.attachControl(canvas, true);
       const player = new Player(camera, scene);
-      
-      // Creates Menu
-      const menu = new Menu(scene, camera);
       
       // Add the Default Rendering Pipeline for bloom effect
       const defaultPipeline = new BABYLON.DefaultRenderingPipeline(
