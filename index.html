@@ -56,8 +56,9 @@
           scene
       );
       
-      // Rotate the dome by 60 degrees (π/3 radians) on the Y-axis
+      // Rotate the dome by 60 degrees (π/3 radians) on the X-axis
       dome.mesh.rotation.x = Math.PI / 3;
+      dome.mesh.rotation.y = (5*Math.PI) / 3;
     
       // Creates a player object that utilizes a controllable camera
       const camera = new BABYLON.ArcRotateCamera("camera1", 0.3, 1.5, (3000), new BABYLON.Vector3(0, 0, 0), scene);
@@ -482,6 +483,9 @@
       planetList.addPlanet(Uranus);
       planetList.addPlanet(Neptune);
       
+      // Adds planet list control to player
+      player.gravityControl(planetList);
+      
       // Updates player velocity to account for gravity
       scene.onBeforeRenderObservable.add(() => {
           player.setVelocity(planetList.getVelocity());
@@ -501,14 +505,6 @@
           menu.determineMenu(player);
       });
       
-      // Resets gravitational velocity to zero when spacebar is pressed
-      window.addEventListener("keyup", (event) => {
-          if (event.key === " ") { // Space bar released
-              planetList.resetVelocity();
-          }
-      });
-      
-
       return scene;
     };
 

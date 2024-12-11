@@ -22,7 +22,7 @@ export class Player {
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
-        this.acceleration = 0.0392; // Adjust acceleration as needed
+        this.acceleration = 0.0492; // Adjust acceleration as needed
         this.accelerationFactor = 50; // Scale of acceleration
         
         // Calls function to initialize player controls
@@ -41,6 +41,7 @@ export class Player {
         this.currentPlanet = null;
         this.resources = new Resources(scene, camera);
         this.planetDistance = 0;
+        this.planetList = null;
         
         // Tracks current player money and tech tier
         this.money = 0.0;
@@ -88,8 +89,10 @@ export class Player {
                 if (this.isBoosting) {
                     this.velocity = this.originalVelocity.clone(); // Revert to original velocity
                     this.isBoosting = false;
-                    this.acceleration = 0.0392;
+                    this.acceleration = 0.0492;
                 }
+                // Resets velocity to zero
+                this.zeroVelocity();
             }
     
             if (event.key === "m" || event.key === "M") { // Handle mining button release
@@ -199,6 +202,7 @@ export class Player {
                         
                     case "none":
                         this.rocket.deactivateLaser(); // Deactivate laser
+                        console.log("none")
                         break;
                 }
             }
@@ -269,6 +273,17 @@ export class Player {
     getResourceInventory() {
         let inventory = this.resources.getInventory();
         return inventory;
+    }
+    
+    gravityControl(planetList) {
+        this.planetList = planetList;
+    }
+    
+    zeroVelocity() {
+        // Resets velocity if planet list is not null
+        if (this.planetList != null) {
+            this.planetList.resetVelocity();
+        }
     }
     
     
