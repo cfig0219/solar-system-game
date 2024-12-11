@@ -80,13 +80,13 @@ export class Base {
         return this.resources;
     }
     
-    // Functions to reset location while in menu
-    inMenu(player, spawnLocation) {
+    // Functions to reset location while near base
+    nearBase(player, spawnLocation) {
     
         // places player back in spawn if close to base
         if (this.playerDistance < 300) {
+            player.setState("docked");
             player.setLocation(spawnLocation);
-            console.log(spawnLocation)
         }
     }
 }

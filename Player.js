@@ -47,6 +47,9 @@ export class Player {
         this.techTier = "chemical";
         this.display.displayMoney(this.money);
         this.display.displayTier(this.techTier);
+        
+        // Tracks current player state
+        this.playerState = "flying";
     }
     
     
@@ -268,6 +271,7 @@ export class Player {
         return inventory;
     }
     
+    
     // Functions to update location of player
     setLocation(newLocation) {
         this.camera.setTarget(newLocation);
@@ -285,8 +289,19 @@ export class Player {
     objectCollision(spawnLocation) {
         // Respawns player if collision with object
         if (this.planetDistance < 0) {
+            this.setState("dead");
             this.setLocation(spawnLocation);
-            console.log(spawnLocation);
         }
+        else {
+            this.setState("flying");
+        }
+    }
+    
+    setState(newState) {
+        this.playerState = newState;
+    }
+    
+    getState() {
+        return this.playerState;
     }
 }

@@ -32,6 +32,7 @@
     import { Player } from './Player.js';
     import { Gravity } from './Gravity.js';
     import { Base } from './Base.js';
+    import { Menu } from './Menu.js';
     
     const canvas = document.getElementById("renderCanvas");
     const createScene = async (engine) => {
@@ -57,6 +58,9 @@
       const camera = new BABYLON.ArcRotateCamera("camera1", 0.3, 1.5, (3000), new BABYLON.Vector3(0, 0, 0), scene);
       camera.attachControl(canvas, true);
       const player = new Player(camera, scene);
+      
+      // Creates Menu
+      const menu = new Menu(scene, camera);
       
       // Add the Default Rendering Pipeline for bloom effect
       const defaultPipeline = new BABYLON.DefaultRenderingPipeline(
@@ -486,10 +490,13 @@
           homeBase.setResources(player.getResourceInventory());
           homeBase.getDistance(player.getLocation());
           
-          // Sets player location back to spawn while in menu
           // Forces spawnLocation to remain constant
           spawnLocation = new BABYLON.Vector3(SolDistance + SolRadius + 299200 - 5300, 0, SolDistance + EarthRadius + 18158);
-          homeBase.inMenu(player, spawnLocation);
+          // Sets player location back to spawn while in menu
+          homeBase.nearBase(player, spawnLocation);
+          
+          // Updates the menu based on player state
+          menu.determineMenu(player);
       });
       
       // Resets gravitational velocity to zero when spacebar is pressed
