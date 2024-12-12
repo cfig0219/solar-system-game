@@ -130,6 +130,9 @@ export class Player {
                 if (this.rocket.getDeltaV() == 0) {
                     this.acceleration = 0.0;
                 }
+                if (this.rocket.getDeltaV() > 0){
+                    this.acceleration = 0.0492;
+                }
     
                 // Handle movement and actions based on combined inputs
                 switch (this.currentButton) {
