@@ -292,7 +292,7 @@ export class Player {
         this.camera.setTarget(newLocation);
         this.camera.alpha = 1.95;  // Horizontal rotation (45 degrees)
         this.camera.beta = 1.6;   // Vertical rotation (90 degrees)
-        this.camera.radius = 100; // adjusts default camera distance
+        this.camera.radius = 50; // adjusts default camera distance
         
         this.rocket.setLocation(this.camera.target); // Sets Rocket Location
     }

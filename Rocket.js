@@ -6,7 +6,7 @@ export class Rocket {
      * @param {BABYLON.camera} camera - The camera to adjust render distance
      */
     constructor(rocketLocation, scene, camera) {
-        this.rocketSize = 15;
+        this.rocketSize = 10;
         this.rocketLocation = rocketLocation;
         this.rocketMass = 20;
         this.rocketTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
@@ -18,24 +18,55 @@ export class Rocket {
         this.oreCapacity = 10000; // kg of ore
         this.money = 0.0;
 
-        // Create a cube (box)
-        this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: this.rocketSize * 2 }, this.scene);
+        // Creates the rocket
+        this.createRocket();
         
+        // Creates laser
+        this.createLaser();
+    }
+    
+    
+    createRocket() {
+        // Create a cube (box)
+        this.cube = BABYLON.MeshBuilder.CreateBox("cube", { size: 1 }, this.scene);
+    
         // Create a gray material
         const cubeMaterial = new BABYLON.StandardMaterial("cubeMaterial", this.scene);
         cubeMaterial.diffuseTexture = this.rocketTexture;
         cubeMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove highlights
         cubeMaterial.emissiveColor = new BABYLON.Color3(0, 0, 0); // No self-illumination
-        
+    
         // Apply material to cube
         this.cube.material = cubeMaterial;
-
-        // Set cube position
         this.cube.position = this.rocketLocation;
-        this.cube.renderingGroupId = 3;
+        this.cube.renderingGroupId = -1;
+    
+        // Create a cylinder
+        this.cylinder = BABYLON.MeshBuilder.CreateCylinder("rocketCylinder", {
+            diameterTop: 0,                     // Top diameter (point of the cone)
+            diameterBottom: this.rocketSize * 2, // Bottom diameter (base of the cone)
+            height: this.rocketSize * 3,       // Height of the cylinder
+            tessellation: 3               // Smoothness
+        }, this.scene);
+    
+        // Apply the same material as the cube to the cylinder
+        this.cylinder.material = cubeMaterial;
+        // Position the cylinder 15 units below the cube
+        this.cylinder.position = new BABYLON.Vector3(0, -10, 0);
+    
+        // Make the cylinder a child of the cube
+        this.cylinder.parent = this.cube;
+        this.cylinder.renderingGroupId = 3;
         
-        // Creates laser
-        this.createLaser();
+        // Set cylinder horizontal
+        this.cylinder.rotation = new BABYLON.Vector3(
+            0,  // X-axis rotation 
+            (90 * Math.PI) / 180,  // Y-axis rotation (300 degrees)
+            (90 * Math.PI) / 180   // Z-axis rotation (90 degrees)
+        );
+        
+        // Sets vertical scale of cylinder
+        this.cylinder.scaling.x = 0.3;
     }
     
     
@@ -44,7 +75,7 @@ export class Rocket {
         // Create a cylinder to represent the laser
         this.laser = BABYLON.MeshBuilder.CreateCylinder("laser", {
             height: 25000,  // Length of the laser
-            diameter: 2 // Thin laser beam
+            diameter: 1 // Thin laser beam
         }, this.scene);
     
         // Create a material for the laser
@@ -58,7 +89,7 @@ export class Rocket {
         
         // Makes laser child of rocket model
         this.laser.parent = this.cube;
-        this.laser.position = new BABYLON.Vector3(0, 0, 12500);
+        this.laser.position = new BABYLON.Vector3(0, -10, 12500);
     
         // Make the laser initially invisible
         this.laser.visibility = 0;
@@ -73,8 +104,11 @@ export class Rocket {
         this.scene.glowLayer.intensity = 0.5;
         
         // Set the cube to not glow
-        this.scene.glowLayer.addIncludedOnlyMesh(this.cube);
-        this.cube.material.emissiveColor = new BABYLON.Color3(0, 0, 0); // No emission
+        this.scene.glowLayer.addIncludedOnlyMesh(this.cylinder);
+        this.cylinder.material.emissiveColor = new BABYLON.Color3(0, 0, 0); // No emission
+                
+        // Set laser horizontal
+        this.laser.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
     }
     
     // Method to toggle laser visibility
@@ -112,9 +146,6 @@ export class Rocket {
     setRotation(yRotation) {
         this.rotation = yRotation;
         this.cube.rotation.y = yRotation;
-        
-        // Set laser horizontal
-        this.laser.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
     }
     
     
