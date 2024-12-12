@@ -75,6 +75,42 @@ export class Rocket {
         // Set the body to not glow
         this.scene.glowLayer.addIncludedOnlyMesh(this.body);
         this.body.material.emissiveColor = new BABYLON.Color3(0, 0, 0); // No emission
+        
+        // Create a red material for the toruses
+        const engineMaterial = new BABYLON.StandardMaterial("engineMaterial", this.scene);
+        engineMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0); // Red color
+        engineMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove highlights
+        engineMaterial.emissiveColor = new BABYLON.Color3(1, 0.4, 0); // Glowing green laser
+        
+        // Create the left torus
+        this.leftTorus = BABYLON.MeshBuilder.CreateTorus("leftTorus", {
+            diameter: 2,
+            thickness: 0.5,
+            tessellation: 32
+        }, this.scene);
+        this.leftTorus.material = engineMaterial;
+        this.leftTorus.position = new BABYLON.Vector3(-2.3, -10, -15); // Position to the left of the body
+        this.leftTorus.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+        
+        // Create the right torus
+        this.rightTorus = BABYLON.MeshBuilder.CreateTorus("rightTorus", {
+            diameter: 2,
+            thickness: 0.5,
+            tessellation: 32
+        }, this.scene);
+        this.rightTorus.material = engineMaterial;
+        this.rightTorus.position = new BABYLON.Vector3(2.3, -10, -15); // Position to the right of the body
+        this.rightTorus.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+            
+        // Make the toruses a children of the cube
+        this.leftTorus.parent = this.cube;
+        this.leftTorus.renderingGroupId = 3;
+        this.rightTorus.parent = this.cube;
+        this.rightTorus.renderingGroupId = 3;
+        
+        // Set the glow intensity for the laser
+        this.scene.glowLayer.addIncludedOnlyMesh(this.leftTorus);
+        this.scene.glowLayer.addIncludedOnlyMesh(this.rightTorus);
     }
     
     
@@ -89,7 +125,8 @@ export class Rocket {
         // Create a material for the laser
         const laserMaterial = new BABYLON.StandardMaterial("laserMaterial", this.scene);
         laserMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Remove highlights
-        laserMaterial.emissiveColor = new BABYLON.Color3(1, 0, 0); // Glowing green laser
+        laserMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+        laserMaterial.emissiveColor = new BABYLON.Color3(0, 1, 0); // Glowing green laser
     
         // Apply the material to the laser
         this.laser.material = laserMaterial;
@@ -177,6 +214,8 @@ export class Rocket {
         const warpCost = 12500000;
         this.money = money;
         
+        // Determines new engine color
+        
         // if not warp tier
         if (tier != "warp") {
             // Determines if upgrade cost is reached
@@ -184,21 +223,25 @@ export class Rocket {
                 newTier = "nuclear";
                 this.money = this.money - nuclearCost; // Updates money
                 this.deltaV = 1352; // Updates delta v
+                this.determineColor(newTier);
             }
             else if (tier == "nuclear" && money > fusionCost) {
                 newTier = "fusion";
                 this.money = this.money - fusionCost;
                 this.deltaV = 5050;
+                this.determineColor(newTier); // Updates engine color
             }
             else if (tier == "fusion" && money > antimatterCost) {
                 newTier = "antimatter";
                 this.money = this.money - antimatterCost;
                 this.deltaV = 17675;
+                this.determineColor(newTier);
             }
             else if (tier == "antimatter" && money > warpCost) {
                 newTier = "warp";
                 this.money = this.money - warpCost;
                 this.deltaV = 70701;
+                this.determineColor(newTier);
             }
             // If upgrade cost has not been reached yet
             else {
@@ -213,20 +256,28 @@ export class Rocket {
         return newTier
     }
     
+    
     // Returns new money balance after rocket upgrade
     upgradeCost() {
         return this.money;
     }
     
-    
     // Determines color based on tier
     determineColor(tier) {
-        if (tier == "chemical") { this.setColor("#ffb400"); }
-        else if (tier == "nuclear") { this.setColor("#ff1a1a"); }
-        else if (tier == "fusion") { this.setColor("#cc33ff"); }
-        else if (tier == "antimatter") { this.setColor("#3366ff"); }
-        else if (tier == "warp") { this.setColor("#4ddbff"); }
+        let newColor = new BABYLON.Color3(1, 0.4, 0)
+        if (tier == "chemical") { newColor = new BABYLON.Color3(1, 0.4, 0); }
+        else if (tier == "nuclear") { newColor = new BABYLON.Color3(1, 0.02, 0.02); }
+        else if (tier == "fusion") { newColor = new BABYLON.Color3(0.4, 0, 1); }
+        else if (tier == "antimatter") { newColor = new BABYLON.Color3(0.1, 0.12, 1); }
+        else if (tier == "warp") { newColor = new BABYLON.Color3(0.25, 0.5, 1); }
+        
+        // Updates engine color
+        console.log("called");
+        this.engineColor(newColor);
     }
     
-    // Updates engine color
+    engineColor(newColor) {
+    	this.leftTorus.material.emissiveColor = newColor;
+    	this.rightTorus.material.emissiveColor = newColor;
+    }
 }
