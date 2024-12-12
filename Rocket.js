@@ -172,10 +172,10 @@ export class Rocket {
     // Functions to upgrade rocket
     upgrade(tier, money) {
         let newTier = "";
-        const nuclearCost = 100000;
-        const fusionCost = 500000;
-        const antimatterCost = 2500000;
-        const warpCost = 12500000;
+        const nuclearCost = 100;
+        const fusionCost = 500;
+        const antimatterCost = 2500;
+        const warpCost = 12500;
         this.money = money;
         
         // if not warp tier

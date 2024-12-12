@@ -67,7 +67,7 @@ export class Display {
     createDeltaVDisplay() {
         this.deltaVDisplay = document.createElement("div");
         this.deltaVDisplay.style.position = "absolute";
-        this.deltaVDisplay.style.bottom = "50px";
+        this.deltaVDisplay.style.bottom = "70px";
         this.deltaVDisplay.style.left = "10px";
         this.deltaVDisplay.style.color = "white";
         this.deltaVDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
@@ -83,7 +83,7 @@ export class Display {
     createDistanceDisplay() {
         this.distanceDisplay = document.createElement("div");
         this.distanceDisplay.style.position = "absolute";
-        this.distanceDisplay.style.bottom = "70px";
+        this.distanceDisplay.style.bottom = "50px";
         this.distanceDisplay.style.left = "10px";
         this.distanceDisplay.style.color = "white";
         this.distanceDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
@@ -138,7 +138,7 @@ export class Display {
     createNameDisplay() {
         this.nameDisplay = document.createElement("div");
         this.nameDisplay.style.position = "absolute";
-        this.nameDisplay.style.bottom = "70px";
+        this.nameDisplay.style.bottom = "50px";
         this.nameDisplay.style.right = "10px";
         this.nameDisplay.style.color = "white";
         this.nameDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
@@ -154,7 +154,7 @@ export class Display {
     createResourcesDisplay() {
         this.resourcesDisplay = document.createElement("div");
         this.resourcesDisplay.style.position = "absolute";
-        this.resourcesDisplay.style.bottom = "50px";
+        this.resourcesDisplay.style.bottom = "70px";
         this.resourcesDisplay.style.right = "10px";
         this.resourcesDisplay.style.color = "white";
         this.resourcesDisplay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";

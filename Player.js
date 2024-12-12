@@ -125,6 +125,11 @@ export class Player {
                 const forward = this.camera.getFrontPosition(1).subtract(this.camera.position).normalize();
                 const right = BABYLON.Vector3.Cross(forward, BABYLON.Vector3.Up()).normalize();
                 const up = BABYLON.Vector3.Up(); // Y-axis direction for up and down movement
+                
+                // If player runs out of fuel
+                if (this.rocket.getDeltaV() == 0) {
+                    this.acceleration = 0.0;
+                }
     
                 // Handle movement and actions based on combined inputs
                 switch (this.currentButton) {

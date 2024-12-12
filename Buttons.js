@@ -23,8 +23,8 @@ export class Buttons {
         // Left side buttons
         this.buttonContainer = document.createElement("div");
         this.buttonContainer.style.position = "absolute";
-        this.buttonContainer.style.bottom = "20%";
-        this.buttonContainer.style.left = "10%";
+        this.buttonContainer.style.bottom = "35%";
+        this.buttonContainer.style.left = "15%";
         this.buttonContainer.style.display = "flex";
         this.buttonContainer.style.flexDirection = "column";
         document.body.appendChild(this.buttonContainer);
@@ -45,10 +45,11 @@ export class Buttons {
             button.innerText = buttonTexts[i];
             button.style.width = "40px";
             button.style.height = "40px";
-            button.style.backgroundColor = buttonColor;
+            button.style.backgroundColor = "#111111";
             button.style.transform = `translate(${buttonOffsets[i].x}px, ${buttonOffsets[i].y}px)`;
             button.style.color = "white";
-            button.style.border = "none";
+            button.style.border = 3;
+            button.style.borderColor = buttonColor;
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
@@ -89,8 +90,8 @@ export class Buttons {
         // Right side buttons
         this.buttonContainer2 = document.createElement("div");
         this.buttonContainer2.style.position = "absolute";
-        this.buttonContainer2.style.bottom = "25%";
-        this.buttonContainer2.style.right = "5%";
+        this.buttonContainer2.style.bottom = "40%";
+        this.buttonContainer2.style.right = "10%";
         this.buttonContainer2.style.display = "flex";
         this.buttonContainer2.style.gap = "15px";
         this.buttonContainer2.style.flexDirection = "column";
@@ -103,9 +104,10 @@ export class Buttons {
             button.innerText = buttonTexts2[i];
             button.style.width = "40px";
             button.style.height = "40px";
-            button.style.backgroundColor = buttonColor;
+            button.style.backgroundColor = "#111111";
             button.style.color = "white";
-            button.style.border = "none";
+            button.style.border = 3;
+            button.style.borderColor = buttonColor;
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
@@ -146,22 +148,23 @@ export class Buttons {
         // Bottom buttons
         this.buttonContainer3 = document.createElement("div");
         this.buttonContainer3.style.position = "absolute";
-        this.buttonContainer3.style.bottom = "5%";
-        this.buttonContainer3.style.left = "40%";
+        this.buttonContainer3.style.bottom = "15%";
+        this.buttonContainer3.style.left = "45%";
         this.buttonContainer3.style.display = "flex";
         this.buttonContainer3.style.gap = "30px";
         document.body.appendChild(this.buttonContainer3);
         
-        const buttonTexts3 = ["drill", "warp"];
+        const buttonTexts3 = ["warp", "drill"];
         
         for (let i = 0; i < 2; i++) {
             const button = document.createElement("button");
             button.innerText = buttonTexts3[i];
             button.style.width = "80px";
             button.style.height = "40px";
-            button.style.backgroundColor = buttonColor;
+            button.style.backgroundColor = "#111111";
             button.style.color = "white";
-            button.style.border = "none";
+            button.style.border = 3;
+            button.style.borderColor = buttonColor;
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
@@ -203,7 +206,7 @@ export class Buttons {
         this.buttonContainer4 = document.createElement("div");
         this.buttonContainer4.style.position = "absolute";
         this.buttonContainer4.style.top = "5%";
-        this.buttonContainer4.style.left = "40%";
+        this.buttonContainer4.style.left = "45%";
         this.buttonContainer4.style.display = "flex";
         this.buttonContainer4.style.gap = "30px";
         document.body.appendChild(this.buttonContainer4);
@@ -215,9 +218,10 @@ export class Buttons {
             button.innerText = buttonTexts4[i];
             button.style.width = "80px";
             button.style.height = "40px";
-            button.style.backgroundColor = buttonColor;
+            button.style.backgroundColor = "#111111";
             button.style.color = "white";
-            button.style.border = "none";
+            button.style.border = 3;
+            button.style.borderColor = "#008000";
             button.style.borderRadius = "5px";
             button.style.cursor = "pointer";
             button.style.fontFamily = "Arial, sans-serif";
@@ -265,10 +269,9 @@ export class Buttons {
     // Changes button color
     setColor(newColor) {
         // Update colors for all buttons in each array
-        this.buttons.forEach((button) => (button.style.backgroundColor = newColor));
-        this.buttons2.forEach((button) => (button.style.backgroundColor = newColor));
-        this.buttons3.forEach((button) => (button.style.backgroundColor = newColor));
-        this.buttons4.forEach((button) => (button.style.backgroundColor = newColor));
+        this.buttons.forEach((button) => (button.style.borderColor = newColor));
+        this.buttons2.forEach((button) => (button.style.borderColor = newColor));
+        this.buttons3.forEach((button) => (button.style.borderColor = newColor));
     }
     
     // Determines color based on tier

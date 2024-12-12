@@ -47,6 +47,7 @@ export class Menu {
         message.style.color = "white";
         message.style.fontSize = "24px";
         message.style.marginBottom = "20px";
+        message.style.fontFamily = "Arial, sans-serif";
     
         // Create the "Respawn" button
         const respawnButton = document.createElement("button");
@@ -54,6 +55,7 @@ export class Menu {
         respawnButton.style.margin = "10px";
         respawnButton.style.padding = "10px 20px";
         respawnButton.style.fontSize = "18px";
+        respawnButton.style.fontFamily = "Arial, sans-serif";
         respawnButton.onclick = () => {
             // Logic to respawn the player
             console.log("Respawning player...");
@@ -67,6 +69,7 @@ export class Menu {
         mainMenuButton.style.margin = "10px";
         mainMenuButton.style.padding = "10px 20px";
         mainMenuButton.style.fontSize = "18px";
+        mainMenuButton.style.fontFamily = "Arial, sans-serif";
         mainMenuButton.onclick = () => {
             // Logic to return to the main menu
             console.log("Returning to main menu...");
