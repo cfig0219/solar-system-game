@@ -41,38 +41,46 @@ export class Rocket {
         this.cube.position = this.rocketLocation;
         this.cube.renderingGroupId = -1;
     
-        // Create a cylinder
-        this.cylinder = BABYLON.MeshBuilder.CreateCylinder("rocketCylinder", {
+        // Create a body
+        this.body = BABYLON.MeshBuilder.CreateCylinder("rocketCylinder", {
             diameterTop: 0,                     // Top diameter (point of the cone)
             diameterBottom: this.rocketSize * 2, // Bottom diameter (base of the cone)
-            height: this.rocketSize * 3,       // Height of the cylinder
+            height: this.rocketSize * 3,       // Height of the body
             tessellation: 3               // Smoothness
         }, this.scene);
     
-        // Apply the same material as the cube to the cylinder
-        this.cylinder.material = cubeMaterial;
-        // Position the cylinder 15 units below the cube
-        this.cylinder.position = new BABYLON.Vector3(0, -10, 0);
+        // Apply the same material as the cube to the body
+        this.body.material = cubeMaterial;
+        // Position the body 15 units below the cube
+        this.body.position = new BABYLON.Vector3(0, -10, 0);
     
-        // Make the cylinder a child of the cube
-        this.cylinder.parent = this.cube;
-        this.cylinder.renderingGroupId = 3;
+        // Make the body a child of the cube
+        this.body.parent = this.cube;
+        this.body.renderingGroupId = 3;
         
-        // Set cylinder horizontal
-        this.cylinder.rotation = new BABYLON.Vector3(
+        // Set body horizontal
+        this.body.rotation = new BABYLON.Vector3(
             0,  // X-axis rotation 
             (90 * Math.PI) / 180,  // Y-axis rotation (300 degrees)
             (90 * Math.PI) / 180   // Z-axis rotation (90 degrees)
         );
         
-        // Sets vertical scale of cylinder
-        this.cylinder.scaling.x = 0.3;
+        // Sets vertical scale of body
+        this.body.scaling.x = 0.3;
+        
+        // Add glow layer to the scene
+        if (!this.scene.glowLayer) {
+            this.scene.glowLayer = new BABYLON.GlowLayer("glowLayer", this.scene);
+        }
+        // Set the body to not glow
+        this.scene.glowLayer.addIncludedOnlyMesh(this.body);
+        this.body.material.emissiveColor = new BABYLON.Color3(0, 0, 0); // No emission
     }
     
     
     // Creates and toggles laser visibility
     createLaser() {
-        // Create a cylinder to represent the laser
+        // Create a body to represent the laser
         this.laser = BABYLON.MeshBuilder.CreateCylinder("laser", {
             height: 25000,  // Length of the laser
             diameter: 1 // Thin laser beam
@@ -94,18 +102,9 @@ export class Rocket {
         // Make the laser initially invisible
         this.laser.visibility = 0;
         
-        // Add glow layer to the scene
-        if (!this.scene.glowLayer) {
-            this.scene.glowLayer = new BABYLON.GlowLayer("glowLayer", this.scene);
-        }
-        
         // Set the glow intensity for the laser
         this.scene.glowLayer.addIncludedOnlyMesh(this.laser);
         this.scene.glowLayer.intensity = 0.5;
-        
-        // Set the cube to not glow
-        this.scene.glowLayer.addIncludedOnlyMesh(this.cylinder);
-        this.cylinder.material.emissiveColor = new BABYLON.Color3(0, 0, 0); // No emission
                 
         // Set laser horizontal
         this.laser.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
@@ -172,10 +171,10 @@ export class Rocket {
     // Functions to upgrade rocket
     upgrade(tier, money) {
         let newTier = "";
-        const nuclearCost = 100;
-        const fusionCost = 500;
-        const antimatterCost = 2500;
-        const warpCost = 12500;
+        const nuclearCost = 100000;
+        const fusionCost = 500000;
+        const antimatterCost = 2500000;
+        const warpCost = 12500000;
         this.money = money;
         
         // if not warp tier
@@ -218,4 +217,16 @@ export class Rocket {
     upgradeCost() {
         return this.money;
     }
+    
+    
+    // Determines color based on tier
+    determineColor(tier) {
+        if (tier == "chemical") { this.setColor("#ffb400"); }
+        else if (tier == "nuclear") { this.setColor("#ff1a1a"); }
+        else if (tier == "fusion") { this.setColor("#cc33ff"); }
+        else if (tier == "antimatter") { this.setColor("#3366ff"); }
+        else if (tier == "warp") { this.setColor("#4ddbff"); }
+    }
+    
+    // Updates engine color
 }

@@ -14,7 +14,7 @@ export class Buttons {
         this.buttonPressed = "none";
         
         // Create buttons with a default color
-        this.setButtons("#e67300");
+        this.setButtons("#ffb400");
     }
     
     
@@ -276,11 +276,11 @@ export class Buttons {
     
     // Determines color based on tier
     determineColor(tier) {
-        if (tier == "chemical") { this.setColor("#e67300"); }
-        else if (tier == "nuclear") { this.setColor("#ff3385"); }
-        else if (tier == "fusion") { this.setColor("#1a75ff"); }
-        else if (tier == "antimatter") { this.setColor("#33ccff"); }
-        else if (tier == "warp") { this.setColor("#9999ff"); }
+        if (tier == "chemical") { this.setColor("#ffb400"); }
+        else if (tier == "nuclear") { this.setColor("#ff1a1a"); }
+        else if (tier == "fusion") { this.setColor("#cc33ff"); }
+        else if (tier == "antimatter") { this.setColor("#3366ff"); }
+        else if (tier == "warp") { this.setColor("#4ddbff"); }
     }
 	
 }
