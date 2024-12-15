@@ -12,9 +12,12 @@ export class Base {
         this.baseMass = 100;
         this.baseTexture = new BABYLON.Texture('Textures/Base/borg.jpg', scene);
         this.scene = scene;
+        this.camera = camera;
         this.baseName = "";
         
+        this.imageScale = 0;
         this.createBase();
+        this.createTarget(); // Makes base location visible
     
         // Resource and player parameters
         this.playerDistance = 0;
@@ -138,7 +141,53 @@ export class Base {
         // places player back in spawn if close to base
         if (this.playerDistance < 100) {
             player.setState("docked");
+            
+            // Sets render priority of base to 3
+            this.cylinder.renderingGroupId = 3;
+            this.crossCylinder1.renderingGroupId = 3;
+            this.crossCylinder2.renderingGroupId = 3;
+            this.torus.renderingGroupId = 3;
             player.setLocation(spawnLocation);
         }
+        else {
+            // Sets render priority of base to 1
+            this.cylinder.renderingGroupId = 1;
+            this.crossCylinder1.renderingGroupId = 1;
+            this.crossCylinder2.renderingGroupId = 1;
+            this.torus.renderingGroupId = 1;
+        }
+    }
+    
+    
+    // Creates target image for base
+    createTarget() {
+        this.imagePlane = BABYLON.MeshBuilder.CreatePlane("imagePlane", { width: this.imageScale, height: this.imageScale }, this.scene);
+        const imageMaterial = new BABYLON.StandardMaterial("imageMaterial", this.scene);
+        const imageTexture = new BABYLON.Texture('Textures/UI/target.png', this.scene);
+
+        imageTexture.hasAlpha = true;
+        imageMaterial.diffuseTexture = imageTexture;
+        imageMaterial.alpha = 1;
+        imageMaterial.useAlphaFromDiffuseTexture = true;
+        imageMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
+        imageMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+        imageMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        this.imagePlane.material = imageMaterial;
+
+        imageMaterial.backFaceCulling = true;
+        this.imagePlane.position = this.baseLocation;
+        this.imagePlane.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+        this.imagePlane.renderingGroupId = 3;
+        
+        // Continuously updates the size of the star flare relative to camera location
+        this.scene.registerBeforeRender(() => {
+            this.starDistance = BABYLON.Vector3.Distance(this.camera.position, this.baseLocation);
+        	this.imageScale = ((this.starDistance) / 30);
+        	console.log(this.imageScale)
+			
+        	// Update the scaling of the imagePlane directly
+        	this.imagePlane.scaling.x = this.imageScale;
+        	this.imagePlane.scaling.y = this.imageScale;
+        });
     }
 }

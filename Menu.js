@@ -12,7 +12,7 @@ export class Menu {
         this.playerState = player.getState();
 
         if (this.playerState == "docked") {
-            this.dockMenu();
+            this.dockMenu(player);
         } else if (this.playerState == "dead") {
             this.deathMenu(player);
         } else {
@@ -21,9 +21,64 @@ export class Menu {
     }
 
     // Menu that appears when player is near base
-    dockMenu() {
-        console.log("dock menu");
+    dockMenu(player) {
+        // Create a semi-transparent overlay for the dock menu
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.backgroundColor = "rgba(0, 0, 0, 0.2)"; // Dark transparent background
+        overlay.style.display = "flex";
+        overlay.style.flexDirection = "column";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "1000";
+    
+        // Create the "Dock" button
+        const dockButton = document.createElement("button");
+        dockButton.textContent = "Dock";
+        dockButton.style.margin = "10px";
+        dockButton.style.padding = "10px 20px";
+        dockButton.style.fontSize = "18px";
+        dockButton.style.fontFamily = "Arial, sans-serif";
+        dockButton.onclick = () => {
+            // Logic to dock the player
+            console.log("Docking player...");
+            document.body.removeChild(overlay);
+            clearInterval(velocityLock);
+        };
+    
+        // Create the "Main Menu" button
+        const mainMenuButton = document.createElement("button");
+        mainMenuButton.textContent = "Main Menu";
+        mainMenuButton.style.margin = "10px";
+        mainMenuButton.style.padding = "10px 20px";
+        mainMenuButton.style.fontSize = "18px";
+        mainMenuButton.style.fontFamily = "Arial, sans-serif";
+        mainMenuButton.onclick = () => {
+            // Logic to return to the main menu
+            console.log("Returning to main menu...");
+            document.body.removeChild(overlay);
+            clearInterval(velocityLock);
+        };
+    
+        // Append buttons to the overlay
+        overlay.appendChild(dockButton);
+        overlay.appendChild(mainMenuButton);
+    
+        // Append overlay to the body
+        document.body.appendChild(overlay);
+    
+        // Continuously lock the player's velocity
+        const velocityLock = setInterval(() => {
+            if (player && typeof player.setVelocity === "function") {
+                player.zeroVelocity();
+            }
+        }, 100); // Reapply every 100ms
     }
+
 
     // Menu that appears when player dies
     deathMenu(player) {
@@ -97,4 +152,5 @@ export class Menu {
     saveMenu() {
         //console.log("save menu");
     }
+    
 }

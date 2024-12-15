@@ -22,7 +22,7 @@ export class Player {
         // Initialize velocity and previous velocity
         this.velocity = new BABYLON.Vector3(0, 0, 0);
         this.previousVelocity = this.velocity.clone();
-        this.acceleration = 0.0492; // Adjust acceleration as needed
+        this.acceleration = 0.0392; // Adjust acceleration as needed
         this.accelerationFactor = 50; // Scale of acceleration
         
         // Calls function to initialize player controls
@@ -89,7 +89,7 @@ export class Player {
                 if (this.isBoosting) {
                     this.velocity = this.originalVelocity.clone(); // Revert to original velocity
                     this.isBoosting = false;
-                    this.acceleration = 0.0492;
+                    this.acceleration = 0.0392;
                 }
                 // Resets velocity to zero
                 this.zeroVelocity();
@@ -118,7 +118,7 @@ export class Player {
             }
     
             // Limit click rate
-            if ((this.clickCount < this.clickRateCap) && (this.currentButton !== "none")) {
+            if ((this.clickCount < this.clickRateCap)) {
                 this.clickCount++; // Count the click
     
                 // Calculate movement vectors
@@ -131,7 +131,7 @@ export class Player {
                     this.acceleration = 0.0;
                 }
                 if (this.rocket.getDeltaV() > 0){
-                    this.acceleration = 0.0492;
+                    this.acceleration = 0.0392;
                 }
     
                 // Handle movement and actions based on combined inputs
@@ -141,6 +141,7 @@ export class Player {
                     case "^": // Accelerate forward
                         this.velocity.addInPlace(forward.scale(this.acceleration));
                         this.rocket.setDeltaV(this.acceleration * this.accelerationFactor);
+                        console.log(this.clickCount);
                         break;
                     case "s":
                     case "S":
@@ -210,7 +211,6 @@ export class Player {
                         
                     case "none":
                         this.rocket.deactivateLaser(); // Deactivate laser
-                        console.log("none")
                         break;
                 }
             }
